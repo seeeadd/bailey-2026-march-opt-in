@@ -1,0 +1,1320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>VIP Upgrade — The AI Income Challenge | Bailey Vann</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&display=swap" rel="stylesheet" />
+<link href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,600,700,800,900&display=swap" rel="stylesheet" />
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+@font-face{font-family:'Ogg';src:url('public/OggRoman.ttf') format('truetype');font-weight:400;font-display:swap}
+@font-face{font-family:'Ogg';src:url('public/OggBold.ttf') format('truetype');font-weight:700;font-display:swap}
+:root{
+  --cream:#FAF8F5;--warm:#F5F0E8;--dark:#1A1816;--coral:#E07A5F;--coral-dark:#C45D45;
+  --teal:#1D6B6B;--teal-dark:#165858;--gold:#D4A853;--border:#E8E2D9;
+  /* Luxury accent palette (blush, rose, sage) */
+  --blush:#F2D7D5;--rose:#C9A0A0;--sage:#B8CEC2;--sage-dark:#8FB5A3;--mauve:#D4B5C7;
+  --font:'Satoshi','DM Sans',-apple-system,BlinkMacSystemFont,sans-serif;
+  --display:'Ogg',Georgia,serif;--accent:'Caveat',cursive;
+}
+body{font-family:var(--font);font-weight:500;color:#2d2a26;background:var(--cream);line-height:1.7;overflow-x:hidden;-webkit-font-smoothing:antialiased;font-size:16px}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer;border:none;background:none}
+.pg{max-width:100%;overflow-x:hidden;position:relative}
+.inner{max-width:1000px;margin:0 auto;padding:0 24px}
+.inner-wide{max-width:1100px;margin:0 auto;padding:0 24px}
+.coral{color:var(--coral)}
+.teal{color:var(--teal)}
+.gold{color:var(--gold)}
+
+/* ── Paper/Marble Texture Overlay ── */
+.pg::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9999;opacity:.02;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.65' numOctaves='5' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='256' height='256' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+}
+/* ── Gold Foil Vein Texture (subtle marble veins) ── */
+.pg::after{content:'';position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9998;opacity:.012;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='m'%3E%3CfeTurbulence type='turbulence' baseFrequency='.008' numOctaves='3' result='turb'/%3E%3CfeDisplacementMap in2='turb' in='SourceGraphic' scale='40' xChannelSelector='R' yChannelSelector='G'/%3E%3C/filter%3E%3Cpath d='M-10,200 Q100,180 200,210 Q300,240 410,190' stroke='%23D4A853' stroke-width='1.5' fill='none' filter='url(%23m)' opacity='.4'/%3E%3Cpath d='M-10,120 Q80,90 180,130 Q280,170 410,100' stroke='%23D4A853' stroke-width='1' fill='none' filter='url(%23m)' opacity='.25'/%3E%3Cpath d='M-10,310 Q120,280 220,320 Q320,360 410,290' stroke='%23C9A0A0' stroke-width='.8' fill='none' filter='url(%23m)' opacity='.2'/%3E%3C/svg%3E");background-size:800px 800px
+}
+
+/* ── Animations ── */
+@keyframes shimmer{0%{background-position:-200% center}100%{background-position:200% center}}
+@keyframes ctaPulse{0%,100%{box-shadow:0 4px 20px rgba(224,122,95,.25),0 0 0 0 rgba(224,122,95,0)}50%{box-shadow:0 6px 28px rgba(224,122,95,.4),0 0 40px 4px rgba(224,122,95,.08)}}
+@keyframes ctaPulseTeal{0%,100%{box-shadow:0 4px 20px rgba(29,107,107,.25)}50%{box-shadow:0 6px 28px rgba(29,107,107,.4)}}
+@keyframes glitterSweep{0%{left:-30%;opacity:0}50%{opacity:.25}100%{left:130%;opacity:0}}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+@keyframes fadeInUp{0%{opacity:0;transform:translateY(24px)}100%{opacity:1;transform:translateY(0)}}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+@keyframes floatOrb{0%,100%{transform:translate(0,0) scale(1)}25%{transform:translate(10px,-15px) scale(1.05)}50%{transform:translate(-5px,-25px) scale(1)}75%{transform:translate(-15px,-10px) scale(.95)}}
+@keyframes rotateSlow{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
+@keyframes breathe{0%,100%{opacity:.4;transform:scale(1)}50%{opacity:.7;transform:scale(1.02)}}
+@keyframes slideInLeft{0%{opacity:0;transform:translateX(-30px)}100%{opacity:1;transform:translateX(0)}}
+@keyframes gradientShift{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+@keyframes ctaPulseRed{0%,100%{box-shadow:0 4px 20px rgba(220,38,38,.3)}50%{box-shadow:0 8px 40px rgba(220,38,38,.5),0 0 60px rgba(220,38,38,.1)}}
+@keyframes sway{0%,100%{transform:rotate(-2deg)}50%{transform:rotate(2deg)}}
+@keyframes scaleIn{0%{transform:scale(.8);opacity:0}100%{transform:scale(1);opacity:1}}
+@keyframes drawLine{0%{width:0}100%{width:100%}}
+@keyframes slideInRight{0%{opacity:0;transform:translateX(30px)}100%{opacity:1;transform:translateX(0)}}
+
+@keyframes glow{0%,100%{filter:drop-shadow(0 0 8px rgba(212,168,83,.15))}50%{filter:drop-shadow(0 0 20px rgba(212,168,83,.25))}}
+@keyframes floatUp{0%{opacity:0;transform:translateY(40px) scale(.95)}100%{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes softPulse{0%,100%{opacity:.6}50%{opacity:1}}
+@keyframes goldShimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
+
+/* ── VIP Crown Animation ── */
+@keyframes crownFloat{0%,100%{transform:translateY(0) rotate(-1.5deg)}33%{transform:translateY(-4px) rotate(1.5deg)}66%{transform:translateY(-2px) rotate(-0.5deg)}}
+@keyframes crownGlow{0%,100%{filter:drop-shadow(0 0 6px rgba(212,168,83,.15)) drop-shadow(0 2px 4px rgba(212,168,83,.1))}50%{filter:drop-shadow(0 0 18px rgba(212,168,83,.45)) drop-shadow(0 0 40px rgba(212,168,83,.15))}}
+@keyframes crownSparkle{0%{opacity:0;transform:scale(0)}15%{opacity:1;transform:scale(1.2)}30%{opacity:.8;transform:scale(.8)}50%{opacity:0;transform:scale(0)}100%{opacity:0;transform:scale(0)}}
+@keyframes crownGemPulse{0%,100%{opacity:.5;r:1.5}50%{opacity:1;r:2.2}}
+.vip-crown{display:inline-flex;align-items:center;vertical-align:middle;animation:crownFloat 4s ease-in-out infinite,crownGlow 3s ease-in-out infinite;position:relative;margin:0 5px;line-height:0}
+.vip-crown svg{width:1.15em;height:1.15em}
+.vip-crown-sm svg{width:1em;height:1em}
+.vip-crown-lg svg{width:1.6em;height:1.6em}
+.vip-crown .sparkle{position:absolute;width:5px;height:5px;border-radius:50%;background:radial-gradient(circle,#ffd700,var(--gold));animation:crownSparkle 2.5s ease-in-out infinite;pointer-events:none;box-shadow:0 0 6px rgba(212,168,83,.6)}
+.vip-crown .sparkle:nth-of-type(1){top:-5px;right:-2px;animation-delay:0s}
+.vip-crown .sparkle:nth-of-type(2){top:-4px;left:0;animation-delay:.8s;width:4px;height:4px}
+.vip-crown .sparkle:nth-of-type(3){bottom:-2px;right:4px;animation-delay:1.6s;width:3px;height:3px}
+/* Heading-level crowns get extra juice */
+.sec-heading .vip-crown svg{width:1.3em;height:1.3em}
+.sec-heading .vip-crown .sparkle{width:7px;height:7px;box-shadow:0 0 10px rgba(212,168,83,.7)}
+.sec-heading .vip-crown .sparkle:nth-of-type(1){top:-7px;right:-3px}
+.sec-heading .vip-crown .sparkle:nth-of-type(2){top:-5px;left:-2px;width:5px;height:5px}
+.sec-heading .vip-crown .sparkle:nth-of-type(3){bottom:-3px;right:5px;width:4px;height:4px}
+
+/* ── Decorative Elements ── */
+.deco-corner{position:absolute;width:60px;height:60px;pointer-events:none;opacity:.08}
+.deco-corner svg{width:100%;height:100%}
+.deco-corner.tl{top:12px;left:12px}
+.deco-corner.tr{top:12px;right:12px;transform:scaleX(-1)}
+.deco-corner.bl{bottom:12px;left:12px;transform:scaleY(-1)}
+.deco-corner.br{bottom:12px;right:12px;transform:scale(-1)}
+
+.deco-line{display:flex;align-items:center;justify-content:center;gap:12px;margin:20px auto;max-width:300px}
+.deco-line::before,.deco-line::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent)}
+.deco-line svg{flex-shrink:0;opacity:.2}
+
+.deco-stars{display:flex;justify-content:center;gap:6px;margin:16px auto}
+.deco-stars svg{opacity:.12;animation:breathe 5s ease-in-out infinite}
+.deco-stars svg:nth-child(2){animation-delay:.5s}
+.deco-stars svg:nth-child(3){animation-delay:1s}
+
+/* ── Gradient Text ── */
+.gradient-text{background:linear-gradient(135deg,var(--coral),var(--coral-dark),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.gradient-text-teal{background:linear-gradient(135deg,var(--teal),#2a8f8f);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+
+/* ── Utility: Typography Art ── */
+.scribble-underline{background-image:url("data:image/svg+xml,%3Csvg width='200' height='12' viewBox='0 0 200 12' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M2 8Q50 2 100 8Q150 14 198 6' stroke='%23E07A5F' stroke-width='2.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:bottom center;background-size:100% 8px;padding-bottom:8px;display:inline}
+.highlight-mark{background:linear-gradient(180deg,transparent 55%,rgba(212,168,83,.2) 55%);padding:0 4px;border-radius:2px}
+.price-dramatic{font-family:var(--display);font-size:clamp(48px,8vw,72px);font-weight:700;background:linear-gradient(135deg,var(--coral),var(--gold),var(--coral));background-size:200% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;position:relative;display:inline-block;animation:goldShimmer 4s linear infinite;filter:drop-shadow(0 2px 4px rgba(224,122,95,.15))}
+.price-dramatic::after{content:'';position:absolute;bottom:-4px;left:0;width:100%;height:3px;background:linear-gradient(90deg,var(--coral),var(--gold));border-radius:2px}
+.price-strike{position:relative;color:rgba(255,255,255,.3)}
+.price-strike::after{content:'';position:absolute;top:50%;left:-4px;right:-4px;height:3px;background:var(--coral);transform:rotate(-5deg);border-radius:2px}
+.sl-dropcap{float:left;font-family:var(--display);font-size:72px;line-height:.8;color:var(--coral);margin-right:8px;margin-top:6px}
+
+/* ── Scroll Animations ── */
+.animate-on-scroll{opacity:0;transform:translateY(24px);transition:all .6s cubic-bezier(.22,1,.36,1)}
+.animate-on-scroll.visible{opacity:1;transform:translateY(0)}
+.stagger-children .animate-on-scroll:nth-child(1){transition-delay:0s}
+.stagger-children .animate-on-scroll:nth-child(2){transition-delay:.1s}
+.stagger-children .animate-on-scroll:nth-child(3){transition-delay:.15s}
+.stagger-children .animate-on-scroll:nth-child(4){transition-delay:.2s}
+.stagger-children .animate-on-scroll:nth-child(5){transition-delay:.25s}
+
+/* ── Section Divider (organic wave) ── */
+.sec-divider{width:100%;line-height:0;margin:0;position:relative;z-index:2}
+.sec-divider svg{display:block;width:100%;height:auto}
+
+/* ── Step Progress Bar ── */
+.steps-bar{background:linear-gradient(135deg,rgba(255,255,255,.92),rgba(250,248,245,.88));padding:12px 28px;display:flex;align-items:center;justify-content:center;gap:12px;position:relative;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,.06);border-bottom:1px solid rgba(232,226,217,.3)}
+.step-pill{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,var(--coral),var(--coral-dark));color:#fff;font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:6px 16px;border-radius:20px;box-shadow:0 2px 8px rgba(224,122,95,.3)}
+.step-pill-num{font-weight:900}
+.step-right{font-size:14px;font-weight:700;color:#2d2a26;letter-spacing:.02em}
+
+/* ── Hero / Video ── */
+.hero{background:linear-gradient(170deg,#1A1816 0%,#2A2520 50%,#1A1816 100%);padding:48px 24px 56px;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:0;left:0;width:100%;height:100%;background:radial-gradient(ellipse at 30% 40%,rgba(224,122,95,.06) 0%,transparent 50%),radial-gradient(ellipse at 70% 60%,rgba(29,107,107,.05) 0%,transparent 50%);pointer-events:none;z-index:0}
+.hero::after{content:'';position:absolute;bottom:0;left:0;width:100%;height:200px;background:linear-gradient(180deg,transparent,rgba(26,24,22,.6));pointer-events:none;z-index:1}
+.hero .inner{display:flex;flex-direction:column;align-items:center;max-width:900px;margin:0 auto;padding:0}
+/* "CONGRATS! YOU'RE IN!" */
+.hero-congrats{font-family:var(--font);font-size:clamp(14px,2vw,17px);font-weight:900;letter-spacing:.2em;text-transform:uppercase;margin-bottom:12px;position:relative;z-index:2}
+.hero-congrats-dark{color:#fff}
+.hero-congrats-coral{color:var(--coral)}
+/* Main headline */
+.hero-h{font-family:var(--display);color:#2d2a26;font-size:clamp(28px,5vw,52px);font-weight:700;line-height:1.08;margin-bottom:32px;max-width:850px;position:relative;z-index:2;text-align:center;letter-spacing:-.02em}
+.hero-h .coral-italic{font-style:italic;color:var(--coral)}
+/* Timer bar — glassmorphic, separate from video */
+.hero-timer-bar{display:flex;align-items:center;justify-content:center;gap:20px;background:linear-gradient(135deg,rgba(255,255,255,.12),rgba(255,255,255,.06));backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.15);padding:14px 32px;border-radius:14px;width:100%;max-width:680px;position:relative;z-index:2;margin-bottom:0;box-shadow:0 4px 20px rgba(0,0,0,.15)}
+.hero-timer-label{font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.7)}
+.hero-timer-digits{display:flex;gap:4px;align-items:center}
+.hero-timer-digits .htd-block{text-align:center;min-width:48px}
+.hero-timer-digits .htd-num{font-family:var(--display);font-size:clamp(28px,4vw,38px);font-weight:700;color:#fff;line-height:1;display:block}
+.hero-timer-digits .htd-label{font-size:8px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--coral);display:block;margin-top:2px}
+.hero-timer-digits .htd-sep{font-size:clamp(22px,3vw,32px);font-weight:700;color:rgba(255,255,255,.4);padding:0 2px}
+/* "Play Now" red banner */
+.video-play-banner{background:linear-gradient(135deg,#dc2626,#b91c1c);color:#fff;font-size:13px;font-weight:700;padding:10px 20px;text-align:center;display:flex;align-items:center;justify-content:center;gap:8px;width:100%;max-width:820px;position:relative;z-index:2;letter-spacing:.03em}
+.video-play-banner strong{font-weight:900;text-transform:uppercase}
+.video-play-banner .vp-sparkle{font-size:14px;opacity:.7}
+/* Video container */
+.hero-media{position:relative;z-index:2;width:100%;max-width:820px}
+.video-wrap{width:100%;overflow:hidden;aspect-ratio:16/9;background:#0a0a0a;display:flex;align-items:center;justify-content:center;position:relative;box-shadow:0 24px 80px rgba(0,0,0,.5);cursor:pointer;border:none;border-radius:0}
+.video-wrap .ph{width:100%;height:100%;display:flex;align-items:center;justify-content:center;flex-direction:column;color:rgba(255,255,255,.35);font-size:13px;gap:10px;position:relative}
+.play-btn{width:80px;height:80px;border-radius:50%;background:rgba(0,0,0,.45);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:3px solid rgba(255,255,255,.3);display:flex;align-items:center;justify-content:center;transition:all .3s;position:relative;z-index:2}
+.play-btn:hover{background:rgba(0,0,0,.6);border-color:rgba(255,255,255,.5)}
+.play-btn svg{fill:#fff;margin-left:4px;width:28px;height:28px}
+/* "Click to turn on sound" — top left */
+.video-sound-label{position:absolute;top:14px;left:14px;display:flex;align-items:center;gap:8px;z-index:3;white-space:nowrap}
+.video-sound-icon{width:36px;height:36px;border-radius:50%;background:var(--coral);display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(224,122,95,.4)}
+.video-sound-icon svg{width:18px;height:18px}
+.video-sound-text{font-size:13px;font-weight:800;text-transform:uppercase;color:#fff;letter-spacing:.04em;text-shadow:0 1px 4px rgba(0,0,0,.5)}
+/* Video CTA overlay — frosted glass bar at bottom */
+.video-cta-overlay{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(135deg,rgba(255,255,255,.15),rgba(255,255,255,.08));backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-top:1px solid rgba(255,255,255,.15);padding:14px 24px;display:flex;align-items:center;justify-content:center;gap:20px;z-index:5;opacity:0;transform:translateY(10px);transition:all .4s cubic-bezier(.22,1,.36,1);pointer-events:none}
+.video-cta-overlay.active{opacity:1;transform:translateY(0);pointer-events:auto}
+.video-cta-timer{display:flex;align-items:center;gap:12px;flex-shrink:0}
+.video-cta-timer-label{font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.7);line-height:1.3;white-space:nowrap}
+.video-cta-timer-digits{display:flex;gap:4px;align-items:baseline}
+.video-cta-timer-digits .vctd-block{text-align:center}
+.video-cta-timer-digits .vctd-num{font-family:var(--display);font-size:clamp(24px,3.5vw,36px);font-weight:700;color:#fff;line-height:1;display:block}
+.video-cta-timer-digits .vctd-label{font-size:7px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--coral);display:block;margin-top:1px}
+.video-cta-timer-digits .vctd-sep{font-size:clamp(18px,2.5vw,28px);color:rgba(255,255,255,.4);font-weight:700;padding:0 2px}
+.video-cta-btn{display:inline-flex;align-items:center;gap:8px;padding:14px 28px;background:linear-gradient(135deg,#22c55e,#16a34a);color:#fff;font-size:15px;font-weight:800;border-radius:10px;border:none;cursor:pointer;font-family:var(--font);box-shadow:0 4px 20px rgba(34,197,94,.35);transition:all .3s;white-space:nowrap;letter-spacing:.02em}
+.video-cta-btn:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(34,197,94,.45)}
+.video-cta-btn svg{flex-shrink:0}
+
+/* ── CTA Button — Luxury Premium ── */
+@keyframes ticketBounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-2px)}}
+@keyframes ctaShimmer{0%{background-position:200% center}100%{background-position:-200% center}}
+@keyframes ctaGoldDust{0%{left:-35%;opacity:0;transform:skewX(-15deg)}40%{opacity:.6}100%{left:135%;opacity:0;transform:skewX(-15deg)}}
+@keyframes ctaRingPulse{0%,100%{box-shadow:0 0 0 0 rgba(212,168,83,.3)}50%{box-shadow:0 0 0 6px rgba(212,168,83,0)}}
+@keyframes ctaParticle1{0%{transform:translate(0,0) scale(0);opacity:0}20%{opacity:1;transform:translate(-8px,-14px) scale(1)}100%{transform:translate(-20px,-40px) scale(0);opacity:0}}
+@keyframes ctaParticle2{0%{transform:translate(0,0) scale(0);opacity:0}25%{opacity:1;transform:translate(12px,-12px) scale(1)}100%{transform:translate(28px,-36px) scale(0);opacity:0}}
+@keyframes ctaParticle3{0%{transform:translate(0,0) scale(0);opacity:0}30%{opacity:1;transform:translate(6px,-16px) scale(.8)}100%{transform:translate(14px,-42px) scale(0);opacity:0}}
+.cta-btn{position:relative;display:block;margin-left:auto;margin-right:auto;padding:20px 40px;font-family:var(--font);font-size:18px;font-weight:800;border-radius:16px;cursor:pointer;transition:all .45s cubic-bezier(.22,1,.36,1);text-align:center;line-height:1.3;background:linear-gradient(135deg,#2a8f8f 0%,var(--teal) 30%,#1a7a7a 60%,var(--teal-dark) 100%);color:#fff;box-shadow:0 8px 32px rgba(29,107,107,.35),0 2px 8px rgba(0,0,0,.1),0 0 0 1px rgba(212,168,83,.15),inset 0 1px 0 rgba(255,255,255,.3),inset 0 -2px 0 rgba(0,0,0,.08);border:1.5px solid rgba(212,168,83,.25);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);animation:ctaPulseTeal 3s ease-in-out infinite,ctaRingPulse 3s ease-in-out infinite;max-width:680px;width:100%;overflow:hidden;letter-spacing:-.01em;z-index:1;text-shadow:0 1px 3px rgba(0,0,0,.15)}
+/* Inner glass sheen — top highlight */
+.cta-btn::before{content:'';position:absolute;top:0;left:0;right:0;height:50%;border-radius:15px 15px 0 0;background:linear-gradient(180deg,rgba(255,255,255,.22) 0%,rgba(255,255,255,.05) 100%);pointer-events:none;z-index:2}
+/* Bottom gold accent line */
+.cta-btn::after{content:'';position:absolute;bottom:0;left:10%;right:10%;height:2px;background:linear-gradient(90deg,transparent,rgba(212,168,83,.5) 30%,rgba(212,168,83,.8) 50%,rgba(212,168,83,.5) 70%,transparent);border-radius:2px;pointer-events:none;z-index:2;opacity:.6;transition:opacity .4s}
+.cta-notch-r{display:none}
+/* Hover — rich shimmer sweep + elevated glow */
+.cta-btn:hover{transform:translateY(-4px) scale(1.025);box-shadow:0 20px 60px rgba(29,107,107,.4),0 8px 20px rgba(0,0,0,.12),0 0 0 1px rgba(212,168,83,.25),0 0 40px rgba(212,168,83,.08),inset 0 1px 0 rgba(255,255,255,.35),inset 0 -2px 0 rgba(0,0,0,.06);border-color:rgba(212,168,83,.4);background:linear-gradient(135deg,#2fa0a0 0%,#238b8b 25%,var(--teal) 50%,#1a7a7a 75%,var(--teal-dark) 100%);background-size:200% 200%;animation:ctaShimmer 1.5s ease-in-out forwards}
+.cta-btn:hover::before{background:linear-gradient(180deg,rgba(255,255,255,.3) 0%,rgba(212,168,83,.06) 100%)}
+.cta-btn:hover::after{opacity:1}
+.cta-btn:active{transform:translateY(1px) scale(.98);box-shadow:0 4px 16px rgba(29,107,107,.25),inset 0 2px 4px rgba(0,0,0,.08)}
+.cta-btn span{position:relative;z-index:3}
+.cta-sub{display:block;font-size:12px;font-weight:500;opacity:.85;margin-top:3px;letter-spacing:.04em;line-height:1.3}
+
+/* Shimmer sweeps */
+.cta-glitter{position:absolute;top:-30%;bottom:-30%;width:20%;background:linear-gradient(90deg,transparent,rgba(212,168,83,.05) 15%,rgba(255,255,255,.2) 40%,rgba(212,168,83,.3) 50%,rgba(255,255,255,.2) 60%,rgba(212,168,83,.05) 85%,transparent);filter:blur(4px);animation:ctaGoldDust 3.5s ease-in-out infinite;pointer-events:none;z-index:2}
+.cta-glitter-2{position:absolute;top:-15%;bottom:-15%;width:12%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.1) 30%,rgba(255,255,255,.35) 50%,rgba(255,255,255,.1) 70%,transparent);filter:blur(3px);animation:ctaGoldDust 3.5s ease-in-out infinite 1.2s;pointer-events:none;z-index:2}
+
+/* Hover particles — gold sparkle dots */
+.cta-btn .cta-particle{position:absolute;width:4px;height:4px;border-radius:50%;background:var(--gold);pointer-events:none;z-index:4;opacity:0}
+.cta-btn:hover .cta-particle:nth-child(1){animation:ctaParticle1 1.2s ease-out infinite;top:30%;left:15%}
+.cta-btn:hover .cta-particle:nth-child(2){animation:ctaParticle2 1.4s ease-out infinite .3s;top:40%;right:20%}
+.cta-btn:hover .cta-particle:nth-child(3){animation:ctaParticle3 1.1s ease-out infinite .6s;top:25%;left:60%}
+
+.ticket-i{display:inline-flex;align-items:center;flex-shrink:0;animation:ticketBounce 2s ease-in-out infinite}
+.decline{display:block;margin:18px auto 0;font-size:13px;color:#999;text-decoration:underline;cursor:pointer;background:none;border:none;font-family:var(--body);font-style:italic;transition:color .2s;padding:8px 16px;max-width:560px;line-height:1.5}
+.decline:hover{color:#555}
+
+/* ── CTA Tiers ── */
+.cta-btn.cta-hero{padding:22px 44px;font-size:20px}
+.cta-btn.cta-nudge{padding:18px 36px;font-size:17px}
+.cta-btn.cta-nudge:hover{transform:translateY(-3px) scale(1.02)}
+.cta-btn.cta-coral{background:linear-gradient(135deg,#d4917e 0%,var(--coral) 30%,#c86b50 60%,var(--coral-dark) 100%);box-shadow:0 8px 32px rgba(224,122,95,.3),0 2px 8px rgba(0,0,0,.1),0 0 0 1px rgba(212,168,83,.12),inset 0 1px 0 rgba(255,255,255,.3),inset 0 -2px 0 rgba(0,0,0,.06);border-color:rgba(212,168,83,.2);animation:ctaPulse 3s ease-in-out infinite,ctaRingPulse 3s ease-in-out infinite}
+.cta-btn.cta-coral:hover{box-shadow:0 20px 60px rgba(224,122,95,.4),0 8px 20px rgba(0,0,0,.12),0 0 40px rgba(212,168,83,.06),inset 0 1px 0 rgba(255,255,255,.35);border-color:rgba(212,168,83,.35);background-size:200% 200%;animation:ctaShimmer 1.5s ease-in-out forwards}
+.cta-btn.cta-coral::after{background:linear-gradient(90deg,transparent,rgba(212,168,83,.4) 30%,rgba(212,168,83,.7) 50%,rgba(212,168,83,.4) 70%,transparent)}
+.cta-btn.cta-urgent{background:linear-gradient(135deg,#e04444,#dc2626 40%,#b91c1c);box-shadow:0 8px 32px rgba(220,38,38,.3),0 2px 8px rgba(0,0,0,.1),inset 0 1px 0 rgba(255,255,255,.2),inset 0 -1px 0 rgba(0,0,0,.08);border-color:rgba(255,255,255,.12);animation:ctaPulseRed 2s ease-in-out infinite}
+.cta-btn.cta-urgent:hover{box-shadow:0 16px 48px rgba(220,38,38,.4),0 4px 12px rgba(0,0,0,.15),inset 0 1px 0 rgba(255,255,255,.25)}
+
+/* ── CTA Box (cream contained) ── */
+.cta-box{max-width:680px;margin:0 auto;padding:0;text-align:center}
+.cta-box .sec-heading{margin-bottom:28px;font-size:clamp(22px,3.5vw,30px);line-height:1.3}
+
+/* ── CTA Variant: Minimal inline (no box) ── */
+.cta-inline{max-width:1000px;margin:0 auto;text-align:center;padding:16px 24px}
+
+/* ── CTA Variant: Full-width teal band ── */
+.cta-band{background:linear-gradient(135deg,#1a7a7a,var(--teal),var(--teal-dark));padding:64px 24px;text-align:center;position:relative;overflow:hidden}
+.cta-band::before{content:'';position:absolute;top:0;left:0;width:100%;height:100%;background:radial-gradient(ellipse at 60% 0%,rgba(255,255,255,.08) 0%,transparent 50%),radial-gradient(ellipse at 20% 100%,rgba(212,168,83,.04) 0%,transparent 40%);pointer-events:none}
+.cta-band::after{content:'';position:absolute;top:0;left:0;width:100%;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.1),transparent);pointer-events:none}
+.cta-band .sec-heading{color:#fff;margin-bottom:20px}
+.cta-band .cta-btn{background:linear-gradient(135deg,rgba(255,255,255,.16),rgba(255,255,255,.06));backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1.5px solid rgba(212,168,83,.2);box-shadow:0 8px 32px rgba(0,0,0,.2),0 0 0 1px rgba(212,168,83,.1),inset 0 1px 0 rgba(255,255,255,.2);animation:ctaRingPulse 3s ease-in-out infinite}
+.cta-band .cta-btn::before{background:linear-gradient(180deg,rgba(255,255,255,.12),transparent)}
+.cta-band .cta-btn::after{background:linear-gradient(90deg,transparent,rgba(212,168,83,.3) 30%,rgba(212,168,83,.6) 50%,rgba(212,168,83,.3) 70%,transparent)}
+.cta-band .cta-btn:hover{background:linear-gradient(135deg,rgba(255,255,255,.22),rgba(255,255,255,.1));box-shadow:0 20px 60px rgba(0,0,0,.3),0 0 40px rgba(212,168,83,.06),inset 0 1px 0 rgba(255,255,255,.25);border-color:rgba(212,168,83,.35);background-size:200% 200%;animation:ctaShimmer 1.5s ease-in-out forwards}
+.cta-band .decline{color:rgba(255,255,255,.4)}
+.cta-band .decline:hover{color:rgba(255,255,255,.6)}
+
+/* ── CTA Variant: Dark minimal ── */
+.cta-dark-strip{background:linear-gradient(170deg,#1A1816,#221F1C,#1A1816);padding:64px 24px;text-align:center;position:relative;overflow:hidden}
+.cta-dark-strip::before{content:'';position:absolute;top:50%;left:50%;width:600px;height:600px;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle,rgba(224,122,95,.05) 0%,transparent 50%),radial-gradient(circle at 30% 70%,rgba(212,168,83,.03) 0%,transparent 40%);pointer-events:none}
+.cta-dark-strip .sec-heading{color:#fff}
+.cta-dark-strip .decline{color:rgba(255,255,255,.5);font-size:16px}
+.cta-dark-strip .decline:hover{color:rgba(255,255,255,.7)}
+
+/* ── Section spacing ── */
+.sec{padding:80px 24px;text-align:center}
+.sec-dark{background:linear-gradient(170deg,#1A1816 0%,#221F1C 50%,#1A1816 100%);color:#fff;position:relative;overflow:hidden}
+.sec-dark::before{content:'';position:absolute;top:0;left:0;width:100%;height:100%;background:radial-gradient(ellipse at 30% 0%,rgba(224,122,95,.04) 0%,transparent 60%),radial-gradient(ellipse at 80% 100%,rgba(29,107,107,.03) 0%,transparent 50%),radial-gradient(ellipse at 90% 30%,rgba(184,206,194,.02) 0%,transparent 40%),radial-gradient(ellipse at 10% 70%,rgba(201,160,160,.015) 0%,transparent 40%);pointer-events:none}
+.sec-dark.dark-teal::before{background:radial-gradient(ellipse at 80% 90%,rgba(29,107,107,.08) 0%,transparent 60%)}
+.sec-dark.dark-gold::before{background:radial-gradient(ellipse at 50% 50%,rgba(212,168,83,.06) 0%,transparent 50%)}
+.sec-dark.dark-gold::after{content:'';position:absolute;top:0;left:0;width:100%;height:100%;background:radial-gradient(circle,rgba(212,168,83,.06) 1px,transparent 1px);background-size:32px 32px;pointer-events:none;z-index:0}
+.sec-cream{background:var(--cream)}
+.sec-white{background:#fff}
+.sec-warm{background:var(--warm)}
+.sec-heading{font-family:var(--display);font-size:clamp(28px,4.5vw,44px);font-weight:700;line-height:1.15;margin-bottom:28px;letter-spacing:-.02em;text-wrap:balance}
+.sec-sub{font-size:16px;color:#777;margin-bottom:36px}
+.sec-eyebrow{font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--coral);margin-bottom:10px;display:inline-block;padding:5px 16px;background:linear-gradient(135deg,rgba(224,122,95,.06),rgba(242,215,213,.04));border:1px solid rgba(224,122,95,.08);border-radius:20px}
+.sec-dark .sec-eyebrow{background:rgba(224,122,95,.08);border-color:rgba(224,122,95,.12);color:var(--coral)}
+.sec-accent{font-family:var(--accent);font-size:22px;color:var(--coral);font-weight:700;margin-bottom:4px}
+.divider{height:1px;background:linear-gradient(90deg,transparent,var(--border) 20%,var(--border) 80%,transparent);position:relative}
+.divider::after{content:'';position:absolute;top:-3px;left:50%;transform:translateX(-50%);width:7px;height:7px;background:var(--gold);border-radius:50%;opacity:.3}
+
+/* ── Value grid hover (sec 16) ── */
+.val-grid-card{background:linear-gradient(135deg,rgba(255,255,255,.06),rgba(255,255,255,.02));backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:24px;text-align:left;transition:all .4s cubic-bezier(.22,1,.36,1);box-shadow:0 2px 16px rgba(0,0,0,.1),inset 0 1px 0 rgba(255,255,255,.06)}
+.val-grid-card:hover{background:linear-gradient(135deg,rgba(255,255,255,.1),rgba(255,255,255,.04));transform:translateY(-3px);box-shadow:0 8px 32px rgba(0,0,0,.15),inset 0 1px 0 rgba(255,255,255,.1);border-color:rgba(255,255,255,.12)}
+.val-grid-card:nth-child(2){background:linear-gradient(135deg,rgba(184,206,194,.06),rgba(255,255,255,.02))}
+.val-grid-card:nth-child(4){background:linear-gradient(135deg,rgba(242,215,213,.04),rgba(255,255,255,.02))}
+.val-grid-card.featured{grid-column:1/-1;background:linear-gradient(135deg,rgba(224,122,95,.08),rgba(212,168,83,.04));backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(224,122,95,.12);text-align:center;box-shadow:0 4px 24px rgba(224,122,95,.08),inset 0 1px 0 rgba(224,122,95,.06)}
+.val-grid-card.featured:hover{background:linear-gradient(135deg,rgba(224,122,95,.12),rgba(212,168,83,.06));box-shadow:0 8px 36px rgba(224,122,95,.12),inset 0 1px 0 rgba(224,122,95,.08)}
+.val-grid-card .val-label{color:var(--coral);font-weight:800;font-size:13px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px}
+.val-grid-card .val-title{font-size:17px;font-weight:700;color:#fff;margin-bottom:6px}
+.val-grid-card .val-desc{font-size:14px;color:rgba(255,255,255,.55);line-height:1.6}
+
+/* ── Sales Letter ── */
+.sl-wrap{max-width:920px;margin:0 auto;text-align:left}
+.sl-hero{display:flex;gap:20px;align-items:center;margin-bottom:24px;padding:20px;background:linear-gradient(135deg,rgba(250,248,245,.6),rgba(255,255,255,.4));backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-radius:16px;border:1px solid rgba(255,255,255,.4);box-shadow:0 2px 12px rgba(0,0,0,.02),inset 0 1px 0 rgba(255,255,255,.5)}
+.sl-photo{width:100px;height:100px;border-radius:12px;border:1px solid var(--border);overflow:hidden;background:#fff;display:flex;align-items:center;justify-content:center;flex-direction:column;color:#aaa;font-size:10px;gap:4px;flex-shrink:0}
+.sl-badge{display:inline-block;background:var(--teal);color:#fff;font-weight:800;font-size:9px;letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;border-radius:4px;margin-bottom:6px}
+.sl-headline{font-family:var(--display);font-size:clamp(17px,2.5vw,22px);font-weight:700;line-height:1.25;margin-bottom:6px}
+.sl-price{display:flex;align-items:baseline;gap:8px}
+.sl-price .old{font-size:18px;color:#bbb;text-decoration:line-through}
+.sl-price .free{font-family:var(--display);font-size:24px;font-weight:700;color:var(--coral)}
+.sl-body{font-size:17px;color:#555;line-height:1.8;margin-bottom:20px}
+.sl-body strong{color:#222}
+.sl-tip{display:flex;gap:16px;align-items:flex-start;padding:20px 24px;background:linear-gradient(135deg,rgba(250,248,245,.65),rgba(255,249,242,.5));backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.4);border-radius:14px;margin-bottom:14px;transition:all .3s cubic-bezier(.22,1,.36,1);box-shadow:0 2px 12px rgba(0,0,0,.02),inset 0 1px 0 rgba(255,255,255,.5)}
+.sl-tip:hover{transform:translateX(6px);box-shadow:0 6px 24px rgba(0,0,0,.04),inset 0 1px 0 rgba(255,255,255,.6)}
+.sl-tip-num{min-width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--coral),var(--coral-dark));color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;flex-shrink:0;box-shadow:0 2px 8px rgba(224,122,95,.2)}
+.sl-tip p{font-size:15px;color:#444;line-height:1.65;margin:0}
+.sl-tip p strong{color:#222}
+.sl-pullquote{position:relative;padding:36px 48px;margin:28px 0;border-left:none;background:linear-gradient(135deg,rgba(224,122,95,.04),rgba(242,215,213,.06),rgba(255,255,255,.3));backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.4);border-radius:18px;font-family:var(--display);font-size:22px;color:#333;line-height:1.5;font-weight:700;box-shadow:inset 0 1px 0 rgba(255,255,255,.6)}
+.sl-pullquote::before{content:'\201C';position:absolute;top:8px;left:12px;font-family:var(--display);font-size:72px;color:var(--coral);opacity:.12;line-height:1}
+.sl-pullquote::after{content:'\201D';position:absolute;bottom:-12px;right:16px;font-family:var(--display);font-size:72px;color:var(--coral);opacity:.12;line-height:1}
+.sl-benefits{display:flex;flex-direction:column;gap:6px;margin:14px 0}
+.sl-benefit{display:flex;align-items:center;gap:8px;padding:10px 14px;background:linear-gradient(135deg,rgba(255,255,255,.6),rgba(250,248,245,.4));backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.4);border-radius:10px;font-size:12px;font-weight:600;color:#333;box-shadow:inset 0 1px 0 rgba(255,255,255,.5);transition:all .2s}
+.sl-benefit:hover{background:linear-gradient(135deg,rgba(255,255,255,.8),rgba(250,248,245,.5));transform:translateX(2px)}
+.sl-benefit svg{flex-shrink:0}
+
+/* ── Bullet List (dark bg) ── */
+.vbullet{display:flex;gap:14px;align-items:flex-start;padding:16px 20px;max-width:880px;margin:0 auto;border-bottom:1px solid rgba(255,255,255,.04);position:relative;border-radius:12px;transition:all .3s cubic-bezier(.22,1,.36,1)}
+.vbullet:hover{background:linear-gradient(135deg,rgba(255,255,255,.04),rgba(255,255,255,.01));box-shadow:inset 0 1px 0 rgba(255,255,255,.04)}
+.vbullet:last-child{border-bottom:none}
+.vbullet-txt{font-size:16px;line-height:1.6;color:rgba(255,255,255,.8)}
+.vbullet-txt strong{color:#fff}
+.vbullet-val{color:var(--coral);font-weight:800;font-size:15px;white-space:nowrap;margin-left:auto;flex-shrink:0;padding:4px 12px;background:rgba(224,122,95,.08);border:1px solid rgba(224,122,95,.06);border-radius:8px;backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}
+.vbullet-sub{display:flex;flex-direction:column;gap:3px;margin-top:6px}
+.vbullet-sub span{display:inline-flex;align-items:center;gap:5px;font-size:14px;color:rgba(255,255,255,.6)}
+.vbullet-stagger{max-width:800px;margin:0 auto}
+.vbullet-stagger .vbullet{max-width:65%;border-bottom:none;border-radius:14px;margin-bottom:16px;padding:20px 24px}
+.vbullet-stagger .vbullet:nth-child(odd){margin-right:auto;margin-left:0;background:linear-gradient(135deg,rgba(224,122,95,.06),rgba(224,122,95,.015));backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-left:2px solid rgba(224,122,95,.2);border-radius:4px 14px 14px 4px;box-shadow:0 2px 12px rgba(0,0,0,.06),inset 0 1px 0 rgba(224,122,95,.04)}
+.vbullet-stagger .vbullet:nth-child(even){margin-left:auto;margin-right:0;background:linear-gradient(135deg,rgba(29,107,107,.06),rgba(29,107,107,.015));backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-right:2px solid rgba(29,107,107,.2);text-align:right;border-radius:14px 4px 4px 14px;box-shadow:0 2px 12px rgba(0,0,0,.06),inset 0 1px 0 rgba(29,107,107,.04)}
+.vbullet-stagger .vbullet:nth-child(even){flex-direction:row-reverse}
+.vbullet-stagger .vbullet:nth-child(5){background:linear-gradient(135deg,rgba(212,168,83,.08),rgba(212,168,83,.03));border-left:3px solid rgba(212,168,83,.2);border-radius:4px 14px 14px 4px}
+
+/* ── Placeholder image ── */
+.ph-img{border-radius:14px;overflow:hidden;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.04);display:flex;align-items:center;justify-content:center;flex-direction:column;color:rgba(255,255,255,.3);font-size:12px;gap:6px}
+.ph-img-light{border-color:var(--border);background:var(--cream);color:#bbb}
+
+/* ── Guarantee ── */
+.guarantee-card{display:flex;gap:24px;align-items:center;max-width:860px;margin:0 auto;text-align:left;padding:40px;background:linear-gradient(135deg,rgba(255,255,255,.72),rgba(242,215,213,.06),rgba(250,248,245,.55));backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.45);border-radius:20px;box-shadow:0 8px 36px rgba(0,0,0,.04),0 0 0 1px rgba(232,226,217,.2),inset 0 1px 0 rgba(255,255,255,.6);position:relative;overflow:hidden}
+
+/* Guarantee variant: centered with larger badge */
+.guarantee-card.centered{flex-direction:column;text-align:center;max-width:760px;padding:48px 44px}
+.guarantee-card.centered .guarantee-badge{width:100px;height:100px}
+.guarantee-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--gold),var(--blush),var(--coral),var(--sage),var(--gold))}
+.guarantee-badge{flex-shrink:0;width:84px;height:84px;border-radius:50%;border:1.5px solid rgba(212,168,83,.35);display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,rgba(255,255,255,.9),rgba(254,252,249,.7));backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);box-shadow:0 4px 16px rgba(212,168,83,.1),0 0 0 3px rgba(212,168,83,.04),inset 0 1px 0 rgba(255,255,255,.6)}
+
+/* ── How It Works cards ── */
+.hiw-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;max-width:960px;margin:0 auto 40px}
+.hiw-card{text-align:center;padding:28px 24px;border-radius:14px;background:#fff;border:1px solid var(--border);transition:transform .3s ease,box-shadow .3s ease}
+.hiw-card:hover{transform:translateY(-5px);box-shadow:0 12px 36px rgba(0,0,0,.07)}
+.hiw-card-img{aspect-ratio:4/3;border-radius:10px;overflow:hidden;border:1px solid var(--border);background:var(--cream);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:4px;color:#bbb;font-size:10px;margin-bottom:16px}
+.hiw-card p{font-size:15px;color:#555;line-height:1.6}
+.hiw-card p strong{color:#222}
+
+/* ── Value stack list ── */
+.val-item{display:flex;align-items:center;gap:10px;padding:10px 14px;background:linear-gradient(135deg,rgba(224,122,95,.03),rgba(255,255,255,.5));backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);border:1px solid rgba(224,122,95,.06);border-radius:10px;margin-bottom:6px;font-size:15px;font-weight:600;transition:all .2s;box-shadow:inset 0 1px 0 rgba(255,255,255,.4)}
+.val-item:hover{background:linear-gradient(135deg,rgba(224,122,95,.05),rgba(255,255,255,.6));transform:translateX(2px)}
+.val-item svg{flex-shrink:0}
+.val-tag{margin-left:auto;color:var(--coral);font-weight:800;font-size:12px;white-space:nowrap}
+
+/* ── Bonus cards ── */
+.bonus{display:grid;grid-template-columns:1fr 1.4fr;gap:24px;align-items:center;margin-bottom:28px;max-width:800px;margin-left:auto;margin-right:auto;padding:28px;border-radius:18px;border:1px solid rgba(255,255,255,.45);background:linear-gradient(180deg,rgba(255,255,255,.8),rgba(254,252,249,.6));backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);box-shadow:0 4px 24px rgba(0,0,0,.03),inset 0 1px 0 rgba(255,255,255,.6);transition:all .3s}
+.bonus:hover{box-shadow:0 8px 36px rgba(0,0,0,.06);transform:translateY(-2px)}
+.bonus.alt{grid-template-columns:1.4fr 1fr}
+.bonus-img{border-radius:10px;aspect-ratio:4/3;display:flex;align-items:center;justify-content:center;flex-direction:column;background:var(--cream);border:1px dashed var(--border);color:#bbb;font-size:10px;gap:4px}
+.bonus-txt h3{font-family:var(--display);font-size:clamp(16px,2.2vw,20px);font-weight:700;margin-bottom:6px;line-height:1.25}
+.bonus-txt p{font-size:15px;color:#555;line-height:1.6;margin-bottom:8px}
+.bonus-val{color:var(--coral);font-weight:800;font-size:14px}
+
+/* ── Bonus Detail Sections ── */
+.bonus-detail{max-width:960px;margin:0 auto 32px;text-align:center;padding:40px 36px;background:linear-gradient(180deg,rgba(255,255,255,.78),rgba(254,252,249,.6));backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.5);border-radius:20px;box-shadow:0 8px 40px rgba(0,0,0,.04),0 0 0 1px rgba(232,226,217,.25),inset 0 1px 0 rgba(255,255,255,.6);position:relative;overflow:hidden;transition:box-shadow .3s,transform .3s}
+.bonus-detail:hover{box-shadow:0 12px 48px rgba(0,0,0,.06),0 0 0 1px rgba(232,226,217,.35),inset 0 1px 0 rgba(255,255,255,.7);transform:translateY(-2px)}
+
+/* ── Bonus Alternate: side-by-side layout ── */
+.bonus-detail.alt-layout{display:grid;grid-template-columns:1fr 1.2fr;gap:36px;text-align:left}
+.bonus-detail.alt-layout .bonus-detail-img{margin:0;max-width:100%;aspect-ratio:4/3}
+.bonus-detail.alt-layout .bonus-right{display:flex;flex-direction:column;justify-content:center}
+.bonus-detail.alt-layout.reverse{grid-template-columns:1.2fr 1fr}
+.bonus-detail.alt-layout.reverse .bonus-detail-img{order:2}
+.bonus-detail.alt-layout.reverse .bonus-right{order:1}
+.bonus-detail::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--teal),var(--sage),var(--coral))}
+.bonus-detail:nth-child(odd)::before{background:linear-gradient(90deg,var(--coral),var(--blush),var(--gold))}
+.bonus-detail:nth-child(even)::before{background:linear-gradient(90deg,var(--teal),var(--sage),var(--mauve))}
+.bonus-mag-num{position:absolute;top:10px;right:20px;font-family:var(--display);font-size:120px;font-weight:700;line-height:1;color:var(--coral);opacity:.04;pointer-events:none;z-index:0}
+.bonus-detail-img{max-width:460px;margin:0 auto 20px;border-radius:12px;overflow:hidden;border:1px solid var(--border);background:linear-gradient(180deg,var(--cream),#fff);aspect-ratio:16/10;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:6px;color:#bbb;font-size:11px}
+.bonus-detail h3{font-family:var(--display);font-size:clamp(22px,3.5vw,30px);font-weight:700;margin-bottom:6px;line-height:1.25;letter-spacing:-.01em}
+.bonus-detail .bonus-val-tag{color:var(--coral);font-weight:800;font-size:15px;margin-bottom:16px;display:inline-block;background:linear-gradient(135deg,rgba(224,122,95,.08),rgba(242,215,213,.06));padding:5px 16px;border-radius:20px;border:1px solid rgba(224,122,95,.06);letter-spacing:.02em}
+.bonus-detail .bonus-body{text-align:left;font-size:15px;color:#555;line-height:1.75;margin-bottom:10px}
+.bonus-detail .bonus-body strong{color:#2d2a26}
+.bonus-detail .bonus-body:first-of-type{font-size:16px;color:#444}
+.bonus-detail .bonus-item-title{font-size:16px;font-weight:700;color:#2d2a26;margin-bottom:6px;text-align:left;display:flex;align-items:center;gap:8px;padding:10px 14px;background:linear-gradient(135deg,var(--cream),rgba(184,206,194,.06));border-radius:10px;margin-top:10px;border:1px solid rgba(232,226,217,.3)}
+
+/* ── Remember callout ── */
+.remember-callout{max-width:740px;margin:0 auto 32px;background:linear-gradient(135deg,rgba(255,249,242,.6),rgba(184,206,194,.05),rgba(250,248,245,.4));backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1.5px dashed rgba(184,206,194,.35);border-radius:16px;padding:24px 30px;text-align:center;font-size:16px;color:#555;line-height:1.65;position:relative;box-shadow:0 4px 20px rgba(0,0,0,.02),inset 0 1px 0 rgba(255,255,255,.6)}
+.remember-callout::before{content:'';position:absolute;top:-1px;left:-1px;right:-1px;bottom:-1px;border-radius:14px;background:linear-gradient(135deg,rgba(224,122,95,.04),transparent);pointer-events:none;z-index:0}
+.remember-callout strong{color:#222;position:relative;z-index:1}
+
+/* ── Warning / Timer ── */
+.warn-card{max-width:740px;margin:0 auto;background:linear-gradient(180deg,rgba(255,255,255,.82),rgba(242,215,213,.04),rgba(255,255,255,.65));backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(224,122,95,.12);border-radius:20px;padding:40px 36px;text-align:center;box-shadow:0 8px 40px rgba(224,122,95,.06),0 0 0 1px rgba(224,122,95,.04),inset 0 1px 0 rgba(255,255,255,.7);position:relative;overflow:hidden}
+.warn-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--coral),var(--blush),var(--gold),var(--rose),var(--coral));border-radius:20px 20px 0 0}
+.warn-label{font-family:var(--display);font-size:clamp(26px,4vw,36px);font-weight:700;color:var(--coral);margin-bottom:8px;letter-spacing:.06em}
+.warn-sub{font-size:16px;color:#666;margin-bottom:28px;line-height:1.65;max-width:600px;margin-left:auto;margin-right:auto}
+.timer{display:flex;justify-content:center;gap:10px;margin-bottom:24px}
+.timer-b{display:flex;flex-direction:column;align-items:center;min-width:60px;padding:12px;background:linear-gradient(180deg,#dc2626 0%,#b91c1c 48%,#a01919 49%,#c42020 100%);border-radius:12px;box-shadow:0 6px 20px rgba(220,38,38,.3),inset 0 1px 0 rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.06)}
+.timer-n{font-family:var(--display);font-size:clamp(24px,4vw,34px);font-weight:700;color:#fff;line-height:1}
+.timer-l{font-size:8px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.8);margin-top:4px}
+.timer-sep{font-size:24px;color:#dc2626;animation:blink 1s ease-in-out infinite;font-weight:700;display:flex;align-items:center}
+
+/* ── Dark closing section ── */
+.closing-dark{background:linear-gradient(170deg,#0f0e0c,#1A1816 40%,#0f0e0c);padding:100px 24px 80px;text-align:center;color:#fff;position:relative;overflow:hidden}
+.closing-dark::before{content:'';position:absolute;top:40%;left:50%;width:700px;height:700px;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle,rgba(224,122,95,.06) 0%,rgba(212,168,83,.03) 30%,transparent 60%);pointer-events:none}
+.closing-dark::after{content:'';position:absolute;top:0;left:0;width:100%;height:1px;background:linear-gradient(90deg,transparent 10%,rgba(212,168,83,.15) 50%,transparent 90%);pointer-events:none}
+.closing-dark .inner{position:relative;z-index:1}
+.closing-dark .decline{color:rgba(255,255,255,.35);font-size:15px}
+.closing-dark .decline:hover{color:rgba(255,255,255,.55)}
+.closing-seal{width:80px;height:80px;margin:0 auto 28px;border-radius:50%;background:linear-gradient(135deg,rgba(212,168,83,.08),rgba(224,122,95,.06));border:1.5px solid rgba(212,168,83,.2);display:flex;align-items:center;justify-content:center;animation:glow 4s ease-in-out infinite;box-shadow:0 0 40px rgba(212,168,83,.06)}
+.closing-warn{font-family:var(--display);font-size:clamp(14px,2vw,16px);font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--coral);margin-bottom:8px;opacity:.8}
+.closing-title{font-family:var(--display);font-size:clamp(28px,5vw,44px);font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#fff;margin-bottom:20px;line-height:1.15;text-shadow:0 2px 20px rgba(0,0,0,.3)}
+.closing-body{font-size:17px;color:rgba(255,255,255,.55);max-width:580px;margin:0 auto 20px;line-height:1.8}
+.closing-body strong{color:rgba(255,255,255,.85);font-weight:700}
+.closing-price{display:inline-block;padding:3px 14px;background:rgba(212,168,83,.1);border:1px solid rgba(212,168,83,.15);border-radius:6px;font-weight:800;color:var(--gold);text-decoration:underline;text-underline-offset:3px}
+.closing-accent{font-family:var(--accent);font-size:22px;color:var(--gold);display:block;margin-bottom:28px;opacity:.6;transform:rotate(-1.5deg)}
+
+/* ── TIME IS OF THE ESSENCE section ── */
+.urgency-sec{background:linear-gradient(170deg,#1A1816 0%,#221F1C 50%,#1A1816 100%);padding:80px 24px;text-align:center;color:#fff;position:relative;overflow:hidden}
+.urgency-sec::before{content:'';position:absolute;top:-100px;left:-100px;width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(224,122,95,.06) 0%,transparent 60%);pointer-events:none;animation:floatOrb 20s ease-in-out infinite}
+.urgency-sec::after{content:'';position:absolute;top:0;left:0;width:100%;height:1px;background:linear-gradient(90deg,transparent 10%,rgba(224,122,95,.12) 50%,transparent 90%);pointer-events:none}
+.urgency-title{font-family:var(--display);font-size:clamp(26px,4.5vw,38px);font-weight:700;color:#fff;margin-bottom:20px;text-transform:uppercase;letter-spacing:.08em;position:relative;z-index:1}
+.urgency-warn-img{max-width:200px;margin:0 auto 20px;aspect-ratio:4/3;border-radius:12px;overflow:hidden;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:6px;color:rgba(255,255,255,.3);font-size:11px}
+.urgency-content{display:flex;gap:36px;align-items:center;max-width:840px;margin:0 auto;text-align:left;position:relative;z-index:1}
+.urgency-content p{font-size:16px;color:rgba(255,255,255,.75);line-height:1.75}
+.urgency-content p strong{color:#fff}
+
+/* ── Form ── */
+.formsec{background:linear-gradient(170deg,#1A1816,#221F1C,#1A1816);padding:80px 24px;text-align:center;position:relative;overflow:hidden}
+.formsec::before{content:'';position:absolute;top:50%;left:50%;width:700px;height:700px;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle,rgba(29,107,107,.06) 0%,transparent 50%);pointer-events:none}
+.formsec::after{content:'';position:absolute;top:0;left:0;width:100%;height:1px;background:linear-gradient(90deg,transparent 10%,rgba(29,107,107,.15) 50%,transparent 90%);pointer-events:none}
+.form-h{font-family:var(--display);font-size:clamp(22px,3.5vw,32px);font-weight:700;color:#fff;margin-bottom:28px;position:relative;z-index:1}
+.form-card{max-width:560px;margin:0 auto;background:linear-gradient(180deg,rgba(255,255,255,.92),rgba(255,255,255,.82));backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.5);border-radius:20px;padding:40px 36px;text-align:left;box-shadow:0 16px 64px rgba(0,0,0,.18),0 0 0 1px rgba(255,255,255,.15),inset 0 1px 0 rgba(255,255,255,.7);position:relative;z-index:1}
+.form-in{display:block;width:100%;padding:14px 16px;border:1px solid rgba(232,226,217,.6);border-radius:12px;font-size:15px;font-family:var(--font);margin-bottom:10px;outline:none;transition:all .3s cubic-bezier(.22,1,.36,1);background:rgba(255,255,255,.7);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);box-shadow:inset 0 2px 4px rgba(0,0,0,.02)}
+.form-in:focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(29,107,107,.08),inset 0 2px 4px rgba(0,0,0,.01);background:#fff}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.phone-wrap{display:flex;gap:0}
+.country-code{width:80px;padding:12px 8px;border:1px solid var(--border);border-right:none;border-radius:10px 0 0 10px;font-size:13px;font-family:var(--font);outline:none;background:#fff;-webkit-appearance:none;appearance:none;background-image:url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L5 5L9 1' stroke='%238a847b' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 6px center;padding-right:20px}
+.form-in-phone{border-radius:0 10px 10px 0;flex:1}
+.form-submit{display:block;width:100%;padding:22px;background:linear-gradient(160deg,#3a9e9e 0%,var(--teal) 40%,var(--teal-dark) 100%);color:#fff;font-family:var(--display);font-size:20px;font-weight:700;border:none;border-radius:16px;cursor:pointer;margin-top:10px;box-shadow:0 8px 28px rgba(29,107,107,.3),inset 0 1px 0 rgba(255,255,255,.12);animation:ctaPulseTeal 3s ease-in-out infinite;transition:all .35s cubic-bezier(.22,1,.36,1);position:relative;overflow:hidden;text-shadow:0 1px 2px rgba(0,0,0,.1);letter-spacing:.01em}
+.form-submit::after{content:'';position:absolute;top:-20%;bottom:-20%;left:-30%;width:25%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.12),transparent);filter:blur(6px);animation:glitterSweep 4s ease-in-out infinite;pointer-events:none}
+.form-submit:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(29,107,107,.45)}
+
+.form-split{display:grid;grid-template-columns:2fr 3fr;gap:32px;max-width:960px;margin:0 auto;align-items:start}
+.form-summary{background:linear-gradient(135deg,rgba(255,255,255,.06),rgba(255,255,255,.02));backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.08);border-radius:20px;padding:36px 28px;text-align:left;position:sticky;top:40px;box-shadow:0 4px 24px rgba(0,0,0,.1),inset 0 1px 0 rgba(255,255,255,.06)}
+.form-summary h3{font-family:var(--display);font-size:22px;font-weight:700;color:#fff;margin-bottom:20px}
+.form-summary-item{display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.06);font-size:14px;color:rgba(255,255,255,.7);line-height:1.5}
+.form-summary-item:last-child{border-bottom:none}
+.form-summary-item svg{flex-shrink:0;margin-top:2px}
+
+/* ── Bottom value stack ── */
+.btm-list{list-style:none;max-width:620px;margin:0 auto}
+.btm-list li{display:flex;gap:10px;align-items:center;margin-bottom:8px;font-size:15px;line-height:1.4;padding:10px 14px;background:linear-gradient(135deg,rgba(255,255,255,.7),rgba(254,252,249,.5));backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-radius:12px;border:1px solid rgba(255,255,255,.4);box-shadow:0 2px 8px rgba(0,0,0,.02),inset 0 1px 0 rgba(255,255,255,.5);transition:all .2s}
+.btm-list li:hover{transform:translateX(3px);box-shadow:0 4px 16px rgba(0,0,0,.04)}
+.btm-list li svg{flex-shrink:0}
+.btm-list .val{color:var(--coral);font-weight:800;font-size:12px;margin-left:auto;white-space:nowrap}
+
+/* ── Guarantee bottom ── */
+.guarantee-bottom{max-width:680px;margin:0 auto;display:flex;gap:24px;align-items:center;text-align:left;padding:28px 32px;background:linear-gradient(135deg,rgba(255,255,255,.72),rgba(184,206,194,.04),rgba(250,248,245,.55));backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.45);border-radius:16px;box-shadow:0 4px 24px rgba(0,0,0,.03),inset 0 1px 0 rgba(255,255,255,.6)}
+
+/* ── Footer ── */
+.vfooter{background:var(--dark);padding:36px 20px;text-align:center;position:relative;overflow:hidden}
+.vfooter::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(184,206,194,.15),rgba(212,168,83,.2),rgba(201,160,160,.15),transparent)}
+.vf-brand{font-family:var(--display);font-size:22px;font-weight:700;color:#fff;margin-bottom:2px}
+.vf-brand span{color:var(--gold)}
+.vf-sub{font-family:var(--accent);font-size:20px;color:var(--coral);display:block;margin-bottom:10px}
+.vf-copy{font-size:13px;color:rgba(255,255,255,.3);margin-bottom:10px}
+.vf-links{display:flex;flex-wrap:wrap;justify-content:center;gap:14px}
+.vf-links a{font-size:12px;color:rgba(255,255,255,.25);text-decoration:underline;transition:color .2s}
+.vf-links a:hover{color:rgba(255,255,255,.5)}
+
+/* ── Wave ── */
+.wave{display:block;width:100%;line-height:0}
+.wave svg{display:block;width:100%;height:auto}
+
+/* ── Trust Badges ── */
+.trust-row{display:flex;justify-content:center;gap:20px;margin-top:16px;flex-wrap:wrap}
+.trust-badge{display:flex;align-items:center;gap:6px;font-size:11px;font-weight:600;color:rgba(255,255,255,.35);letter-spacing:.06em;text-transform:uppercase;padding:6px 12px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.05);border-radius:8px;backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}
+.trust-badge svg{opacity:.3}
+
+/* ── Bonus Number Tag ── */
+.bonus-num{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--teal),var(--teal-dark));color:#fff;font-size:12px;font-weight:800;margin-bottom:8px}
+
+/* ── Responsive ── */
+@media(max-width:768px){
+  .sl-hero{flex-direction:column;text-align:center;gap:12px}
+  .sl-photo{width:100%!important;min-width:unset!important;height:320px!important;margin-top:20px}
+  .sl-price{justify-content:center}
+  .bonus{grid-template-columns:1fr;text-align:center}
+  .bonus.alt{grid-template-columns:1fr}
+  .bonus-img{max-width:240px;margin:0 auto}
+  .hiw-grid{grid-template-columns:1fr;gap:16px;max-width:340px}
+  .guarantee-card{flex-direction:column;text-align:center}
+  .guarantee-bottom{flex-direction:column;text-align:center}
+  .form-row{grid-template-columns:1fr}
+  .form-card{padding:24px 18px}
+  .steps-bar{gap:8px;padding:10px 16px}
+  .step-pill{font-size:10px;padding:5px 12px}
+  .step-right{font-size:12px}
+  .urgency-content{flex-direction:column;text-align:center}
+  .cta-box{padding:0 16px}
+  .guarantee-card.centered{padding:32px 20px}
+  .bonus-detail{padding:24px 18px;margin-bottom:24px}
+  .bonus-detail.alt-layout{grid-template-columns:1fr;text-align:center}
+  .bonus-detail.alt-layout.reverse{grid-template-columns:1fr}
+  .bonus-detail.alt-layout.reverse .bonus-detail-img{order:0}
+  .bonus-detail.alt-layout.reverse .bonus-right{order:0}
+  .trust-row{gap:12px}
+  .val-grid-card.featured{grid-column:auto}
+  .hero{padding:36px 16px 40px}
+  .hero .inner>[style*="grid-template-columns:1.3fr"]{grid-template-columns:1fr!important;gap:24px!important}
+  .hero-h{font-size:clamp(24px,6vw,36px)}
+  .hero-timer-bar{padding:10px 16px;gap:12px;border-radius:10px}
+  .hero-timer-label{font-size:10px;letter-spacing:.1em}
+  .hero-timer-digits .htd-num{font-size:clamp(22px,5vw,28px)}
+  .video-play-banner{font-size:11px;padding:8px 14px}
+  .video-sound-text{font-size:11px}
+  .video-sound-icon{width:30px;height:30px}
+  .video-cta-overlay{flex-direction:column;gap:10px;padding:12px 16px}
+  .video-cta-btn{font-size:13px;padding:10px 20px}
+  .vbullet-stagger .vbullet{max-width:100%}
+  .vbullet-stagger .vbullet:nth-child(even){margin-left:0;text-align:left;flex-direction:row}
+  .form-split{grid-template-columns:1fr}
+  .hiw-card{padding:24px 20px}
+  .bonus-mag-num{font-size:80px}
+}
+@media(max-width:480px){
+  .cta-btn{font-size:15px;padding:16px 24px}
+  .hero-h{font-size:clamp(22px,5.5vw,32px)}
+  .deco-corner{width:40px;height:40px}
+  .sl-dropcap{font-size:52px}
+  .price-dramatic{font-size:clamp(36px,10vw,48px)}
+  .exit-modal{max-width:95vw;max-height:94vh;border-radius:18px}
+  .exit-inner{padding:28px 18px 24px}
+  .exit-timer-ring{width:100px;height:100px}
+  .exit-timer-hero-num{font-size:38px}
+  .exit-loss-row{font-size:12px;padding:7px 10px}
+}
+
+/* ── Exit-Intent Popup keyframes ── */
+@keyframes exit-shake{0%,100%{transform:translateX(0)}10%{transform:translateX(-8px) rotate(-1deg)}20%{transform:translateX(8px) rotate(1deg)}30%{transform:translateX(-6px) rotate(-.5deg)}40%{transform:translateX(6px) rotate(.5deg)}50%{transform:translateX(-4px)}60%{transform:translateX(4px)}70%{transform:translateX(-2px)}80%{transform:translateX(2px)}}
+@keyframes exit-pulse-ring{0%{box-shadow:0 0 0 0 rgba(220,38,38,.5)}70%{box-shadow:0 0 0 16px rgba(220,38,38,0)}100%{box-shadow:0 0 0 0 rgba(220,38,38,0)}}
+
+/* ── Exit Popup ── */
+.exit-overlay{position:fixed;inset:0;background:rgba(10,8,6,.78);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);z-index:99999;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:all .4s cubic-bezier(.22,1,.36,1);padding:20px}
+.exit-overlay.active{opacity:1;pointer-events:all}
+.exit-overlay.active .exit-modal{transform:scale(1) translateY(0);opacity:1}
+.exit-modal{background:#fff;border-radius:0;max-width:520px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 40px 120px rgba(0,0,0,.5);position:relative;transform:scale(.9) translateY(20px);opacity:0;transition:all .5s cubic-bezier(.22,1,.36,1) .08s}
+.exit-close{position:absolute;top:10px;right:10px;width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,.15);border:none;display:flex;align-items:center;justify-content:center;font-size:16px;color:rgba(255,255,255,.6);cursor:pointer;transition:all .3s;z-index:10;line-height:1}
+.exit-close:hover{background:rgba(255,255,255,.25);color:#fff}
+.exit-close .exit-close-warn{display:none}
+
+/* Dark header band */
+.exit-header{background:var(--dark);padding:24px 28px 0;text-align:center}
+.exit-header h2{font-family:var(--display);font-size:clamp(30px,6vw,44px);font-weight:700;color:var(--coral);line-height:1.05;margin-bottom:6px}
+.exit-header p{font-size:14px;color:rgba(255,255,255,.7);line-height:1.4;margin:0}
+.exit-header p strong{color:#fff}
+
+/* Product image — flush inside dark header */
+.exit-product-img{margin:16px 0 0;aspect-ratio:16/9;background:var(--cream);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:4px;color:#bbb;font-size:11px}
+
+/* White body — letter style, tight */
+.exit-body{padding:24px 28px 28px;text-align:left}
+.exit-body p{font-size:14px;color:#444;line-height:1.65;margin-bottom:10px}
+.exit-body p:last-of-type{margin-bottom:0}
+.exit-body p strong{color:#111}
+.exit-body p em{color:var(--coral);font-style:italic}
+
+/* CTA button — coral/orange */
+.exit-cta{display:block;width:100%;padding:18px 28px;margin-top:20px;background:var(--coral);color:#fff;font-family:var(--body);font-size:22px;font-weight:800;border:none;border-radius:8px;cursor:pointer;text-align:center;box-shadow:0 4px 16px rgba(224,122,95,.35);transition:all .3s ease;letter-spacing:-.01em}
+.exit-cta:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(224,122,95,.45);background:#d4684a}
+.exit-cta:active{transform:translateY(1px)}
+.exit-cta-sub{display:block;font-size:12px;font-weight:500;opacity:.8;margin-top:3px}
+
+/* Leave link */
+.exit-leave{display:block;width:100%;margin-top:12px;padding:6px;font-size:12px;font-family:var(--body);color:#aaa;text-decoration:none;cursor:pointer;transition:color .3s;background:none;border:none;text-align:center}
+.exit-leave:hover{color:#dc2626}
+
+/* ═══════════════════════════════════════════════════ */
+/* SCARE MODE — red takeover on leave hover           */
+/* ═══════════════════════════════════════════════════ */
+.exit-overlay.scare{background:rgba(60,5,5,.88)}
+.exit-overlay.scare .exit-modal{box-shadow:0 0 0 3px rgba(220,38,38,.6),0 40px 120px rgba(180,0,0,.5);animation:exit-shake .6s ease-in-out}
+.exit-overlay.scare .exit-header{background:linear-gradient(180deg,#3a0a0a,#2a0505)}
+.exit-overlay.scare .exit-header h2{color:#dc2626}
+.exit-overlay.scare .exit-body p{color:#991b1b}
+.exit-overlay.scare .exit-body p strong{color:#dc2626}
+.exit-overlay.scare .exit-cta{animation:exit-pulse-ring 1s ease-in-out infinite;box-shadow:0 8px 32px rgba(29,107,107,.4),0 0 0 3px rgba(29,107,107,.25)}
+.exit-overlay.scare .exit-leave{color:#dc2626;font-weight:700;text-decoration:none;background:rgba(220,38,38,.06);border:1px solid rgba(220,38,38,.15);border-radius:6px}
+.exit-overlay.scare .exit-close{background:rgba(220,38,38,.2);color:#dc2626}
+
+@media(max-width:600px){
+  .exit-modal{max-width:95vw;max-height:94vh;border-radius:10px}
+  .exit-header{padding:24px 20px 20px;border-radius:10px 10px 0 0}
+  .exit-header{padding:20px 20px 0}
+  .exit-header h2{font-size:28px}
+  .exit-body{padding:18px 20px 24px}
+  .exit-body p{font-size:13px}
+  .exit-cta{font-size:18px;padding:16px 20px}
+}
+
+/* ── NEW: Validation Letter (Section 4) ── */
+.validation-letter{max-width:920px;margin:0 auto;text-align:left}
+.validation-letter .vl-greeting{font-size:17px;color:#555;line-height:1.8;margin-bottom:14px}
+.validation-letter .vl-greeting strong{color:#222}
+.validation-letter .vl-greeting em{font-style:italic}
+.vl-two-col{display:flex;gap:32px;align-items:flex-start}
+.vl-copy{flex:1}
+.vl-img{flex-shrink:0;width:340px;height:400px;border-radius:18px;border:2px solid rgba(212,168,83,.18);box-shadow:0 12px 48px rgba(0,0,0,.08),0 0 0 4px rgba(212,168,83,.04);background:linear-gradient(180deg,#fff,rgba(242,215,213,.06));display:flex;align-items:center;justify-content:center;flex-direction:column;color:#bbb;font-size:11px;gap:6px;overflow:hidden}
+.vl-check{display:flex;align-items:flex-start;gap:12px;padding:14px 18px;background:linear-gradient(135deg,rgba(29,107,107,.04),rgba(184,206,194,.06));border:1px solid rgba(29,107,107,.08);border-radius:12px;margin-bottom:10px;font-size:15px;color:#444;line-height:1.6;transition:all .2s}
+.vl-check:hover{background:linear-gradient(135deg,rgba(29,107,107,.06),rgba(184,206,194,.08));transform:translateX(3px)}
+.vl-check svg{flex-shrink:0;margin-top:3px}
+.vl-check strong{color:#222}
+.vl-underline{text-decoration:underline;text-decoration-color:var(--coral);text-underline-offset:3px}
+
+/* ── NEW: Truth Bridge (Section 5) ── */
+.truth-bridge{display:flex;gap:36px;align-items:center;max-width:920px;margin:0 auto}
+.truth-bridge-img{flex-shrink:0;width:340px;height:380px;border-radius:18px;overflow:hidden;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.04);display:flex;align-items:center;justify-content:center;flex-direction:column;color:rgba(255,255,255,.3);font-size:11px;gap:6px;box-shadow:0 8px 32px rgba(0,0,0,.2)}
+.truth-bridge-copy{flex:1;font-size:17px;color:rgba(255,255,255,.75);line-height:1.8}
+.truth-bridge-copy p{margin-bottom:16px}
+.truth-bridge-copy strong{color:#fff}
+.truth-bridge-copy em{font-family:var(--display);font-style:italic;color:rgba(255,255,255,.9)}
+
+/* ── NEW: Unfair Advantage Intro (Section 6) ── */
+.unfair-headline{font-family:var(--display);font-size:clamp(24px,4vw,38px);font-weight:700;color:#fff;line-height:1.15;max-width:780px;margin:0 auto 12px;letter-spacing:-.01em}
+.unfair-headline em{font-style:italic;background:linear-gradient(135deg,var(--coral),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.unfair-callout{max-width:720px;margin:28px auto;padding:24px 32px;background:linear-gradient(135deg,rgba(255,255,255,.08),rgba(255,255,255,.03));backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1.5px solid rgba(255,255,255,.12);border-radius:16px;font-size:17px;color:rgba(255,255,255,.85);text-align:center;line-height:1.65}
+.unfair-callout strong{color:#fff}
+.unfair-callout .price-cross{text-decoration:line-through;opacity:.5}
+
+/* ── NEW: Fear Reframe (Section 9) ── */
+.fear-reframe{display:flex;gap:40px;align-items:stretch;max-width:920px;margin:0 auto}
+.fear-reframe-copy{flex:1;text-align:left}
+.fear-reframe-copy p{font-size:17px;color:rgba(255,255,255,.78);line-height:1.8;margin-bottom:16px}
+.fear-reframe-copy strong{color:#fff}
+.fear-reframe-copy em{font-style:italic}
+.fear-reframe-img{flex-shrink:0;width:300px;border-radius:18px;overflow:hidden;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.04);display:flex;align-items:center;justify-content:center;flex-direction:column;color:rgba(255,255,255,.3);font-size:11px;gap:6px;box-shadow:0 8px 32px rgba(0,0,0,.2);position:sticky;top:100px;align-self:flex-start;min-height:340px}
+.fear-reframe-h{font-family:var(--display);font-size:clamp(24px,3.5vw,34px);font-weight:700;color:#fff;margin-bottom:8px;line-height:1.15}
+.fear-reframe-h em{font-style:italic;color:var(--coral)}
+.ai-bullet-list{display:flex;flex-direction:column;gap:10px;margin:24px 0}
+.ai-bullet{display:flex;gap:12px;align-items:flex-start;padding:14px 18px;background:linear-gradient(135deg,rgba(224,122,95,.06),rgba(224,122,95,.02));border:1px solid rgba(224,122,95,.08);border-radius:12px;font-size:15px;color:rgba(255,255,255,.8);line-height:1.6;transition:all .2s}
+.ai-bullet:hover{background:linear-gradient(135deg,rgba(224,122,95,.08),rgba(224,122,95,.03));transform:translateX(4px)}
+.ai-bullet svg{flex-shrink:0;margin-top:3px}
+.ai-bullet strong{color:#fff}
+
+/* ── Responsive: new sections ── */
+@media(max-width:768px){
+  .vl-two-col{flex-direction:column}
+  .vl-img{width:100%;height:280px}
+  .truth-bridge{flex-direction:column;text-align:center}
+  .truth-bridge-img{width:100%;height:240px}
+  .truth-bridge-copy{text-align:left}
+  .fear-reframe{flex-direction:column}
+  .fear-reframe-img{width:100%;height:240px;order:-1}
+}
+
+/* ── Page-level refinements ── */
+
+/* ── Exit popup ── */
+.exit-modal{border-radius:0!important;box-shadow:0 20px 60px rgba(0,0,0,.5)!important;max-width:780px!important;max-height:100vh!important;overflow-y:hidden!important}
+.exit-header{background:#1A1816!important;padding:24px 40px 0!important}
+.exit-header h2{font-size:clamp(40px,8vw,60px)!important;letter-spacing:.06em!important;text-transform:uppercase!important;margin-bottom:8px!important;background:linear-gradient(135deg,#ff6b4a,var(--coral),var(--gold),var(--coral),#ff6b4a)!important;background-size:300% auto!important;-webkit-background-clip:text!important;-webkit-text-fill-color:transparent!important;background-clip:text!important;animation:goldShimmer 3s linear infinite!important;filter:drop-shadow(0 2px 12px rgba(224,122,95,.5))!important;-webkit-text-stroke:0!important}
+.exit-header p{font-size:13px!important;margin-bottom:0!important}
+.exit-product-img{aspect-ratio:auto!important;background:none!important;margin:0!important}
+.exit-body{padding:24px 40px 28px!important}
+.exit-body p{font-size:14px!important;line-height:1.6!important;margin-bottom:8px!important}
+.exit-cta{border-radius:8px!important;box-shadow:none!important;font-size:24px!important;padding:18px 36px!important;margin-top:16px!important}
+.exit-cta:hover{box-shadow:none!important}
+.exit-cta-sub{font-size:12px!important}
+.exit-leave{font-size:12px!important;margin-top:10px!important;padding:4px!important}
+
+/* keep exit popup dramatic and wide */
+
+</style>
+</head>
+<body>
+<!-- Shared SVG gradient definitions for crown icons -->
+<svg style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true">
+  <defs>
+    <linearGradient id="cg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#ffd700"/><stop offset="50%" stop-color="#D4A853"/><stop offset="100%" stop-color="#b8860b"/></linearGradient>
+    <linearGradient id="cwg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#fff"/><stop offset="50%" stop-color="#ffd700"/><stop offset="100%" stop-color="#D4A853"/></linearGradient>
+  </defs>
+</svg>
+<div class="pg">
+
+<!-- ══════════════════════════════════════════════════ -->
+<!-- 1. STEP PROGRESS BAR                              -->
+<!-- ══════════════════════════════════════════════════ -->
+<div class="steps-bar" style="background:linear-gradient(135deg,#1a0a0a,#2a0e0e);border-bottom:1px solid rgba(220,38,38,.2);padding:0;flex-direction:column;gap:0">
+  <div style="display:flex;align-items:center;justify-content:center;gap:14px;padding:12px 28px;width:100%">
+    <div class="step-pill" style="background:linear-gradient(135deg,#dc2626,#b91c1c);animation:ctaPulseRed 2s ease-in-out infinite;box-shadow:0 2px 12px rgba(220,38,38,.4)"><span class="step-pill-num">Step 2 of 3</span></div>
+    <span class="step-right" style="color:rgba(255,255,255,.7);font-weight:800;letter-spacing:.04em">
+      <span style="color:#dc2626;animation:blink 1s ease-in-out infinite;margin-right:4px">&#9679;</span>
+      YOUR REGISTRATION IS NOT COMPLETE
+    </span>
+  </div>
+  <!-- Progress bar stuck at ~60% -->
+  <div style="width:100%;height:4px;background:rgba(255,255,255,.06);position:relative;overflow:hidden">
+    <div style="width:60%;height:100%;background:linear-gradient(90deg,#dc2626,#ef4444,#dc2626);background-size:200% 100%;animation:shimmer 2s linear infinite;border-radius:0 2px 2px 0;position:relative">
+      <div style="position:absolute;right:0;top:-2px;bottom:-2px;width:8px;background:#fff;border-radius:50%;box-shadow:0 0 8px rgba(220,38,38,.8),0 0 20px rgba(220,38,38,.4);animation:blink 1s ease-in-out infinite"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════ -->
+<!-- SECTION 1: CONGRATULATIONS BANNER + HOOK          -->
+<!-- ══════════════════════════════════════════════════ -->
+<section class="hero" style="padding:40px 24px 0">
+  <!-- Subtle floating orbs -->
+  <svg width="200" height="200" viewBox="0 0 200 200" fill="none" style="position:absolute;top:10%;left:5%;opacity:.03;pointer-events:none;z-index:0;animation:floatOrb 25s ease-in-out infinite"><circle cx="100" cy="100" r="90" fill="var(--blush)"/></svg>
+  <svg width="150" height="150" viewBox="0 0 150 150" fill="none" style="position:absolute;bottom:15%;right:3%;opacity:.025;pointer-events:none;z-index:0;animation:floatOrb 30s ease-in-out 5s infinite"><circle cx="75" cy="75" r="70" fill="var(--sage)"/></svg>
+  <div class="inner" style="max-width:880px">
+
+    <!-- Eyebrow — identity-level label -->
+    <p class="hero-congrats"><span class="hero-congrats-dark">Your free spot is confirmed.</span> <span style="color:#dc2626;animation:blink 1.2s ease-in-out infinite;text-shadow:0 0 12px rgba(220,38,38,.4)">Don't close this page yet.</span></p>
+
+    <!-- Heading — pattern interrupt + open loop -->
+    <h1 class="hero-h" style="color:#fff;margin-bottom:16px">Before you go, there is one thing that will completely change <span class="coral-italic">how you experience this challenge.</span></h1>
+
+    <!-- Sub — validate the action they just took, seed the gap -->
+    <p style="font-size:17px;color:rgba(255,255,255,.6);max-width:660px;margin:0 auto 32px;line-height:1.75;position:relative;z-index:2">You just did what 90% of people only talk about. You are in. But here is what I have learned running challenges: <strong style="color:rgba(255,255,255,.85)">the people who get results and the people who just watch are not separated by talent.</strong> They are separated by preparation. Let me explain.</p>
+
+    <!-- ═══ FULL-WIDTH VSL VIDEO ═══ -->
+    <div style="position:relative;z-index:2;margin-bottom:0">
+      <!-- [VIDEO NEEDED: Bailey records 2-3 min casual video] -->
+      <div style="width:100%;aspect-ratio:16/9;border-radius:16px 16px 0 0;overflow:hidden;border:1px solid rgba(255,255,255,.1);border-bottom:none;background:#0a0a0a;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:10px;color:rgba(255,255,255,.35);font-size:13px;cursor:pointer;box-shadow:0 30px 100px rgba(0,0,0,.6)" id="heroVideo" onclick="handleVideoClick()">
+        <div class="play-btn"><svg width="28" height="28" viewBox="0 0 24 24"><polygon points="8,5 20,12 8,19" fill="#fff"/></svg></div>
+        <span>[VIDEO NEEDED] VTurb Embed</span>
+      </div>
+
+      <!-- VIP bar — flush under video, split layout: items left, price right -->
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 24px;background:linear-gradient(135deg,rgba(255,255,255,.08),rgba(255,255,255,.03));backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.08);border-top:1px solid rgba(212,168,83,.15);border-radius:0 0 16px 16px">
+        <!-- Left: items list -->
+        <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;flex:1">
+          <span style="font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--gold)"><span class="vip-crown vip-crown-sm"><svg viewBox="0 0 24 24" fill="none"><path d="M2 17L5 7.5l4 4.5 3-8 3 8 4-4.5 3 9.5H2z" fill="url(#cg)"/><path d="M2 17h20v2.5a1.5 1.5 0 01-1.5 1.5h-17A1.5 1.5 0 012 19.5V17z" fill="url(#cg)"/><path d="M3 17.5h18" stroke="#b8860b" stroke-width=".4" opacity=".5"/><circle cx="5" cy="7" r="1.8" fill="#ffd700" opacity=".7"/><circle cx="12" cy="3.5" r="2" fill="#ffd700" opacity=".8"/><circle cx="19" cy="7" r="1.8" fill="#ffd700" opacity=".7"/><circle cx="8" cy="15" r="1" fill="#E07A5F" opacity=".6"/><circle cx="12" cy="14" r="1.2" fill="#E07A5F" opacity=".7"/><circle cx="16" cy="15" r="1" fill="#E07A5F" opacity=".6"/></svg><span class="sparkle"></span><span class="sparkle"></span><span class="sparkle"></span></span> VIP:</span>
+          <span style="font-size:11px;color:rgba(255,255,255,.55);font-weight:600">Workbook</span>
+          <span style="font-size:8px;color:rgba(255,255,255,.12)">&#9670;</span>
+          <span style="font-size:11px;color:rgba(255,255,255,.55);font-weight:600">Track Picker</span>
+          <span style="font-size:8px;color:rgba(255,255,255,.12)">&#9670;</span>
+          <span style="font-size:11px;color:rgba(255,255,255,.55);font-weight:600">Calendars</span>
+          <span style="font-size:8px;color:rgba(255,255,255,.12)">&#9670;</span>
+          <span style="font-size:11px;color:rgba(255,255,255,.55);font-weight:600">Organizer</span>
+          <span style="font-size:8px;color:rgba(255,255,255,.12)">&#9670;</span>
+          <span style="font-size:11px;color:rgba(255,255,255,.55);font-weight:600">Early Pricing</span>
+          <span style="font-size:8px;color:rgba(255,255,255,.12)">&#9670;</span>
+          <span style="font-size:11px;color:var(--gold);font-weight:700">Permanent Replays</span>
+        </div>
+        <!-- Right: big $47 price badge -->
+        <div style="flex-shrink:0;display:flex;flex-direction:column;align-items:center;padding:8px 20px;background:linear-gradient(135deg,rgba(212,168,83,.15),rgba(212,168,83,.05));border:1px solid rgba(212,168,83,.25);border-radius:12px;position:relative;overflow:hidden">
+          <span style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.4);line-height:1">All for just</span>
+          <span style="font-family:var(--display);font-size:clamp(32px,5vw,42px);font-weight:700;color:var(--gold);line-height:1.1;letter-spacing:-.02em;background:linear-gradient(135deg,#ffd700,var(--gold),#b8860b,var(--gold),#ffd700);background-size:300% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:goldShimmer 3s linear infinite">$47</span>
+          <span style="font-size:9px;color:rgba(255,255,255,.3);font-weight:600">one-time</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- URGENT TIMER — red danger countdown -->
+    <div class="urgency-timer" style="margin-top:28px;margin-bottom:0;position:relative;z-index:2;max-width:680px;width:100%">
+      <div style="text-align:center;margin-bottom:12px">
+        <span style="display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:#dc2626;animation:blink 1.2s ease-in-out infinite">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2.5"><path d="M12 9v4"/><path d="M12 17h.01"/><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/></svg>
+          THIS PAGE EXPIRES. DO NOT CLOSE.
+        </span>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:center;gap:12px">
+        <div class="timer-b"><span class="timer-n" id="heroTimerMin">15</span><span class="timer-l">Min</span></div>
+        <span class="timer-sep">:</span>
+        <div class="timer-b"><span class="timer-n" id="heroTimerSec">00</span><span class="timer-l">Sec</span></div>
+      </div>
+      <p style="text-align:center;margin-top:10px;font-size:12px;color:rgba(255,255,255,.35);font-weight:600">When this timer hits zero, VIP pricing is gone. No extensions. No exceptions.</p>
+    </div>
+  </div>
+  <!-- Bottom pad so wave sits right -->
+  <div style="height:48px"></div>
+</section>
+
+<!-- Wave: dark → warm -->
+<div class="sec-divider"><svg viewBox="0 0 1440 70" preserveAspectRatio="none" style="background:var(--dark)"><path d="M0,35 Q360,65 720,35 Q1080,5 1440,35 L1440,70 L0,70Z" fill="var(--warm)"/></svg></div>
+
+<!-- ══════════════════════════════════════════════════ -->
+<!-- SECTION 3: THE OFFER — "SAY MAYBE"                -->
+<!-- ══════════════════════════════════════════════════ -->
+<section class="sec sec-warm" style="padding-top:80px;padding-bottom:80px">
+  <div class="inner" style="max-width:780px">
+    <p class="sec-eyebrow">A Special Gift</p>
+    <h2 class="sec-heading">A Special Gift for <span class="coral"><span class="vip-crown"><svg viewBox="0 0 24 24" fill="none"><path d="M2 17L5 7.5l4 4.5 3-8 3 8 4-4.5 3 9.5H2z" fill="url(#cg)"/><path d="M2 17h20v2.5a1.5 1.5 0 01-1.5 1.5h-17A1.5 1.5 0 012 19.5V17z" fill="url(#cg)"/><path d="M3 17.5h18" stroke="#b8860b" stroke-width=".4" opacity=".5"/><circle cx="5" cy="7" r="1.8" fill="#ffd700" opacity=".7"/><circle cx="12" cy="3.5" r="2" fill="#ffd700" opacity=".8"/><circle cx="19" cy="7" r="1.8" fill="#ffd700" opacity=".7"/><circle cx="8" cy="15" r="1" fill="#E07A5F" opacity=".6"/><circle cx="12" cy="14" r="1.2" fill="#E07A5F" opacity=".7"/><circle cx="16" cy="15" r="1" fill="#E07A5F" opacity=".6"/></svg><span class="sparkle"></span><span class="sparkle"></span><span class="sparkle"></span></span>Challenge VIPs</span></h2>
+
+    <div style="text-align:left;font-size:17px;color:#555;line-height:1.8;margin-bottom:36px">
+      <p style="margin-bottom:16px">Here is the deal: the free challenge is going to give you a complete map of 4 AI-powered creative business paths and help you figure out which one fits your life.</p>
+      <p style="margin-bottom:16px">But I know from experience: the people who get the most out of a challenge like this are the ones who show up prepared, take notes in the right places, and have a clear framework for making decisions.</p>
+      <p style="margin-bottom:16px">So I put together a <strong style="color:#222"><span class="vip-crown vip-crown-sm"><svg viewBox="0 0 24 24" fill="none"><path d="M2 17L5 7.5l4 4.5 3-8 3 8 4-4.5 3 9.5H2z" fill="url(#cg)"/><path d="M2 17h20v2.5a1.5 1.5 0 01-1.5 1.5h-17A1.5 1.5 0 012 19.5V17z" fill="url(#cg)"/><path d="M3 17.5h18" stroke="#b8860b" stroke-width=".4" opacity=".5"/><circle cx="5" cy="7" r="1.8" fill="#ffd700" opacity=".7"/><circle cx="12" cy="3.5" r="2" fill="#ffd700" opacity=".8"/><circle cx="19" cy="7" r="1.8" fill="#ffd700" opacity=".7"/><circle cx="8" cy="15" r="1" fill="#E07A5F" opacity=".6"/><circle cx="12" cy="14" r="1.2" fill="#E07A5F" opacity=".7"/><circle cx="16" cy="15" r="1" fill="#E07A5F" opacity=".6"/></svg><span class="sparkle"></span><span class="sparkle"></span><span class="sparkle"></span></span>VIP Upgrade</strong> to help you do exactly that.</p>
+      <p style="margin-bottom:16px;font-family:var(--accent);font-size:22px;color:var(--coral)">All you have to do is say &ldquo;maybe.&rdquo;</p>
+      <p style="margin-bottom:0">If you love it, great. If you go through the challenge and decide this is not your thing, no hard feelings. The gifts are yours to keep either way.</p>
+    </div>
+
+    <!-- CTA -->
+    <div style="text-align:center" id="vipCTAArea1">
+      <a href="#" class="cta-btn cta-hero" id="vipCTA" onclick="handleVIPClick(event)">
+        <span class="cta-glitter"></span>
+        <span class="cta-glitter-2"></span>
+        <span><span class="vip-crown vip-crown-sm" style="animation-duration:2s"><svg viewBox="0 0 24 24" fill="none"><path d="M2 17L5 7.5l4 4.5 3-8 3 8 4-4.5 3 9.5H2z" fill="url(#cwg)"/><path d="M2 17h20v2.5a1.5 1.5 0 01-1.5 1.5h-17A1.5 1.5 0 012 19.5V17z" fill="url(#cwg)"/><circle cx="5" cy="7" r="1.8" fill="#fff" opacity=".8"/><circle cx="12" cy="3.5" r="2" fill="#fff" opacity=".9"/><circle cx="19" cy="7" r="1.8" fill="#fff" opacity=".8"/></svg></span>Get the VIP Upgrade · $47 &rarr;</span>
+      </a>
+      <p style="font-size:13px;color:#888;margin-top:12px;line-height:1.6">Instant access to workbook, Track Picker, calendar templates, organizer, and permanent replays.<br>One-time $47. No subscription. Yours to keep forever.</p>
+      <p style="font-size:12px;color:#aaa;margin-top:8px;font-style:italic">Last challenge, about 1 in 10 registrants grabbed VIP.</p>
+      <p style="font-size:14px;color:#777;margin-top:16px;line-height:1.6">If you know you tend to watch things and not implement, VIP is my way of making implementation easier.</p>
+      <a href="/confirmed" class="decline" id="declineLink">No thanks, I will stick with the free challenge experience. Take me to my confirmation page.</a>
+    </div>
+  </div>
+</section>
+
+<!-- Wave: warm → cream -->
+<div class="sec-divider"><svg viewBox="0 0 1440 80" preserveAspectRatio="none" style="background:var(--warm)"><path d="M0,40 Q360,80 720,40 Q1080,0 1440,40 L1440,80 L0,80Z" fill="var(--cream)" opacity=".5"/><path d="M0,50 Q360,80 720,50 Q1080,20 1440,50 L1440,80 L0,80Z" fill="var(--cream)"/></svg></div>
+
+<!-- ══════════════════════════════════════════════════ -->
+<!-- SECTION 4: WHAT IS INSIDE THE VIP UPGRADE         -->
+<!-- ══════════════════════════════════════════════════ -->
+<section class="sec sec-cream" style="padding-top:80px;padding-bottom:80px">
+  <div class="inner" style="max-width:960px">
+    <p class="sec-eyebrow">What You Get</p>
+    <h2 class="sec-heading">Here Is Exactly What You Get <span class="coral">as a <span class="vip-crown"><svg viewBox="0 0 24 24" fill="none"><path d="M2 17L5 7.5l4 4.5 3-8 3 8 4-4.5 3 9.5H2z" fill="url(#cg)"/><path d="M2 17h20v2.5a1.5 1.5 0 01-1.5 1.5h-17A1.5 1.5 0 012 19.5V17z" fill="url(#cg)"/><path d="M3 17.5h18" stroke="#b8860b" stroke-width=".4" opacity=".5"/><circle cx="5" cy="7" r="1.8" fill="#ffd700" opacity=".7"/><circle cx="12" cy="3.5" r="2" fill="#ffd700" opacity=".8"/><circle cx="19" cy="7" r="1.8" fill="#ffd700" opacity=".7"/><circle cx="8" cy="15" r="1" fill="#E07A5F" opacity=".6"/><circle cx="12" cy="14" r="1.2" fill="#E07A5F" opacity=".7"/><circle cx="16" cy="15" r="1" fill="#E07A5F" opacity=".6"/></svg><span class="sparkle"></span><span class="sparkle"></span><span class="sparkle"></span></span>VIP</span></h2>
+    <!-- Luxury divider -->
+    <div style="display:flex;align-items:center;justify-content:center;gap:12px;margin:-20px auto 40px;max-width:400px">
+      <svg width="80" height="2" viewBox="0 0 80 2"><rect width="80" height="2" rx="1" fill="var(--gold)" opacity=".2"/></svg>
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5Z" fill="var(--gold)" opacity=".25"/></svg>
+      <svg width="80" height="2" viewBox="0 0 80 2"><rect width="80" height="2" rx="1" fill="var(--gold)" opacity=".2"/></svg>
+    </div>
+
+    <!-- Gift 1: AI Income Challenge Workbook -->
+    <div class="bonus-detail animate-on-scroll">
+      <span class="bonus-mag-num">01</span>
+      <span class="bonus-num">1</span>
+      <div class="bonus-detail-img">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#bbb" stroke-width=".8"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+        <span>Workbook Mockup</span>
+      </div>
+      <h3>Gift 1: The AI Income Challenge Workbook <span style="color:#888;font-weight:400">&middot; PDF</span></h3>
+      <p class="bonus-body">This is not a generic PDF with motivational quotes. This is a working document designed to go alongside each day of the challenge. Print it or open it on a second screen while you watch.</p>
+      <p class="bonus-body">You can learn all the strategies in the world during the challenge...</p>
+      <p class="bonus-body">But without the right TOOL to actually build your funnels, <strong>it's like having a blueprint for a house but no hammer, no nails, no lumber.</strong></p>
+      <div style="text-align:left;margin-top:16px">
+        <div class="vl-check"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect width="22" height="22" rx="6" fill="var(--teal)" opacity=".12"/><path d="M6 11.5L9.5 15L16 7" stroke="var(--teal)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg><p><strong>Day 1 prompts</strong> that help you evaluate all 4 paths against your real life (not just which one sounds exciting, but which one actually fits)</p></div>
+        <div class="vl-check"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect width="22" height="22" rx="6" fill="var(--teal)" opacity=".12"/><path d="M6 11.5L9.5 15L16 7" stroke="var(--teal)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg><p><strong>Day 2 decision framework</strong> with space to map your schedule, skills, and personality to the right path</p></div>
+        <div class="vl-check"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect width="22" height="22" rx="6" fill="var(--teal)" opacity=".12"/><path d="M6 11.5L9.5 15L16 7" stroke="var(--teal)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg><p><strong>Day 3 action planner</strong> so you leave with a concrete &ldquo;what to do Monday morning&rdquo; plan</p></div>
+      </div>
+      <p class="bonus-body" style="margin-top:16px">Most people watch a challenge, feel inspired, and then forget everything by Thursday. This workbook is designed to make sure that does not happen to you, even if you are a complete beginner who has never used AI or sold anything online. Every prompt assumes you are starting from zero.</p>
+      <div style="text-align:center;margin-top:24px"><a href="#" class="cta-btn cta-nudge" onclick="handleVIPClick(event)" style="max-width:480px"><span class="cta-glitter"></span><span class="cta-glitter-2"></span><span>I Want the Workbook + 5 More Gifts &rarr;</span></a></div>
+    </div>
+
+    <!-- Gift 2: Track Picker Toolkit -->
+    <div class="bonus-detail alt-layout animate-on-scroll">
+      <span class="bonus-mag-num">02</span>
+      <div class="bonus-detail-img">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#bbb" stroke-width=".8"><circle cx="12" cy="12" r="10"/><path d="M12 2v10l7 4"/></svg>
+        <span>Track Picker Mockup</span>
+      </div>
+      <div class="bonus-right">
+        <span class="bonus-num" style="align-self:flex-start">2</span>
+        <h3>Gift 2: The Track Picker Toolkit <span style="color:#888;font-weight:400">&middot; Google Sheet</span></h3>
+        <p class="bonus-body">If you have ADHD (or just have a hard time choosing), this one is for you.</p>
+        <div class="vl-check"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect width="22" height="22" rx="6" fill="var(--teal)" opacity=".12"/><path d="M6 11.5L9.5 15L16 7" stroke="var(--teal)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg><p>A simple <strong>scoring sheet</strong> that lets you rate each path on 4 factors in under 7 minutes. The sheet color-codes your best fit</p></div>
+        <div class="vl-check"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect width="22" height="22" rx="6" fill="var(--teal)" opacity=".12"/><path d="M6 11.5L9.5 15L16 7" stroke="var(--teal)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg><p>An <strong>&ldquo;if this, then that&rdquo; decision tree:</strong> answer 5 honest questions and it points you to your best-fit path</p></div>
+        <div class="vl-check"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect width="22" height="22" rx="6" fill="var(--teal)" opacity=".12"/><path d="M6 11.5L9.5 15L16 7" stroke="var(--teal)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg><p>A <strong>comparison chart</strong> that shows time required, skills needed, personality fit, and offer model for all 4 tracks, side by side</p></div>
+        <p class="bonus-body" style="margin-top:12px">So you are way less likely to get stuck choosing, even if your brain wants to do all 4 at once.</p>
+        <div style="margin-top:20px"><a href="#" class="cta-btn cta-nudge" onclick="handleVIPClick(event)" style="max-width:480px"><span class="cta-glitter"></span><span class="cta-glitter-2"></span><span>I Want the Track Picker + 5 More Gifts &rarr;</span></a></div>
+      </div>
+    </div>
+
+    <!-- Gift 3: Weekly Calendar Templates -->
+    <div class="bonus-detail animate-on-scroll">
+      <span class="bonus-mag-num">03</span>
+      <span class="bonus-num">3</span>
+      <div class="bonus-detail-img">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#bbb" stroke-width=".8"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        <span>Calendar Template Mockup</span>
+      </div>
+      <h3>Gift 3: Weekly Calendar Templates</h3>
+      <p class="bonus-body">A week-by-week action plan customized for each income path:</p>
+      <div style="text-align:left;margin-top:12px">
+        <div class="vl-check"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect width="22" height="22" rx="6" fill="var(--teal)" opacity=".12"/><path d="M6 11.5L9.5 15L16 7" stroke="var(--teal)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg><p><strong>Pre-built weekly schedules</strong> so you know exactly what to work on each day</p></div>
+        <div class="vl-check"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect width="22" height="22" rx="6" fill="var(--teal)" opacity=".12"/><path d="M6 11.5L9.5 15L16 7" stroke="var(--teal)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg><p>Designed for real life, whether you have <strong>5, 8, or 12 hours a week</strong></p></div>
+        <div class="vl-check"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect width="22" height="22" rx="6" fill="var(--teal)" opacity=".12"/><path d="M6 11.5L9.5 15L16 7" stroke="var(--teal)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg><p>Every step assumes you are <strong>starting from zero</strong> (if you are brand new, these are your training wheels)</p></div>
+      </div>
+      <p class="bonus-body" style="margin-top:12px">These are not vague &ldquo;work on your business&rdquo; reminders. Each week tells you: do this, then this, then this. Monday through Friday, mapped out.</p>
+      <div style="text-align:center;margin-top:24px"><a href="#" class="cta-btn cta-nudge" onclick="handleVIPClick(event)" style="max-width:480px"><span class="cta-glitter"></span><span class="cta-glitter-2"></span><span>I Want the Calendar Templates + 5 More Gifts &rarr;</span></a></div>
+    </div>
+
+    <!-- Gift 4: Google Sheet Business Organizer -->
+    <div class="bonus-detail alt-layout animate-on-scroll">
+      <span class="bonus-mag-num">04</span>
+      <div class="bonus-detail-img">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#bbb" stroke-width=".8"><rect x="2" y="3" width="20" height="18" rx="2"/><line x1="2" y1="9" x2="22" y2="9"/><line x1="9" y1="3" x2="9" y2="21"/></svg>
+        <span>Google Sheet Mockup</span>
+      </div>
+      <div class="bonus-right">
+        <span class="bonus-num" style="align-self:flex-start">4</span>
+        <h3>Gift 4: Google Sheet Business Organizer</h3>
+        <p class="bonus-body">One spreadsheet to run your entire creative business from:</p>
+        <div class="vl-check"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect width="22" height="22" rx="6" fill="var(--teal)" opacity=".12"/><path d="M6 11.5L9.5 15L16 7" stroke="var(--teal)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg><p><strong>Goals section</strong> where you map your 30-day, 60-day, and 90-day targets</p></div>
+        <div class="vl-check"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect width="22" height="22" rx="6" fill="var(--teal)" opacity=".12"/><path d="M6 11.5L9.5 15L16 7" stroke="var(--teal)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg><p><strong>Weekly plan tab</strong> that breaks big goals into daily micro-actions</p></div>
+        <div class="vl-check"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect width="22" height="22" rx="6" fill="var(--teal)" opacity=".12"/><path d="M6 11.5L9.5 15L16 7" stroke="var(--teal)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg><p><strong>Asset tracker</strong> to log every design, listing, or piece of content you create</p></div>
+        <div class="vl-check"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect width="22" height="22" rx="6" fill="var(--teal)" opacity=".12"/><path d="M6 11.5L9.5 15L16 7" stroke="var(--teal)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg><p><strong>Built-in progress dashboard</strong> so you can actually see momentum building (this matters more than you think, especially for ADHD brains)</p></div>
+        <p class="bonus-body" style="margin-top:12px">This is the same organizer structure I use to manage 4 different creative businesses without losing my mind.</p>
+        <div style="margin-top:20px"><a href="#" class="cta-btn cta-nudge" onclick="handleVIPClick(event)" style="max-width:480px"><span class="cta-glitter"></span><span class="cta-glitter-2"></span><span>I Want the Organizer + 5 More Gifts &rarr;</span></a></div>
+      </div>
+    </div>
+
+    <!-- Gift 5: Early Price Reveal -->
+    <div class="bonus-detail animate-on-scroll">
+      <span class="bonus-mag-num">05</span>
+      <span class="bonus-num">5</span>
+      <div class="bonus-detail-img" style="aspect-ratio:16/8">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#bbb" stroke-width=".8"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+        <span>Early Access Badge</span>
+      </div>
+      <h3>Gift 5: Early Price Reveal</h3>
+      <p class="bonus-body">VIP challenge participants see the AI Income OS pricing before Day 3 so you have time to think it through, talk it over, and make a calm decision instead of a rushed one.</p>
+      <p class="bonus-body"><strong>No pressure. No surprise. Just transparency.</strong></p>
+      <div style="text-align:center;margin-top:24px"><a href="#" class="cta-btn cta-nudge" onclick="handleVIPClick(event)" style="max-width:480px"><span class="cta-glitter"></span><span class="cta-glitter-2"></span><span>I Want Early Access + 5 More Gifts &rarr;</span></a></div>
+    </div>
+
+    <!-- Gift 6: Permanent Replay Access -->
+    <div class="bonus-detail alt-layout animate-on-scroll">
+      <span class="bonus-mag-num">06</span>
+      <div class="bonus-detail-img" style="aspect-ratio:16/8">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#bbb" stroke-width=".8"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+        <span>Replay / Infinity Symbol</span>
+      </div>
+      <div class="bonus-right">
+        <span class="bonus-num" style="align-self:flex-start">6</span>
+        <h3>Gift 6: Permanent Replay Access</h3>
+        <p class="bonus-body">Non-VIP participants get timed access to the challenge replays. VIPs get <strong>permanent access.</strong> Watch, re-watch, and reference the training anytime.</p>
+        <p class="bonus-body">If your week gets chaotic (kids, work, life), you do not have to panic about missing a day. <strong>Your replays are not going anywhere.</strong></p>
+        <div style="margin-top:20px"><a href="#" class="cta-btn cta-nudge" onclick="handleVIPClick(event)" style="max-width:480px"><span class="cta-glitter"></span><span class="cta-glitter-2"></span><span>I Want Permanent Replays + 5 More Gifts &rarr;</span></a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Wave: cream → dark -->
+<div class="sec-divider"><svg viewBox="0 0 1440 70" preserveAspectRatio="none" style="background:var(--cream)"><path d="M0,35 Q360,5 720,35 Q1080,65 1440,35 L1440,70 L0,70Z" fill="var(--dark)"/></svg></div>
+
+<!-- ══════════════════════════════════════════════════ -->
+<!-- SECTION 5: WHY VIP MATTERS                        -->
+<!-- ══════════════════════════════════════════════════ -->
+<section class="sec sec-dark" style="padding-top:80px;padding-bottom:80px">
+  <div class="inner" style="max-width:720px">
+    <p class="sec-eyebrow">Honestly?</p>
+    <h2 class="sec-heading" style="color:#fff">Why <span class="vip-crown"><svg viewBox="0 0 24 24" fill="none"><path d="M2 17L5 7.5l4 4.5 3-8 3 8 4-4.5 3 9.5H2z" fill="url(#cg)"/><path d="M2 17h20v2.5a1.5 1.5 0 01-1.5 1.5h-17A1.5 1.5 0 012 19.5V17z" fill="url(#cg)"/><path d="M3 17.5h18" stroke="#b8860b" stroke-width=".4" opacity=".5"/><circle cx="5" cy="7" r="1.8" fill="#ffd700" opacity=".7"/><circle cx="12" cy="3.5" r="2" fill="#ffd700" opacity=".8"/><circle cx="19" cy="7" r="1.8" fill="#ffd700" opacity=".7"/><circle cx="8" cy="15" r="1" fill="#E07A5F" opacity=".6"/><circle cx="12" cy="14" r="1.2" fill="#E07A5F" opacity=".7"/><circle cx="16" cy="15" r="1" fill="#E07A5F" opacity=".6"/></svg><span class="sparkle"></span><span class="sparkle"></span><span class="sparkle"></span></span>VIP? <span style="font-family:var(--accent);color:var(--coral)">Honestly?</span></h2>
+    <div style="text-align:left;font-size:17px;color:rgba(255,255,255,.75);line-height:1.8">
+      <p style="margin-bottom:16px">I have run challenges before. Here is what I have learned:</p>
+      <p style="margin-bottom:16px">The people who show up with a plan, a workbook, and a decision framework get <strong style="color:#fff">so much more</strong> out of the experience than the people who just watch passively.</p>
+      <p style="margin-bottom:16px">It is the same information. Same challenge. Same 3 days.</p>
+      <p style="margin-bottom:16px">The difference is whether you are just watching... or actually <strong style="color:#fff">working through it alongside me.</strong></p>
+      <p style="margin-bottom:0;font-family:var(--accent);font-size:22px;color:var(--coral)">The <span class="vip-crown vip-crown-sm"><svg viewBox="0 0 24 24" fill="none"><path d="M2 17L5 7.5l4 4.5 3-8 3 8 4-4.5 3 9.5H2z" fill="url(#cg)"/><path d="M2 17h20v2.5a1.5 1.5 0 01-1.5 1.5h-17A1.5 1.5 0 012 19.5V17z" fill="url(#cg)"/><path d="M3 17.5h18" stroke="#b8860b" stroke-width=".4" opacity=".5"/><circle cx="5" cy="7" r="1.8" fill="#ffd700" opacity=".7"/><circle cx="12" cy="3.5" r="2" fill="#ffd700" opacity=".8"/><circle cx="19" cy="7" r="1.8" fill="#ffd700" opacity=".7"/><circle cx="8" cy="15" r="1" fill="#E07A5F" opacity=".6"/><circle cx="12" cy="14" r="1.2" fill="#E07A5F" opacity=".7"/><circle cx="16" cy="15" r="1" fill="#E07A5F" opacity=".6"/></svg><span class="sparkle"></span><span class="sparkle"></span><span class="sparkle"></span></span>VIP gifts are designed to turn you from a watcher into a doer. That is it. That is the whole pitch.</p>
+    </div>
+
+    <!-- VIP vs Free Comparison Table -->
+    <div style="max-width:680px;margin:48px auto 0;border-radius:18px;overflow:hidden;border:1px solid rgba(255,255,255,.1);background:linear-gradient(135deg,rgba(255,255,255,.06),rgba(255,255,255,.02));backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)">
+      <!-- Header row -->
+      <div style="display:grid;grid-template-columns:1.6fr 1fr 1fr;font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;border-bottom:1px solid rgba(255,255,255,.08)">
+        <span style="padding:16px 20px;color:rgba(255,255,255,.4)"></span>
+        <span style="padding:16px 12px;color:rgba(255,255,255,.45);text-align:center">Free</span>
+        <span style="padding:16px 12px;text-align:center;color:var(--gold);background:linear-gradient(135deg,rgba(212,168,83,.1),rgba(212,168,83,.04))"><span class="vip-crown vip-crown-sm"><svg viewBox="0 0 24 24" fill="none"><path d="M2 17L5 7.5l4 4.5 3-8 3 8 4-4.5 3 9.5H2z" fill="url(#cg)"/><path d="M2 17h20v2.5a1.5 1.5 0 01-1.5 1.5h-17A1.5 1.5 0 012 19.5V17z" fill="url(#cg)"/><path d="M3 17.5h18" stroke="#b8860b" stroke-width=".4" opacity=".5"/><circle cx="5" cy="7" r="1.8" fill="#ffd700" opacity=".7"/><circle cx="12" cy="3.5" r="2" fill="#ffd700" opacity=".8"/><circle cx="19" cy="7" r="1.8" fill="#ffd700" opacity=".7"/><circle cx="8" cy="15" r="1" fill="#E07A5F" opacity=".6"/><circle cx="12" cy="14" r="1.2" fill="#E07A5F" opacity=".7"/><circle cx="16" cy="15" r="1" fill="#E07A5F" opacity=".6"/></svg><span class="sparkle"></span><span class="sparkle"></span><span class="sparkle"></span></span>VIP · $47</span>
+      </div>
+      <!-- Row: Live Challenge -->
+      <div style="display:grid;grid-template-columns:1.6fr 1fr 1fr;align-items:center;border-bottom:1px solid rgba(255,255,255,.05)">
+        <span style="padding:13px 20px;font-size:14px;color:rgba(255,255,255,.7);font-weight:600">Live challenge (3 days)</span>
+        <span style="text-align:center;font-size:18px;color:#22c55e">&#10003;</span>
+        <span style="text-align:center;font-size:18px;color:#22c55e;background:linear-gradient(135deg,rgba(212,168,83,.06),rgba(212,168,83,.02))">&#10003;</span>
+      </div>
+      <!-- Row: Replay Access -->
+      <div style="display:grid;grid-template-columns:1.6fr 1fr 1fr;align-items:center;border-bottom:1px solid rgba(255,255,255,.05)">
+        <span style="padding:13px 20px;font-size:14px;color:rgba(255,255,255,.7);font-weight:600">Replay access</span>
+        <span style="text-align:center;font-size:12px;color:rgba(255,255,255,.35);font-weight:600">That day only</span>
+        <span style="text-align:center;font-size:12px;color:var(--gold);font-weight:700;background:linear-gradient(135deg,rgba(212,168,83,.06),rgba(212,168,83,.02))">Permanent / forever</span>
+      </div>
+      <!-- Row: Workbook -->
+      <div style="display:grid;grid-template-columns:1.6fr 1fr 1fr;align-items:center;border-bottom:1px solid rgba(255,255,255,.05)">
+        <span style="padding:13px 20px;font-size:14px;color:rgba(255,255,255,.7);font-weight:600">Challenge Workbook</span>
+        <span style="text-align:center;font-size:16px;color:rgba(255,255,255,.2)">&times;</span>
+        <span style="text-align:center;font-size:18px;color:#22c55e;background:linear-gradient(135deg,rgba(212,168,83,.06),rgba(212,168,83,.02))">&#10003;</span>
+      </div>
+      <!-- Row: Track Picker -->
+      <div style="display:grid;grid-template-columns:1.6fr 1fr 1fr;align-items:center;border-bottom:1px solid rgba(255,255,255,.05)">
+        <span style="padding:13px 20px;font-size:14px;color:rgba(255,255,255,.7);font-weight:600">Track Picker Toolkit</span>
+        <span style="text-align:center;font-size:16px;color:rgba(255,255,255,.2)">&times;</span>
+        <span style="text-align:center;font-size:18px;color:#22c55e;background:linear-gradient(135deg,rgba(212,168,83,.06),rgba(212,168,83,.02))">&#10003;</span>
+      </div>
+      <!-- Row: Calendar Templates -->
+      <div style="display:grid;grid-template-columns:1.6fr 1fr 1fr;align-items:center;border-bottom:1px solid rgba(255,255,255,.05)">
+        <span style="padding:13px 20px;font-size:14px;color:rgba(255,255,255,.7);font-weight:600">Weekly Calendar Templates</span>
+        <span style="text-align:center;font-size:16px;color:rgba(255,255,255,.2)">&times;</span>
+        <span style="text-align:center;font-size:18px;color:#22c55e;background:linear-gradient(135deg,rgba(212,168,83,.06),rgba(212,168,83,.02))">&#10003;</span>
+      </div>
+      <!-- Row: Business Organizer -->
+      <div style="display:grid;grid-template-columns:1.6fr 1fr 1fr;align-items:center;border-bottom:1px solid rgba(255,255,255,.05)">
+        <span style="padding:13px 20px;font-size:14px;color:rgba(255,255,255,.7);font-weight:600">Business Organizer</span>
+        <span style="text-align:center;font-size:16px;color:rgba(255,255,255,.2)">&times;</span>
+        <span style="text-align:center;font-size:18px;color:#22c55e;background:linear-gradient(135deg,rgba(212,168,83,.06),rgba(212,168,83,.02))">&#10003;</span>
+      </div>
+      <!-- Row: Early Price Reveal -->
+      <div style="display:grid;grid-template-columns:1.6fr 1fr 1fr;align-items:center;border-bottom:1px solid rgba(255,255,255,.05)">
+        <span style="padding:13px 20px;font-size:14px;color:rgba(255,255,255,.7);font-weight:600">Early Price Reveal</span>
+        <span style="text-align:center;font-size:16px;color:rgba(255,255,255,.2)">&times;</span>
+        <span style="text-align:center;font-size:18px;color:#22c55e;background:linear-gradient(135deg,rgba(212,168,83,.06),rgba(212,168,83,.02))">&#10003;</span>
+      </div>
+      <!-- Row: Involvement -->
+      <div style="display:grid;grid-template-columns:1.6fr 1fr 1fr;align-items:center">
+        <span style="padding:13px 20px;font-size:14px;color:rgba(255,255,255,.7);font-weight:600">Your experience</span>
+        <span style="text-align:center;font-size:12px;color:rgba(255,255,255,.35);font-weight:600;padding:13px 8px">Watch passively</span>
+        <span style="text-align:center;font-size:12px;color:var(--gold);font-weight:700;padding:13px 8px;background:linear-gradient(135deg,rgba(212,168,83,.06),rgba(212,168,83,.02))">Actively working alongside Bailey</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Wave: dark → white -->
+<div class="sec-divider"><svg viewBox="0 0 1440 80" preserveAspectRatio="none" style="background:var(--dark)"><path d="M0,40 Q360,80 720,40 Q1080,0 1440,40 L1440,80 L0,80Z" fill="#fff" opacity=".5"/><path d="M0,50 Q360,80 720,50 Q1080,20 1440,50 L1440,80 L0,80Z" fill="#fff"/></svg></div>
+
+<!-- ══════════════════════════════════════════════════ -->
+<!-- SECTION 6: QUICK SUMMARY + FINAL CTA              -->
+<!-- ══════════════════════════════════════════════════ -->
+<section class="sec sec-white" style="padding-top:80px;padding-bottom:80px">
+  <div class="inner" style="max-width:800px">
+    <h2 class="sec-heading">Everything in the <span class="coral"><span class="vip-crown"><svg viewBox="0 0 24 24" fill="none"><path d="M2 17L5 7.5l4 4.5 3-8 3 8 4-4.5 3 9.5H2z" fill="url(#cg)"/><path d="M2 17h20v2.5a1.5 1.5 0 01-1.5 1.5h-17A1.5 1.5 0 012 19.5V17z" fill="url(#cg)"/><path d="M3 17.5h18" stroke="#b8860b" stroke-width=".4" opacity=".5"/><circle cx="5" cy="7" r="1.8" fill="#ffd700" opacity=".7"/><circle cx="12" cy="3.5" r="2" fill="#ffd700" opacity=".8"/><circle cx="19" cy="7" r="1.8" fill="#ffd700" opacity=".7"/><circle cx="8" cy="15" r="1" fill="#E07A5F" opacity=".6"/><circle cx="12" cy="14" r="1.2" fill="#E07A5F" opacity=".7"/><circle cx="16" cy="15" r="1" fill="#E07A5F" opacity=".6"/></svg><span class="sparkle"></span><span class="sparkle"></span><span class="sparkle"></span></span>VIP Upgrade</span></h2>
+
+    <!-- Summary table -->
+    <div style="max-width:720px;margin:0 auto 40px;border-radius:16px;overflow:hidden;border:1px solid var(--border);background:#fff">
+      <div style="display:grid;grid-template-columns:1fr 1fr;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#888;padding:14px 20px;background:var(--cream);border-bottom:1px solid var(--border)">
+        <span>What You Get</span><span>What It Does For You</span>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;padding:14px 20px;border-bottom:1px solid rgba(0,0,0,.04);font-size:15px;align-items:center">
+        <strong style="color:#222">Challenge Workbook (PDF)</strong>
+        <span style="color:#555">Turns passive watching into active decision-making</span>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;padding:14px 20px;border-bottom:1px solid rgba(0,0,0,.04);font-size:15px;align-items:center">
+        <strong style="color:#222">Track Picker Toolkit (Google Sheet)</strong>
+        <span style="color:#555">Takes the guesswork out of choosing (especially for ADHD brains)</span>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;padding:14px 20px;border-bottom:1px solid rgba(0,0,0,.04);font-size:15px;align-items:center">
+        <strong style="color:#222">Weekly Calendar Templates</strong>
+        <span style="color:#555">Week-by-week action plan for your chosen path. No guessing what to do next</span>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;padding:14px 20px;border-bottom:1px solid rgba(0,0,0,.04);font-size:15px;align-items:center">
+        <strong style="color:#222">Google Sheet Business Organizer</strong>
+        <span style="color:#555">One place to set goals, plan your week, and track every asset you create</span>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;padding:14px 20px;border-bottom:1px solid rgba(0,0,0,.04);font-size:15px;align-items:center">
+        <strong style="color:#222">Early Price Reveal</strong>
+        <span style="color:#555">See AI Income OS pricing before Day 3 so you can decide calmly</span>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;padding:14px 20px;font-size:15px;align-items:center">
+        <strong style="color:#222">Permanent Replay Access</strong>
+        <span style="color:#555">Watch and re-watch the challenge forever. No timed expiry</span>
+      </div>
+    </div>
+
+    <!-- Price framing -->
+    <div style="text-align:center;margin-bottom:36px">
+      <p style="font-size:17px;color:#555;line-height:1.7;margin-bottom:8px">All of this for a one-time investment of</p>
+      <p class="price-dramatic" style="font-size:clamp(48px,8vw,64px)">$47</p>
+      <p style="font-size:15px;color:#888;margin-top:8px">No subscription. No hidden fees. No recurring charges.<br>Yours to keep, even if you decide the challenge is not for you.</p>
+    </div>
+
+    <!-- CTA -->
+    <div style="text-align:center" id="vipCTAArea">
+      <a href="#" class="cta-btn cta-hero" onclick="handleVIPClick(event)">
+        <span class="cta-glitter"></span>
+        <span class="cta-glitter-2"></span>
+        <span><span class="vip-crown vip-crown-sm" style="animation-duration:2s"><svg viewBox="0 0 24 24" fill="none"><path d="M2 17L5 7.5l4 4.5 3-8 3 8 4-4.5 3 9.5H2z" fill="url(#cwg)"/><path d="M2 17h20v2.5a1.5 1.5 0 01-1.5 1.5h-17A1.5 1.5 0 012 19.5V17z" fill="url(#cwg)"/><circle cx="5" cy="7" r="1.8" fill="#fff" opacity=".8"/><circle cx="12" cy="3.5" r="2" fill="#fff" opacity=".9"/><circle cx="19" cy="7" r="1.8" fill="#fff" opacity=".8"/></svg></span>Get the VIP Upgrade · $47 &rarr;</span>
+      </a>
+      <p style="font-size:13px;color:#888;margin-top:12px">Secure checkout via ThriveCart. Your challenge access is already confirmed. This is just the VIP upgrade.</p>
+      <a href="/confirmed" class="decline">No thanks, I am happy with the free challenge. Take me to my confirmation page.</a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════ -->
+<!-- SECTION 7: FINAL REASSURANCE                      -->
+<!-- ══════════════════════════════════════════════════ -->
+<section class="sec sec-warm" style="padding-top:64px;padding-bottom:64px">
+  <div style="max-width:740px;margin:0 auto;display:flex;gap:28px;align-items:center;text-align:left">
+    <!-- [PHOTO NEEDED: Bailey casual, holding coffee, looking at camera] -->
+    <div class="ph-img ph-img-light" style="flex-shrink:0;width:160px;height:200px;border-radius:14px">
+      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#bbb" stroke-width=".8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-3.3 3.6-6 8-6s8 2.7 8 6"/></svg>
+      <span>[PHOTO NEEDED]</span>
+    </div>
+    <div>
+      <p style="font-size:17px;color:#555;line-height:1.75;margin-bottom:16px">One more thing: if you skip VIP today, you will still get the full free challenge. I will also include a VIP link in your Day 1 email if you change your mind. But this page is the simplest and cheapest way to get everything in one bundle.</p>
+      <p style="font-size:17px;color:#555;line-height:1.75;margin-bottom:16px">Whatever you decide, I am glad you are here. See you on March 14th.</p>
+      <p style="font-family:var(--accent);font-size:24px;color:var(--coral);transform:rotate(-1deg);display:inline-block">Bailey</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════ -->
+<!-- FOOTER                                            -->
+<!-- ══════════════════════════════════════════════════ -->
+<footer class="vfooter">
+  <div class="inner">
+    <!-- Luxury brand separator -->
+    <svg width="200" height="20" viewBox="0 0 200 20" fill="none" style="display:block;margin:0 auto 20px;opacity:.35"><line x1="0" y1="10" x2="75" y2="10" stroke="var(--gold)" stroke-width=".5"/><path d="M85 10L92 3L100 10L92 17Z" fill="none" stroke="var(--gold)" stroke-width=".8"/><circle cx="100" cy="10" r="2" fill="var(--gold)" opacity=".5"/><path d="M108 10L115 3L100 10L115 17Z" fill="none" stroke="var(--gold)" stroke-width=".8"/><line x1="125" y1="10" x2="200" y2="10" stroke="var(--gold)" stroke-width=".5"/></svg>
+    <p class="vf-brand">BAILEY <span>VANN</span></p>
+    <span class="vf-sub">Education</span>
+    <p class="vf-copy">Bailey Vann Education &copy; 2026 | All Rights Reserved</p>
+    <div class="vf-links">
+      <a href="#">Terms &amp; Conditions</a>
+      <a href="#">Privacy</a>
+      <a href="#">Income Disclosure</a>
+      <a href="#">Support</a>
+    </div>
+    <p style="font-size:11px;color:rgba(255,255,255,.3);line-height:1.6;max-width:640px;margin:20px auto 0">This site is not a part of the Facebook website or Facebook Inc. Additionally, this site is not endorsed by Facebook in any way. FACEBOOK is a trademark of FACEBOOK, Inc. Results mentioned are not typical. Your results will vary based on effort, experience, and many other factors.</p>
+  </div>
+</footer>
+
+</div><!-- .pg -->
+
+<!-- ══════════════════════════════════════════════════ -->
+<!-- EXIT-INTENT POPUP                                  -->
+<!-- ══════════════════════════════════════════════════ -->
+<div class="exit-overlay" id="exitOverlay">
+  <div class="exit-modal">
+    <button class="exit-close" id="exitClose" aria-label="Close">
+      <span class="exit-close-x">&times;</span>
+      <span class="exit-close-warn" style="display:none"></span>
+    </button>
+
+    <!-- Dark header with dramatic urgency -->
+    <div class="exit-header">
+      <h2>FINAL OFFER!</h2>
+      <p>Your <strong>VIP Upgrade</strong> is about to expire forever.</p>
+      <p style="font-size:12px;margin-top:3px;color:rgba(255,255,255,.45)">(... and you will lose access to all 6 VIP gifts!)</p>
+      <!-- Product chips flush inside dark band -->
+      <div style="margin:16px -28px 0;padding:14px 28px 18px;background:linear-gradient(180deg,rgba(0,0,0,.3),rgba(0,0,0,.15));display:flex;justify-content:center;gap:8px;flex-wrap:wrap">
+        <span style="padding:5px 12px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);border-radius:6px;font-size:10px;font-weight:700;color:rgba(255,255,255,.55);letter-spacing:.03em">Workbook</span>
+        <span style="padding:5px 12px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);border-radius:6px;font-size:10px;font-weight:700;color:rgba(255,255,255,.55);letter-spacing:.03em">Track Picker</span>
+        <span style="padding:5px 12px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);border-radius:6px;font-size:10px;font-weight:700;color:rgba(255,255,255,.55);letter-spacing:.03em">Calendars</span>
+        <span style="padding:5px 12px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);border-radius:6px;font-size:10px;font-weight:700;color:rgba(255,255,255,.55);letter-spacing:.03em">Organizer</span>
+        <span style="padding:5px 12px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);border-radius:6px;font-size:10px;font-weight:700;color:rgba(255,255,255,.55);letter-spacing:.03em">Early Pricing</span>
+        <span style="padding:5px 12px;background:linear-gradient(135deg,rgba(212,168,83,.12),rgba(212,168,83,.04));border:1px solid rgba(212,168,83,.2);border-radius:6px;font-size:10px;font-weight:700;color:var(--gold);letter-spacing:.03em">Permanent Replays</span>
+      </div>
+    </div>
+
+    <!-- Letter-style body — old dramatic format -->
+    <div class="exit-body">
+      <p><em>"Okay Bailey, you really want me to grab VIP."</em></p>
+
+      <p>It is true, and that is because I <strong>know</strong> the VIP tools are the difference between people who watch a challenge and people who actually walk away with a plan.</p>
+
+      <p>The workbook, the track picker, the calendar templates, the business organizer, the early pricing reveal, and <strong>permanent replay access</strong> are all designed to make the challenge actually work for you.</p>
+
+      <p>Without VIP, you get the live videos on each day. That is it. No replays. No tools. No framework. Just watching.</p>
+
+      <p>With VIP, you are <strong>working alongside me</strong> every single day, with everything you need to make a real decision by Day 3.</p>
+
+      <p>This is it. This is your <strong>LAST CHANCE</strong> to grab VIP at $47.</p>
+
+      <p>This offer disappears the moment you leave this page...</p>
+
+      <p><strong>So do not wait!</strong></p>
+
+      <p>Hit the button below right now before it is gone for good...</p>
+
+      <!-- CTA — uses the coral exit-cta style from old design -->
+      <button class="exit-cta" id="exitGoBack">
+        Yes, Give Me VIP Access · $47 &raquo;<span class="exit-cta-sub">One-time payment. No subscription. Yours to keep forever.</span>
+      </button>
+
+      <button class="exit-leave" id="exitLeave">
+        No thanks, I am not interested... take me to my confirmation page
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── VIP Click Handler ──
+function handleVIPClick(e){
+  if(e)e.preventDefault();
+  // [THRIVECART URL NEEDED] — replace with actual ThriveCart VIP product link
+  window.location.href='https://baileyvann.thrivecart.com/ai-challenge-vip/';
+}
+
+// ── Video Click Handler ──
+function handleVideoClick(){
+  var overlay=document.getElementById('videoCTAOverlay');
+  if(overlay&&!overlay.classList.contains('active')){
+    overlay.classList.add('active');
+  }
+}
+
+// ── 15-Minute Countdown Timer ──
+(function(){
+  var totalSecs=15*60; // 15:00
+  var expired=false;
+  function pad(n){return String(n).padStart(2,'0')}
+
+  function onExpiry(){
+    expired=true;
+    // Swap all CTA areas to show "window closed" message
+    var ctaAreas=document.querySelectorAll('[id^="vipCTAArea"]');
+    ctaAreas.forEach(function(area){
+      area.innerHTML='<div style="text-align:center;padding:32px 20px;background:rgba(26,24,22,.04);border-radius:16px;border:1px solid rgba(26,24,22,.08)">'
+        +'<p style="font-family:var(--display);font-size:22px;font-weight:700;color:var(--dark);margin-bottom:12px">VIP Window Closed</p>'
+        +'<p style="font-size:16px;color:#555;line-height:1.6;margin-bottom:20px">You are still registered for the AI Income Challenge.<br>Head to your confirmation page for next steps.</p>'
+        +'<a href="/confirmed" class="cta-btn cta-hero" style="background:var(--teal)"><span>Go to My Confirmation Page &rarr;</span></a>'
+        +'</div>';
+    });
+    // Also update hero timer display
+    var heroMin=document.getElementById('heroTimerMin');
+    var heroSec=document.getElementById('heroTimerSec');
+    if(heroMin)heroMin.textContent='00';
+    if(heroSec)heroSec.textContent='00';
+    // Update urgency timer warning text
+    var urgencyWarn=document.querySelector('.urgency-timer span[style*="animation"]');
+    if(urgencyWarn)urgencyWarn.innerHTML='<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2.5"><path d="M12 9v4"/><path d="M12 17h.01"/><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/></svg> VIP OFFER HAS EXPIRED';
+    // Disable all VIP CTA buttons
+    document.querySelectorAll('.cta-hero').forEach(function(btn){
+      if(btn.getAttribute('onclick')==='handleVIPClick(event)'){
+        btn.style.opacity='.4';
+        btn.style.pointerEvents='none';
+      }
+    });
+  }
+
+  function updateAll(){
+    var m=Math.floor(totalSecs/60);
+    var s=totalSecs%60;
+    var el=function(id){return document.getElementById(id)};
+    if(el('heroTimerMin'))el('heroTimerMin').textContent=pad(m);
+    if(el('heroTimerSec'))el('heroTimerSec').textContent=pad(s);
+    if(el('videoCTAMin'))el('videoCTAMin').textContent=pad(m);
+    if(el('videoCTASec'))el('videoCTASec').textContent=pad(s);
+  }
+
+  setInterval(function(){
+    if(expired)return;
+    if(totalSecs>0){
+      totalSecs--;
+      updateAll();
+    }else{
+      onExpiry();
+    }
+  },1000);
+  updateAll();
+})();
+
+// ── Scroll-Triggered Reveal Animations ──
+(function(){
+  var els=document.querySelectorAll('.animate-on-scroll');
+  if(!els.length)return;
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target)}
+    });
+  },{threshold:0.15,rootMargin:'0px 0px -50px 0px'});
+  els.forEach(function(el){io.observe(el)});
+})();
+
+// ── Exit-Intent Popup ──
+(function(){
+  var overlay=document.getElementById('exitOverlay');
+  var closeBtn=document.getElementById('exitClose');
+  var goBackBtn=document.getElementById('exitGoBack');
+  var leaveBtn=document.getElementById('exitLeave');
+  if(!overlay)return;
+
+  function showPopup(){
+    overlay.classList.add('active');
+    overlay.classList.remove('scare');
+    document.body.style.overflow='hidden';
+  }
+
+  function hidePopup(){
+    overlay.classList.remove('active');
+    overlay.classList.remove('scare');
+    document.body.style.overflow='';
+  }
+
+  // Trigger: ALL decline buttons show popup
+  document.querySelectorAll('.decline').forEach(function(btn){
+    btn.addEventListener('click',function(e){
+      e.preventDefault();
+      e.stopPropagation();
+      showPopup();
+    });
+  });
+
+  // Close popup
+  closeBtn.addEventListener('click',hidePopup);
+  overlay.addEventListener('click',function(e){
+    if(e.target===overlay)hidePopup();
+  });
+
+  // "Yes, Give Me VIP" = redirect to ThriveCart
+  goBackBtn.addEventListener('click',function(){
+    hidePopup();
+    handleVIPClick();
+  });
+
+  // "No thanks" = go to confirmation page
+  leaveBtn.addEventListener('click',function(){
+    hidePopup();
+    window.location.href='/confirmed';
+  });
+
+  // Scare mode: hovering "No thanks" turns modal red
+  leaveBtn.addEventListener('mouseenter',function(){
+    overlay.classList.add('scare');
+  });
+  leaveBtn.addEventListener('mouseleave',function(){
+    overlay.classList.remove('scare');
+  });
+
+  // Escape key
+  document.addEventListener('keydown',function(e){
+    if(e.key==='Escape')hidePopup();
+  });
+})();
+</script>
+</body>
+</html>
