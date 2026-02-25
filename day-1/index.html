@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Day 1 — Free AI Challenge with Bailey</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&display=swap" rel="stylesheet" />
+<link href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,600,700,800,900&display=swap" rel="stylesheet" />
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+@font-face{font-family:'Ogg';src:url('public/OggRoman.ttf') format('truetype');font-weight:400;font-display:swap}
+@font-face{font-family:'Ogg';src:url('public/OggBold.ttf') format('truetype');font-weight:700;font-display:swap}
+:root{
+  --cream:#FAF8F5;--warm:#F5F0E8;--dark:#1A1816;--coral:#E07A5F;--coral-dark:#C45D45;
+  --teal:#1D6B6B;--teal-dark:#165858;--gold:#D4A853;--border:#E8E2D9;
+  --blush:#F2D7D5;--rose:#C9A0A0;--sage:#B8CEC2;--sage-dark:#8FB5A3;--mauve:#D4B5C7;
+  --font:'Satoshi','DM Sans',-apple-system,BlinkMacSystemFont,sans-serif;
+  --display:'Ogg',Georgia,serif;--accent:'Caveat',cursive;
+}
+body{font-family:var(--font);font-weight:500;color:#2d2a26;background:var(--cream);line-height:1.7;overflow-x:hidden;-webkit-font-smoothing:antialiased;font-size:16px}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer;border:none;background:none}
+img{max-width:100%;display:block}
+
+.pg{max-width:100%;overflow-x:hidden;position:relative}
+
+/* ── Paper Texture Overlay ── */
+.pg::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9999;opacity:.02;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.65' numOctaves='5' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='256' height='256' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E")}
+.pg::after{content:'';position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9998;opacity:.012;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='m'%3E%3CfeTurbulence type='turbulence' baseFrequency='.008' numOctaves='3' result='turb'/%3E%3CfeDisplacementMap in2='turb' in='SourceGraphic' scale='40' xChannelSelector='R' yChannelSelector='G'/%3E%3C/filter%3E%3Cpath d='M-10,200 Q100,180 200,210 Q300,240 410,190' stroke='%23D4A853' stroke-width='1.5' fill='none' filter='url(%23m)' opacity='.4'/%3E%3Cpath d='M-10,120 Q80,90 180,130 Q280,170 410,100' stroke='%23D4A853' stroke-width='1' fill='none' filter='url(%23m)' opacity='.25'/%3E%3C/svg%3E");background-size:800px 800px}
+
+.coral{color:var(--coral)}
+.teal{color:var(--teal)}
+.gold{color:var(--gold)}
+
+/* ── Animations ── */
+@keyframes shimmer{0%{background-position:-200% center}100%{background-position:200% center}}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+@keyframes breathe{0%,100%{opacity:.4;transform:scale(1)}50%{opacity:.7;transform:scale(1.02)}}
+@keyframes fadeInUp{0%{opacity:0;transform:translateY(24px)}100%{opacity:1;transform:translateY(0)}}
+@keyframes glitterSweep{0%{left:-30%;opacity:0}50%{opacity:.25}100%{left:130%;opacity:0}}
+@keyframes ctaPulseTeal{0%,100%{box-shadow:0 4px 20px rgba(29,107,107,.25)}50%{box-shadow:0 6px 28px rgba(29,107,107,.4)}}
+@keyframes ctaRingPulse{0%,100%{box-shadow:0 0 0 0 rgba(212,168,83,.3)}50%{box-shadow:0 0 0 6px rgba(212,168,83,0)}}
+@keyframes ctaGoldDust{0%{left:-35%;opacity:0;transform:skewX(-15deg)}40%{opacity:.6}100%{left:135%;opacity:0;transform:skewX(-15deg)}}
+@keyframes goldShimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
+@keyframes floatOrb{0%,100%{transform:translate(0,0) scale(1)}25%{transform:translate(10px,-15px) scale(1.05)}50%{transform:translate(-5px,-25px) scale(1)}75%{transform:translate(-15px,-10px) scale(.95)}}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+
+/* ── Decorative Elements ── */
+.deco-corner{position:absolute;width:60px;height:60px;pointer-events:none;opacity:.08}
+.deco-corner svg{width:100%;height:100%}
+.deco-corner.tl{top:12px;left:12px}
+.deco-corner.tr{top:12px;right:12px;transform:scaleX(-1)}
+.deco-corner.bl{bottom:12px;left:12px;transform:scaleY(-1)}
+.deco-corner.br{bottom:12px;right:12px;transform:scale(-1)}
+.deco-line{display:flex;align-items:center;justify-content:center;gap:12px;margin:20px auto;max-width:300px}
+.deco-line::before,.deco-line::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent)}
+.deco-line svg{flex-shrink:0;opacity:.2}
+.deco-stars{display:flex;justify-content:center;gap:6px;margin:16px auto}
+.deco-stars svg{opacity:.12;animation:breathe 5s ease-in-out infinite}
+.deco-stars svg:nth-child(2){animation-delay:.5s}
+.deco-stars svg:nth-child(3){animation-delay:1s}
+
+/* ── Scroll Animations ── */
+.animate-on-scroll{opacity:0;transform:translateY(24px);transition:all .6s cubic-bezier(.22,1,.36,1)}
+.animate-on-scroll.visible{opacity:1;transform:translateY(0)}
+
+/* ── Section Divider (organic wave) ── */
+.sec-divider{width:100%;line-height:0;margin:0;position:relative;z-index:2}
+.sec-divider svg{display:block;width:100%;height:auto}
+
+/* ══════════════════════════════════════════════
+   HEADER — Welcome bar
+   ══════════════════════════════════════════════ */
+.header-bar{
+  background:linear-gradient(170deg,#1A1816 0%,#2A2520 50%,#1A1816 100%);
+  padding:18px 24px 22px;
+  text-align:center;
+  position:relative;
+  overflow:hidden;
+}
+.header-bar::before{content:'';position:absolute;top:0;left:0;width:100%;height:100%;
+  background:radial-gradient(ellipse at 30% 40%,rgba(224,122,95,.06) 0%,transparent 50%),
+  radial-gradient(ellipse at 70% 60%,rgba(29,107,107,.05) 0%,transparent 50%);pointer-events:none}
+.header-bar::after{content:'';position:absolute;bottom:0;left:0;width:100%;height:120px;
+  background:linear-gradient(180deg,transparent,rgba(26,24,22,.5));pointer-events:none}
+.header-inner{max-width:1200px;margin:0 auto;position:relative;z-index:2}
+.ep-nav{display:inline-flex;align-items:center;gap:6px;margin-bottom:14px}
+.ep-dot{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:5px 14px 5px 5px;border-radius:20px;
+  font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  text-decoration:none;transition:all .25s;cursor:default}
+.ep-dot .ep-num{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:22px;height:22px;border-radius:50%;
+  font-size:11px;font-weight:800;letter-spacing:0;transition:all .25s}
+/* Active */
+.ep-dot.active{
+  background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);color:#fff}
+.ep-dot.active .ep-num{
+  background:linear-gradient(135deg,var(--coral),var(--coral-dark));color:#fff}
+/* Now-playing equalizer bars */
+.now-playing{display:flex;align-items:flex-end;gap:2px;height:12px}
+.now-playing span{display:block;width:2.5px;border-radius:1px;background:#fff}
+.now-playing span:nth-child(1){animation:eqBar1 .8s ease-in-out infinite}
+.now-playing span:nth-child(2){animation:eqBar2 .8s ease-in-out infinite .15s}
+.now-playing span:nth-child(3){animation:eqBar3 .8s ease-in-out infinite .3s}
+@keyframes eqBar1{0%,100%{height:4px}50%{height:11px}}
+@keyframes eqBar2{0%,100%{height:8px}50%{height:4px}}
+@keyframes eqBar3{0%,100%{height:5px}50%{height:10px}}
+/* Locked */
+.ep-dot.locked{
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);
+  color:rgba(255,255,255,.35);cursor:pointer}
+.ep-dot.locked .ep-num{
+  background:rgba(255,255,255,.08);color:rgba(255,255,255,.4)}
+.ep-dot.locked:hover{
+  background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.15);
+  color:rgba(255,255,255,.55)}
+.ep-dot.locked:hover .ep-num{background:rgba(255,255,255,.12);color:rgba(255,255,255,.6)}
+/* Connector line between dots */
+.ep-nav-sep{width:16px;height:1px;background:rgba(255,255,255,.12)}
+.header-welcome{
+  font-family:var(--accent);font-size:clamp(18px,2.5vw,24px);color:var(--gold);
+  margin-bottom:8px;display:block}
+.header-title{
+  font-family:var(--display);font-size:clamp(28px,5vw,52px);font-weight:700;
+  line-height:1.1;color:#faf8f5;margin-bottom:12px;letter-spacing:-.02em}
+.header-title .coral-italic{font-style:italic;color:var(--coral)}
+.header-sub{font-size:clamp(14px,1.8vw,17px);color:rgba(255,255,255,.55);max-width:680px;margin:0 auto;line-height:1.6}
+.header-sub strong{color:rgba(255,255,255,.85)}
+
+/* Floating orbs */
+.header-orb{position:absolute;border-radius:50%;pointer-events:none;z-index:0}
+.header-orb-1{width:300px;height:300px;top:-60px;left:-80px;background:radial-gradient(circle,rgba(224,122,95,.06),transparent 70%);animation:floatOrb 20s ease-in-out infinite}
+.header-orb-2{width:250px;height:250px;bottom:-40px;right:-60px;background:radial-gradient(circle,rgba(29,107,107,.06),transparent 70%);animation:floatOrb 25s ease-in-out infinite 5s}
+
+/* ══════════════════════════════════════════════
+   VIDEO SECTION
+   ══════════════════════════════════════════════ */
+.video-section{
+  background:var(--cream);
+  padding:24px 24px 32px;
+  position:relative;
+}
+.video-layout{
+  display:grid;
+  grid-template-columns:1fr 380px;
+  gap:36px;
+  align-items:start;
+  max-width:1200px;
+  margin:0 auto;
+}
+.video-main{position:relative}
+.video-eyebrow{
+  font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--coral);margin-bottom:14px;display:inline-block;
+  padding:5px 16px;background:linear-gradient(135deg,rgba(224,122,95,.06),rgba(242,215,213,.04));
+  border:1px solid rgba(224,122,95,.08);border-radius:20px}
+.video-heading{
+  font-family:var(--display);font-size:clamp(22px,3vw,32px);font-weight:700;
+  line-height:1.2;color:#2d2a26;margin-bottom:8px}
+.video-sub{font-size:15px;color:#6b635a;margin-bottom:16px;line-height:1.6}
+.video-wrap{
+  width:100%;overflow:hidden;aspect-ratio:16/9;background:#0a0a0a;
+  display:flex;align-items:center;justify-content:center;
+  position:relative;border-radius:14px;
+  box-shadow:0 16px 60px rgba(0,0,0,.12),0 4px 16px rgba(0,0,0,.06);
+  border:1px solid rgba(0,0,0,.06)}
+.video-wrap iframe{width:100%;height:100%;border:none}
+.video-wrap .ph{width:100%;height:100%;display:flex;align-items:center;justify-content:center;flex-direction:column;color:rgba(255,255,255,.35);font-size:13px;gap:10px;position:relative}
+.play-btn{width:80px;height:80px;border-radius:50%;background:rgba(0,0,0,.45);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:3px solid rgba(255,255,255,.3);display:flex;align-items:center;justify-content:center;transition:all .3s;cursor:pointer}
+.play-btn:hover{background:rgba(0,0,0,.6);border-color:rgba(255,255,255,.5);transform:scale(1.05)}
+.play-btn svg{fill:#fff;margin-left:4px;width:28px;height:28px}
+.video-note{
+  display:flex;align-items:center;gap:10px;margin-top:16px;
+  padding:12px 18px;background:linear-gradient(135deg,rgba(255,255,255,.7),rgba(250,248,245,.5));
+  border:1px solid var(--border);border-radius:10px;font-size:14px;color:#6b635a}
+.video-note svg{flex-shrink:0;opacity:.5}
+
+/* Sidebar — Table of Contents */
+.sidebar{position:relative}
+.sidebar-sticky{position:sticky;top:32px}
+.sidebar-card{
+  background:linear-gradient(180deg,rgba(255,255,255,.85),rgba(250,248,245,.7));
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  border:1px solid rgba(232,226,217,.5);border-radius:18px;
+  padding:32px 28px;box-shadow:0 4px 24px rgba(0,0,0,.04),inset 0 1px 0 rgba(255,255,255,.6);
+  position:relative;overflow:hidden}
+.sidebar-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--coral),var(--gold),var(--teal))}
+.sidebar-label{
+  font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--coral);margin-bottom:16px}
+.sidebar-hint{
+  font-size:14px;color:#6b635a;line-height:1.6;margin-bottom:20px;
+  font-style:italic}
+.sidebar-toggle{width:100%}
+.sidebar-toggle summary{
+  display:flex;align-items:center;gap:10px;cursor:pointer;
+  font-size:15px;font-weight:700;color:#2d2a26;
+  padding:14px 18px;background:rgba(255,255,255,.6);border:1px solid var(--border);
+  border-radius:12px;list-style:none;transition:all .2s}
+.sidebar-toggle summary::-webkit-details-marker{display:none}
+.sidebar-toggle summary::before{content:'▸';font-size:14px;color:var(--coral);transition:transform .2s}
+.sidebar-toggle[open] summary::before{transform:rotate(90deg)}
+.sidebar-toggle summary:hover{background:rgba(255,255,255,.9);border-color:rgba(224,122,95,.15)}
+.toc-list{list-style:none;padding:12px 0 0;margin:0}
+.toc-list li{padding:10px 18px;font-size:14px;color:#555;line-height:1.5;
+  border-left:2px solid var(--border);margin-left:8px;transition:all .2s}
+.toc-list li:hover{border-left-color:var(--coral);color:#2d2a26;padding-left:22px}
+.toc-list li strong{color:#2d2a26;font-weight:600}
+.toc-time{color:var(--coral);font-size:12px;font-weight:600;margin-left:4px}
+
+/* ══════════════════════════════════════════════
+   EPISODES SECTION
+   ══════════════════════════════════════════════ */
+.episodes-section{
+  background:#fff;
+  padding:28px 24px 32px;
+  position:relative;
+}
+.episodes-inner{max-width:1200px;margin:0 auto}
+.episodes-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:20px;
+}
+.ep-card{
+  text-align:center;
+  padding:16px 16px 20px;
+  border-radius:14px;
+  border:1px solid var(--border);
+  background:linear-gradient(180deg,rgba(255,255,255,.9),var(--cream));
+  transition:all .4s cubic-bezier(.22,1,.36,1);
+  position:relative;overflow:hidden}
+.ep-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:14px 14px 0 0;opacity:0;transition:opacity .3s}
+.ep-card:hover{transform:translateY(-3px);box-shadow:0 8px 28px rgba(0,0,0,.06)}
+.ep-card:hover::before{opacity:1}
+.ep-card.active::before{background:linear-gradient(90deg,var(--coral),var(--gold));opacity:1}
+.ep-card.active{border-color:rgba(224,122,95,.2);box-shadow:0 3px 16px rgba(224,122,95,.08)}
+.ep-card.locked::before{background:linear-gradient(90deg,rgba(0,0,0,.1),rgba(0,0,0,.05));opacity:1}
+.ep-card.locked{opacity:.85;cursor:pointer}
+.ep-card.locked:hover{transform:none;box-shadow:none}
+
+/* Locked card click animation */
+@keyframes lockShake{0%{transform:translateX(0)}15%{transform:translateX(-6px)}30%{transform:translateX(5px)}45%{transform:translateX(-4px)}60%{transform:translateX(3px)}75%{transform:translateX(-2px)}90%{transform:translateX(1px)}100%{transform:translateX(0)}}
+@keyframes lockJiggle{0%,100%{transform:rotate(0)}20%{transform:rotate(-8deg)}40%{transform:rotate(8deg)}60%{transform:rotate(-5deg)}80%{transform:rotate(3deg)}}
+@keyframes lockFlash{0%{opacity:0}30%{opacity:.15}100%{opacity:0}}
+.ep-card.locked.shake{animation:lockShake .5s ease-in-out}
+.ep-card.locked.shake .ep-lock-icon{animation:lockJiggle .5s ease-in-out}
+.ep-card.locked.shake::after{content:'';position:absolute;inset:0;background:var(--coral);border-radius:14px;animation:lockFlash .5s ease-out;pointer-events:none}
+
+.ep-status{
+  font-size:13px;font-weight:700;color:var(--coral);margin-bottom:10px;
+  display:flex;align-items:center;justify-content:center;gap:6px}
+.ep-status.watching{color:var(--teal)}
+.ep-status.locked{color:#999}
+.ep-status a{color:var(--coral);text-decoration:underline;text-underline-offset:3px;font-weight:700;transition:color .2s}
+.ep-status a:hover{color:var(--coral-dark)}
+
+.ep-thumb{
+  width:100%;aspect-ratio:16/10;border-radius:10px;overflow:hidden;
+  margin-bottom:12px;position:relative;
+  border:1px solid var(--border);
+  background:linear-gradient(145deg,#F0EDE8,#E8E2D9)}
+.ep-thumb img{width:100%;height:100%;object-fit:cover}
+.ep-thumb-ph{
+  width:100%;height:100%;display:flex;align-items:center;justify-content:center;
+  flex-direction:column;gap:6px;color:#8a847b;font-size:12px}
+
+/* Now-playing overlay on active ep card */
+.ep-thumb-playing{
+  position:absolute;bottom:8px;left:8px;
+  display:flex;align-items:center;gap:6px;
+  padding:4px 10px 4px 6px;border-radius:8px;
+  background:rgba(29,107,107,.85);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+  font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#fff}
+.ep-thumb-playing .now-playing{height:10px}
+.ep-thumb-playing .now-playing span{width:2px;background:#fff}
+
+/* Lock overlay */
+.ep-lock-overlay{
+  position:absolute;top:0;left:0;right:0;bottom:0;
+  background:rgba(26,24,22,.55);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);
+  display:flex;align-items:center;justify-content:center;border-radius:10px;
+  transition:background .3s}
+.ep-card.locked:hover .ep-lock-overlay{background:rgba(26,24,22,.65)}
+.ep-lock-icon{
+  width:44px;height:44px;border-radius:50%;
+  background:linear-gradient(135deg,rgba(224,122,95,.9),rgba(196,93,69,.9));
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 4px 16px rgba(224,122,95,.3);
+  transition:transform .3s}
+.ep-card.locked:hover .ep-lock-icon{transform:scale(1.08)}
+.ep-lock-icon svg{width:20px;height:20px}
+
+.ep-tag{
+  font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  color:#8a847b;margin-bottom:2px}
+.ep-title{
+  font-family:var(--display);font-size:clamp(15px,1.8vw,17px);font-weight:700;
+  line-height:1.3;color:#2d2a26;margin-bottom:0}
+.ep-desc{font-size:13px;color:#6b635a;line-height:1.5}
+
+/* ══════════════════════════════════════════════
+   BOTTOM SECTION — FAQ + Links
+   ══════════════════════════════════════════════ */
+.bottom-section{
+  background:var(--warm);
+  padding:28px 24px 32px;
+  position:relative;
+}
+.bottom-layout{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:40px;
+  align-items:start;
+  max-width:1200px;
+  margin:0 auto;
+}
+.bottom-card{
+  padding:36px 32px;
+  background:linear-gradient(180deg,rgba(255,255,255,.8),rgba(250,248,245,.6));
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  border:1px solid rgba(255,255,255,.5);border-radius:18px;
+  box-shadow:0 4px 24px rgba(0,0,0,.03),inset 0 1px 0 rgba(255,255,255,.6);
+  position:relative;overflow:hidden}
+.bottom-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--coral),var(--gold),var(--sage))}
+.bottom-card-title{
+  font-family:var(--display);font-size:clamp(20px,2.5vw,26px);font-weight:700;
+  color:#2d2a26;margin-bottom:16px;line-height:1.2}
+.bottom-card-body{font-size:15px;color:#6b635a;line-height:1.7;margin-bottom:16px}
+.bottom-card-body strong{color:#2d2a26;font-weight:600}
+.bottom-card-body a{color:var(--coral);text-decoration:underline;text-underline-offset:3px;font-weight:600;transition:color .2s}
+.bottom-card-body a:hover{color:var(--coral-dark)}
+
+.help-list{list-style:none;padding:0;margin:0}
+.help-list li{
+  display:flex;align-items:center;gap:12px;
+  padding:14px 18px;margin-bottom:8px;
+  background:linear-gradient(135deg,rgba(255,255,255,.6),rgba(250,248,245,.4));
+  border:1px solid rgba(255,255,255,.4);border-radius:12px;
+  font-size:15px;color:#2d2a26;font-weight:500;
+  transition:all .25s;box-shadow:inset 0 1px 0 rgba(255,255,255,.5)}
+.help-list li:hover{transform:translateX(4px);background:rgba(255,255,255,.8);
+  box-shadow:0 4px 16px rgba(0,0,0,.03),inset 0 1px 0 rgba(255,255,255,.6)}
+.help-list li:last-child{margin-bottom:0}
+.help-list a{color:var(--teal);text-decoration:underline;text-underline-offset:3px;font-weight:700;transition:color .2s}
+.help-list a:hover{color:var(--teal-dark)}
+.help-tag{font-size:11px;font-weight:600;padding:3px 10px;border-radius:6px;margin-left:auto;white-space:nowrap}
+.help-tag.free{color:var(--teal);background:rgba(29,107,107,.08)}
+.help-tag.paid{color:var(--coral);background:rgba(224,122,95,.08)}
+
+/* ══════════════════════════════════════════════
+   FOOTER
+   ══════════════════════════════════════════════ */
+.vfooter{background:var(--dark);padding:22px 20px;text-align:center;position:relative;overflow:hidden}
+.vfooter::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(184,206,194,.15),rgba(212,168,83,.2),rgba(201,160,160,.15),transparent)}
+.vf-brand{font-family:var(--display);font-size:22px;font-weight:700;color:#fff;margin-bottom:2px}
+.vf-brand span{color:var(--gold)}
+.vf-sub{font-family:var(--accent);font-size:20px;color:var(--coral);display:block;margin-bottom:10px}
+.vf-copy{font-size:13px;color:rgba(255,255,255,.3);margin-bottom:10px}
+.vf-links{display:flex;flex-wrap:wrap;justify-content:center;gap:14px}
+.vf-links a{font-size:12px;color:rgba(255,255,255,.25);text-decoration:underline;transition:color .2s}
+.vf-links a:hover{color:rgba(255,255,255,.5)}
+
+/* ══════════════════════════════════════════════
+   RESPONSIVE
+   ══════════════════════════════════════════════ */
+@media(max-width:900px){
+  .video-layout{grid-template-columns:1fr;gap:32px}
+  .sidebar-sticky{position:relative;top:0}
+  .episodes-grid{grid-template-columns:repeat(3,1fr);gap:20px}
+  .bottom-layout{grid-template-columns:1fr;gap:32px}
+}
+@media(max-width:680px){
+  .episodes-grid{grid-template-columns:1fr;gap:20px;max-width:480px;margin:0 auto}
+  .header-bar{padding:14px 20px 18px}
+  .video-section{padding:20px 20px 24px}
+  .episodes-section{padding:22px 20px 26px}
+  .bottom-section{padding:22px 20px 26px}
+  .bottom-card{padding:28px 24px}
+}
+</style>
+</head>
+<body>
+<div class="pg">
+
+<!-- ═══════════════════════════════════════════
+     HEADER — Dark welcome bar
+     ═══════════════════════════════════════════ -->
+<section class="header-bar">
+  <div class="header-orb header-orb-1"></div>
+  <div class="header-orb header-orb-2"></div>
+  <div class="header-inner">
+    <nav class="ep-nav">
+      <span class="ep-dot active"><span class="ep-num"><span class="now-playing"><span></span><span></span><span></span></span></span> Episode 1</span>
+      <span class="ep-nav-sep"></span>
+      <a href="#" class="ep-dot locked"><span class="ep-num">2</span> Episode 2</a>
+      <span class="ep-nav-sep"></span>
+      <a href="#" class="ep-dot locked"><span class="ep-num">3</span> Episode 3</a>
+    </nav>
+    <span class="header-welcome">Welcome to episode 1 of my free &amp; no-pitch series on...</span>
+    <h1 class="header-title">How I Turned My Love of Planning<br>into a <span class="coral-italic">6-Figure Freelance Career</span></h1>
+    <p class="header-sub">Inside My Digital Business Manager Career: How I Made 6 Figures &amp; <strong>How I Found My High-Paying Clients</strong></p>
+  </div>
+</section>
+
+<!-- Wave: dark → cream -->
+<div class="sec-divider">
+  <svg viewBox="0 0 1440 56" preserveAspectRatio="none" fill="none">
+    <path d="M0,0 L1440,0 L1440,12 Q1080,56 720,32 Q360,8 0,48 Z" fill="#1A1816"/>
+  </svg>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     VIDEO + SIDEBAR
+     ═══════════════════════════════════════════ -->
+<section class="video-section">
+  <div class="video-layout">
+    <!-- Main video column -->
+    <div class="video-main">
+      <span class="video-eyebrow">Episode 1 — Behind the Scenes</span>
+      <h2 class="video-heading">How I Turned My Love for Planning into a <span class="coral">6-Figure Freelance Career</span></h2>
+      <p class="video-sub">Inside My Digital Business Manager Career: How I Made 6 Figures &amp; How I Found My High-Paying Clients</p>
+
+      <div class="video-wrap">
+        <!-- Replace this placeholder with your Vimeo/YouTube embed -->
+        <div class="ph">
+          <div class="play-btn">
+            <svg viewBox="0 0 24 24"><polygon points="8,5 19,12 8,19"/></svg>
+          </div>
+          <span>Episode 1 — 37:11</span>
+        </div>
+      </div>
+
+      <div class="video-note">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+        Feel free to watch this on 1.5x or 2x by clicking the gear icon in the bottom right of the video.
+      </div>
+    </div>
+
+    <!-- Sidebar — Table of Contents -->
+    <div class="sidebar">
+      <div class="sidebar-sticky">
+        <div class="sidebar-card">
+          <p class="sidebar-label">Table of Contents</p>
+          <p class="sidebar-hint">Open the toggle below to find a detailed table of contents.</p>
+          <details class="sidebar-toggle">
+            <summary><strong>In Episode One...</strong></summary>
+            <ul class="toc-list">
+              <li><strong>Intro</strong> — Who I am &amp; why this series <span class="toc-time">0:00</span></li>
+              <li><strong>The beginning</strong> — How I discovered the DBM role <span class="toc-time">4:12</span></li>
+              <li><strong>First clients</strong> — Landing clients at $10/hr <span class="toc-time">9:30</span></li>
+              <li><strong>The shift</strong> — Going from $10/hr to premium <span class="toc-time">16:45</span></li>
+              <li><strong>6 figures</strong> — What actually got me there <span class="toc-time">24:00</span></li>
+              <li><strong>Key lessons</strong> — What I'd do differently <span class="toc-time">31:20</span></li>
+            </ul>
+          </details>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Wave: cream → white -->
+<div class="sec-divider">
+  <svg viewBox="0 0 1440 48" preserveAspectRatio="none" fill="none">
+    <path d="M0,0 L1440,0 L1440,8 Q1080,48 720,24 Q360,0 0,40 Z" fill="var(--cream)"/>
+  </svg>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     EPISODES — 3 cards
+     ═══════════════════════════════════════════ -->
+<section class="episodes-section">
+  <div class="episodes-inner">
+    <div class="episodes-grid">
+
+      <!-- Episode 1 — Active -->
+      <div class="ep-card active animate-on-scroll">
+        <p class="ep-status watching">You're watching episode 1!</p>
+        <div class="ep-thumb">
+          <div class="ep-thumb-ph">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><polygon points="10,7 16,10 10,13" fill="var(--teal)" opacity=".3"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+            Episode 1 Thumbnail
+          </div>
+          <div class="ep-thumb-playing">
+            <span class="now-playing"><span></span><span></span><span></span></span>
+            Now Playing
+          </div>
+        </div>
+        <p class="ep-tag">Episode 1:</p>
+        <h3 class="ep-title">The Chaotic Journey from $10/hr to 6 Figures</h3>
+      </div>
+
+      <!-- Episode 2 — Locked -->
+      <div class="ep-card locked animate-on-scroll" data-unlock-url="#" onclick="handleLockedClick(this)">
+        <p class="ep-status locked">Click <a href="#" onclick="event.stopPropagation()">here</a> to unlock episode 2.</p>
+        <div class="ep-thumb">
+          <div class="ep-thumb-ph">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#8a847b" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+            Episode 2 Thumbnail
+          </div>
+          <div class="ep-lock-overlay">
+            <div class="ep-lock-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+            </div>
+          </div>
+        </div>
+        <p class="ep-tag">Episode 2:</p>
+        <h3 class="ep-title">How the $$$ Breaks Down &amp; What I Charged</h3>
+      </div>
+
+      <!-- Episode 3 — Locked -->
+      <div class="ep-card locked animate-on-scroll" data-unlock-url="#" onclick="handleLockedClick(this)">
+        <p class="ep-status locked">Click <a href="#" onclick="event.stopPropagation()">here</a> to unlock episode 3.</p>
+        <div class="ep-thumb">
+          <div class="ep-thumb-ph">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#8a847b" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+            Episode 3 Thumbnail
+          </div>
+          <div class="ep-lock-overlay">
+            <div class="ep-lock-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+            </div>
+          </div>
+        </div>
+        <p class="ep-tag">Episode 3:</p>
+        <h3 class="ep-title">Where I Found My 40+ Clients &amp; My Advice</h3>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Wave: white → warm -->
+<div class="sec-divider">
+  <svg viewBox="0 0 1440 48" preserveAspectRatio="none" fill="none">
+    <path d="M0,0 L1440,0 L1440,8 Q1080,48 720,24 Q360,0 0,40 Z" fill="#fff"/>
+  </svg>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     BOTTOM — FAQ + Other Ways I Can Help
+     ═══════════════════════════════════════════ -->
+<section class="bottom-section">
+  <div class="bottom-layout">
+
+    <!-- Left: "Why free?" -->
+    <div class="bottom-card">
+      <h3 class="bottom-card-title">"Why are you offering this for free?"</h3>
+      <div class="bottom-card-body">
+        <p>Good question! Because I think a small percentage of those of you that would click &amp; watch this series might be interested in my programs. So I created this series to deliver as much value as I could upfront to help you see if this is something for you. If not, 100% okay! I hope it's helpful to you regardless.</p>
+        <p style="margin-top:14px">If you have any questions, you can message me on <a href="#">Instagram</a> or email me: bailey@example.com</p>
+      </div>
+    </div>
+
+    <!-- Right: Other ways to help -->
+    <div class="bottom-card">
+      <h3 class="bottom-card-title">Whenever it suits you, here are other ways I can help:</h3>
+      <ul class="help-list">
+        <li>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2"><path d="M22.54 6.42a2.78 2.78 0 00-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 00-1.94 2A29 29 0 001 11.75a29 29 0 00.46 5.33A2.78 2.78 0 003.4 19.13C5.12 19.56 12 19.56 12 19.56s6.88 0 8.6-.46a2.78 2.78 0 001.94-2 29 29 0 00.46-5.25 29 29 0 00-.46-5.43z"/><polygon points="9.75,15.02 15.5,11.75 9.75,8.48" fill="var(--teal)"/></svg>
+          <a href="#">Youtube Videos</a>
+          <span class="help-tag free">Free</span>
+        </li>
+        <li>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--coral)" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          <a href="#">Explore a higher-level role with the Mini-DBM Challenge</a>
+          <span class="help-tag paid">Paid</span>
+        </li>
+        <li>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+          <a href="#">Request an Invitation to the Open House</a> of My Signature Program: DBM Bootcamp&reg;
+          <span class="help-tag paid">Paid</span>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     FOOTER
+     ═══════════════════════════════════════════ -->
+<footer class="vfooter">
+  <div style="max-width:1200px;margin:0 auto">
+    <svg width="200" height="20" viewBox="0 0 200 20" fill="none" style="display:block;margin:0 auto 20px;opacity:.35">
+      <line x1="0" y1="10" x2="75" y2="10" stroke="var(--gold)" stroke-width=".5"/>
+      <path d="M85 10L92 3L100 10L92 17Z" fill="none" stroke="var(--gold)" stroke-width=".8"/>
+      <circle cx="100" cy="10" r="2" fill="var(--gold)" opacity=".5"/>
+      <path d="M108 10L115 3L100 10L115 17Z" fill="none" stroke="var(--gold)" stroke-width=".8"/>
+      <line x1="125" y1="10" x2="200" y2="10" stroke="var(--gold)" stroke-width=".5"/>
+    </svg>
+    <p class="vf-brand">BAILEY <span>VANN</span></p>
+    <span class="vf-sub">Free Series</span>
+    <p class="vf-copy">&copy; 2026 Bailey Vann | All Rights Reserved</p>
+    <div class="vf-links">
+      <a href="#">Terms &amp; Conditions</a>
+      <a href="#">Privacy</a>
+      <a href="#">Support</a>
+    </div>
+  </div>
+</footer>
+
+</div><!-- .pg -->
+
+<!-- ── Scripts ── -->
+<script>
+// Scroll animations
+document.addEventListener('DOMContentLoaded',function(){
+  var els=document.querySelectorAll('.animate-on-scroll');
+  if(!els.length) return;
+  var obs=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target)}
+    });
+  },{threshold:.15});
+  els.forEach(function(el){obs.observe(el)});
+});
+
+// Locked episode click → shake then redirect
+function handleLockedClick(card){
+  if(card.classList.contains('shake')) return;
+  card.classList.add('shake');
+  card.addEventListener('animationend',function onEnd(){
+    card.classList.remove('shake');
+    card.removeEventListener('animationend',onEnd);
+    var url=card.getAttribute('data-unlock-url');
+    if(url && url!=='#') window.location.href=url;
+  });
+}
+</script>
+</body>
+</html>
