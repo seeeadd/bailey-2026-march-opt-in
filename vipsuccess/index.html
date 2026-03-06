@@ -615,10 +615,135 @@ strong{color:#2A2520}
   50%{transform:scale(1.06)}
 }
 
-/* Skool logo */
+/* ===== VIP VAULT INTRO ANIMATION ===== */
+.intro-overlay{position:fixed;inset:0;z-index:99999;background:#1A1816;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.intro-particles{position:absolute;inset:0;pointer-events:none;z-index:1}
+.intro-particle{position:absolute;border-radius:50%;background:radial-gradient(circle,#D4A853,rgba(212,168,83,0));pointer-events:none;animation:introParticle var(--dur) ease-in-out var(--delay) forwards;opacity:0}
+.intro-text{position:absolute;z-index:3;font-family:'Caveat',cursive;font-size:clamp(28px,5vw,48px);color:#D4A853;text-align:center;letter-spacing:.05em;opacity:0;animation:introTextIn 1s ease-out .3s forwards,introTextOut .8s ease-in 1.6s forwards;text-shadow:0 0 30px rgba(212,168,83,.3),0 0 60px rgba(212,168,83,.15)}
+.intro-doors{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;opacity:0;transform:scale(.92);animation:introDoorsIn 1.2s ease-out 1.5s forwards}
+.intro-crown{width:clamp(80px,15vw,140px);height:auto;margin-bottom:-8px;filter:drop-shadow(0 0 16px rgba(212,168,83,.5))}
+.intro-frame{position:relative;display:flex;width:clamp(220px,50vw,420px);height:clamp(320px,60vh,520px);border:2px solid rgba(212,168,83,.45);border-radius:4px 4px 0 0;overflow:hidden;box-shadow:0 0 60px rgba(212,168,83,.12),0 0 120px rgba(212,168,83,.06),inset 0 0 40px rgba(0,0,0,.5)}
+.intro-rays{position:absolute;inset:-50%;background:radial-gradient(ellipse at center,rgba(212,168,83,.6) 0%,rgba(212,168,83,.2) 30%,transparent 65%);opacity:0;transform:scale(.5);z-index:0;animation:introRays 1.5s ease-out 2.8s forwards}
+.intro-door{width:50%;height:100%;position:relative;z-index:2;backface-visibility:hidden}
+.intro-door-l{transform-origin:left center;animation:introDoorSwingL 1.6s cubic-bezier(.2,.6,.3,1) 3.8s forwards}
+.intro-door-r{transform-origin:right center;animation:introDoorSwingR 1.6s cubic-bezier(.2,.6,.3,1) 3.8s forwards}
+.intro-door svg{width:100%;height:100%}
+.intro-keyhole{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:16px;height:28px;z-index:3;background:radial-gradient(circle,rgba(255,250,230,.95) 0%,rgba(212,168,83,.6) 40%,transparent 70%);border-radius:50% 50% 40% 40%;opacity:0;animation:introKeyholeIn .8s ease-out 2.3s forwards,introKeyholePulse 1s ease-in-out 2.8s 3}
+.intro-sparkle{position:absolute;width:4px;height:4px;background:#FFF9EF;border-radius:50%;opacity:0;z-index:4}
+.intro-wash{position:absolute;inset:0;z-index:10;background:radial-gradient(circle at center,rgba(255,250,230,.95) 0%,rgba(212,168,83,.8) 40%,rgba(26,24,22,0) 70%);opacity:0;transform:scale(.3);animation:introWash 1.2s ease-out 4.8s forwards}
+
+/* Intro keyframes */
+@keyframes introTextIn{0%{opacity:0;transform:translateY(18px)}100%{opacity:1;transform:translateY(0)}}
+@keyframes introTextOut{0%{opacity:1;transform:translateY(0)}100%{opacity:0;transform:translateY(-12px)}}
+@keyframes introDoorsIn{0%{opacity:0;transform:scale(.92)}100%{opacity:1;transform:scale(1)}}
+@keyframes introKeyholeIn{0%{opacity:0;transform:translate(-50%,-50%) scale(.5)}100%{opacity:1;transform:translate(-50%,-50%) scale(1)}}
+@keyframes introKeyholePulse{0%,100%{box-shadow:0 0 12px rgba(212,168,83,.4),0 0 24px rgba(212,168,83,.2);transform:translate(-50%,-50%) scale(1)}50%{box-shadow:0 0 35px rgba(255,250,230,.85),0 0 70px rgba(212,168,83,.5),0 0 100px rgba(212,168,83,.2);transform:translate(-50%,-50%) scale(1.2)}}
+@keyframes introRays{0%{opacity:0;transform:scale(.5)}100%{opacity:1;transform:scale(2)}}
+@keyframes introDoorSwingL{0%{transform:perspective(1200px) rotateY(0)}100%{transform:perspective(1200px) rotateY(75deg)}}
+@keyframes introDoorSwingR{0%{transform:perspective(1200px) rotateY(0)}100%{transform:perspective(1200px) rotateY(-75deg)}}
+@keyframes introWash{0%{opacity:0;transform:scale(.3)}60%{opacity:1;transform:scale(1.5)}100%{opacity:1;transform:scale(3)}}
+@keyframes introFadeOut{0%{opacity:1}100%{opacity:0}}
+@keyframes introParticle{0%{opacity:0;transform:translate(0,0)}15%{opacity:var(--maxOp)}85%{opacity:var(--maxOp)}100%{opacity:0;transform:translate(var(--tx),var(--ty))}}
+@keyframes introSparkle{0%{opacity:0;transform:translate(0,0) scale(0)}30%{opacity:1;transform:translate(var(--sx),var(--sy)) scale(1.5)}100%{opacity:0;transform:translate(calc(var(--sx)*2),calc(var(--sy)*2)) scale(0)}}
 </style>
 </head>
 <body>
+
+<!-- VIP VAULT INTRO OVERLAY -->
+<div id="vip-intro" class="intro-overlay">
+  <div class="intro-particles" id="introParticles"></div>
+  <div class="intro-text">Welcome to the Inner Circle</div>
+  <div class="intro-doors">
+    <!-- Crown crest -->
+    <svg class="intro-crown" viewBox="0 0 140 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="iCrownG" x1="20" y1="10" x2="120" y2="65">
+          <stop offset="0%" stop-color="#FFF9EF"/><stop offset="40%" stop-color="#D4A853"/><stop offset="100%" stop-color="#B8892A"/>
+        </linearGradient>
+      </defs>
+      <rect x="25" y="52" width="90" height="10" rx="3" fill="#D4A853"/>
+      <rect x="25" y="52" width="90" height="10" rx="3" fill="url(#iCrownG)" opacity=".5"/>
+      <path d="M25 52 L30 18 L48 35 L60 8 L72 35 L90 12 L115 52Z" fill="#D4A853"/>
+      <path d="M25 52 L30 18 L48 35 L60 8 L72 35 L90 12 L115 52Z" fill="url(#iCrownG)" opacity=".4"/>
+      <circle cx="38" cy="52" r="3" fill="#E07A5F"/><circle cx="55" cy="52" r="3" fill="#FFF9EF"/>
+      <circle cx="70" cy="52" r="3.5" fill="#E07A5F"/><circle cx="85" cy="52" r="3" fill="#FFF9EF"/>
+      <circle cx="102" cy="52" r="3" fill="#E07A5F"/>
+      <circle cx="30" cy="16" r="2.5" fill="#FFF9EF" opacity=".7"/>
+      <circle cx="60" cy="5" r="3" fill="#FFF9EF" opacity=".8"/>
+      <circle cx="90" cy="10" r="2.5" fill="#FFF9EF" opacity=".7"/>
+    </svg>
+    <div class="intro-frame">
+      <div class="intro-rays"></div>
+      <!-- Left door panel -->
+      <div class="intro-door intro-door-l">
+        <svg viewBox="0 0 200 500" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="iWoodL" x1="0" y1="0" x2="200" y2="500" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#3D3526"/><stop offset="30%" stop-color="#2A2520"/><stop offset="60%" stop-color="#352F28"/><stop offset="100%" stop-color="#2A2520"/>
+            </linearGradient>
+            <linearGradient id="iTrimL" x1="0" y1="0" x2="0" y2="500" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#D4A853"/><stop offset="50%" stop-color="#B8892A"/><stop offset="100%" stop-color="#D4A853"/>
+            </linearGradient>
+          </defs>
+          <rect width="200" height="500" fill="url(#iWoodL)"/>
+          <rect x="4" y="4" width="192" height="492" rx="2" fill="none" stroke="url(#iTrimL)" stroke-width="1.5"/>
+          <!-- Top panel -->
+          <rect x="20" y="24" width="160" height="200" rx="3" fill="none" stroke="rgba(212,168,83,0.5)" stroke-width="1"/>
+          <rect x="28" y="32" width="144" height="184" rx="2" fill="rgba(0,0,0,0.15)"/>
+          <rect x="40" y="48" width="120" height="152" rx="2" fill="none" stroke="rgba(212,168,83,0.2)" stroke-width=".75"/>
+          <!-- Rail -->
+          <rect x="12" y="240" width="176" height="6" rx="1" fill="rgba(212,168,83,0.25)"/>
+          <line x1="12" y1="243" x2="188" y2="243" stroke="rgba(212,168,83,0.4)" stroke-width=".5"/>
+          <!-- Bottom panel -->
+          <rect x="20" y="260" width="160" height="200" rx="3" fill="none" stroke="rgba(212,168,83,0.5)" stroke-width="1"/>
+          <rect x="28" y="268" width="144" height="184" rx="2" fill="rgba(0,0,0,0.15)"/>
+          <rect x="40" y="284" width="120" height="152" rx="2" fill="none" stroke="rgba(212,168,83,0.2)" stroke-width=".75"/>
+          <!-- Handle -->
+          <circle cx="178" cy="250" r="16" fill="none" stroke="rgba(212,168,83,0.3)" stroke-width=".75"/>
+          <circle cx="178" cy="250" r="12" fill="none" stroke="#D4A853" stroke-width="2"/>
+          <circle cx="178" cy="250" r="7" fill="#D4A853"/>
+          <circle cx="178" cy="250" r="4" fill="#B8892A"/>
+          <!-- Wood grain -->
+          <line x1="60" y1="0" x2="60" y2="500" stroke="rgba(212,168,83,0.04)" stroke-width=".5"/>
+          <line x1="120" y1="0" x2="120" y2="500" stroke="rgba(212,168,83,0.03)" stroke-width=".5"/>
+        </svg>
+      </div>
+      <!-- Keyhole -->
+      <div class="intro-keyhole"></div>
+      <!-- Right door panel (mirrored) -->
+      <div class="intro-door intro-door-r">
+        <svg viewBox="0 0 200 500" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="iWoodR" x1="200" y1="0" x2="0" y2="500" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#3D3526"/><stop offset="30%" stop-color="#2A2520"/><stop offset="60%" stop-color="#352F28"/><stop offset="100%" stop-color="#2A2520"/>
+            </linearGradient>
+            <linearGradient id="iTrimR" x1="0" y1="0" x2="0" y2="500" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#D4A853"/><stop offset="50%" stop-color="#B8892A"/><stop offset="100%" stop-color="#D4A853"/>
+            </linearGradient>
+          </defs>
+          <rect width="200" height="500" fill="url(#iWoodR)"/>
+          <rect x="4" y="4" width="192" height="492" rx="2" fill="none" stroke="url(#iTrimR)" stroke-width="1.5"/>
+          <rect x="20" y="24" width="160" height="200" rx="3" fill="none" stroke="rgba(212,168,83,0.5)" stroke-width="1"/>
+          <rect x="28" y="32" width="144" height="184" rx="2" fill="rgba(0,0,0,0.15)"/>
+          <rect x="40" y="48" width="120" height="152" rx="2" fill="none" stroke="rgba(212,168,83,0.2)" stroke-width=".75"/>
+          <rect x="12" y="240" width="176" height="6" rx="1" fill="rgba(212,168,83,0.25)"/>
+          <line x1="12" y1="243" x2="188" y2="243" stroke="rgba(212,168,83,0.4)" stroke-width=".5"/>
+          <rect x="20" y="260" width="160" height="200" rx="3" fill="none" stroke="rgba(212,168,83,0.5)" stroke-width="1"/>
+          <rect x="28" y="268" width="144" height="184" rx="2" fill="rgba(0,0,0,0.15)"/>
+          <rect x="40" y="284" width="120" height="152" rx="2" fill="none" stroke="rgba(212,168,83,0.2)" stroke-width=".75"/>
+          <!-- Handle (mirrored) -->
+          <circle cx="22" cy="250" r="16" fill="none" stroke="rgba(212,168,83,0.3)" stroke-width=".75"/>
+          <circle cx="22" cy="250" r="12" fill="none" stroke="#D4A853" stroke-width="2"/>
+          <circle cx="22" cy="250" r="7" fill="#D4A853"/>
+          <circle cx="22" cy="250" r="4" fill="#B8892A"/>
+          <line x1="80" y1="0" x2="80" y2="500" stroke="rgba(212,168,83,0.04)" stroke-width=".5"/>
+          <line x1="140" y1="0" x2="140" y2="500" stroke="rgba(212,168,83,0.03)" stroke-width=".5"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+  <div class="intro-wash"></div>
+</div>
 
 <!-- HERO -->
 <div class="hero">
@@ -953,8 +1078,53 @@ strong{color:#2A2520}
 </div>
 
 <script>
-/* Confetti animation */
-(function(){var c=['#D4A853','#E07A5F','#1D6B6B','#B8CEC2','#F2D7D5','#C9A0A0'];for(var i=0;i<35;i++){var el=document.createElement('div');el.className='confetti';el.style.left=Math.random()*100+'vw';el.style.background=c[Math.floor(Math.random()*c.length)];var s=4+Math.random()*7;el.style.width=s+'px';el.style.height=s+'px';el.style.animationDuration=(3+Math.random()*3)+'s';el.style.animationDelay=Math.random()*1.5+'s';el.style.borderRadius=Math.random()>.5?'50%':'2px';el.style.opacity=(.2+Math.random()*.4).toFixed(2);document.body.appendChild(el);setTimeout(function(e){return function(){e.remove()}}(el),7000)}})();
+/* VIP Vault Intro — particles, sparkles, vignette, cleanup */
+(function(){
+  var pWrap=document.getElementById('introParticles');
+  if(!pWrap)return;
+  for(var i=0;i<25;i++){
+    var dot=document.createElement('div');
+    dot.className='intro-particle';
+    var sz=2+Math.random()*4;
+    dot.style.width=sz+'px';dot.style.height=sz+'px';
+    dot.style.left=Math.random()*100+'%';
+    dot.style.top=(40+Math.random()*55)+'%';
+    dot.style.setProperty('--dur',(4+Math.random()*5)+'s');
+    dot.style.setProperty('--delay',(Math.random()*2)+'s');
+    dot.style.setProperty('--tx',(-20+Math.random()*40)+'px');
+    dot.style.setProperty('--ty',(-80-Math.random()*120)+'px');
+    dot.style.setProperty('--maxOp',(0.3+Math.random()*0.5).toFixed(2));
+    pWrap.appendChild(dot);
+  }
+  var vig=document.createElement('div');
+  vig.style.cssText='position:absolute;inset:0;z-index:0;background:radial-gradient(ellipse at center,transparent 40%,rgba(0,0,0,.6) 100%);pointer-events:none';
+  var intro=document.getElementById('vip-intro');
+  intro.insertBefore(vig,intro.firstChild);
+  setTimeout(function(){
+    var frame=document.querySelector('.intro-frame');
+    if(!frame)return;
+    for(var j=0;j<10;j++){
+      var sp=document.createElement('div');
+      sp.className='intro-sparkle';
+      var ang=(j/10)*Math.PI*2;
+      sp.style.left='50%';sp.style.top='50%';
+      sp.style.setProperty('--sx',(Math.cos(ang)*(20+Math.random()*18))+'px');
+      sp.style.setProperty('--sy',(Math.sin(ang)*(20+Math.random()*18))+'px');
+      sp.style.animation='introSparkle .8s ease-out '+(j*.07)+'s forwards';
+      frame.appendChild(sp);
+    }
+  },2800);
+  setTimeout(function(){
+    var ov=document.getElementById('vip-intro');
+    if(ov){
+      ov.style.animation='introFadeOut 1.2s ease-out forwards';
+      setTimeout(function(){ov.style.display='none'},1300);
+    }
+  },5600);
+})();
+
+/* Confetti delayed until after VIP Vault intro */
+setTimeout(function(){(function(){var c=['#D4A853','#E07A5F','#1D6B6B','#B8CEC2','#F2D7D5','#C9A0A0'];for(var i=0;i<35;i++){var el=document.createElement('div');el.className='confetti';el.style.left=Math.random()*100+'vw';el.style.background=c[Math.floor(Math.random()*c.length)];var s=4+Math.random()*7;el.style.width=s+'px';el.style.height=s+'px';el.style.animationDuration=(3+Math.random()*3)+'s';el.style.animationDelay=Math.random()*1.5+'s';el.style.borderRadius=Math.random()>.5?'50%':'2px';el.style.opacity=(.2+Math.random()*.4).toFixed(2);document.body.appendChild(el);setTimeout(function(e){return function(){e.remove()}}(el),7000)}})();},6500);
 
 /* Calendar: reserve all 3 days (March 14-16) */
 (function(){
