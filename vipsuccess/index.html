@@ -30,9 +30,19 @@ strong{color:#2A2520}
 
 /* ═══ HERO ═══ */
 .hero{
-  background: #2A2520;
+  background: linear-gradient(135deg, #1A1816 0%, #3D3526 16%, #2A2520 32%, #1A1816 44%, #352F28 56%, #2A2520 68%, #3D3526 80%, #1A1816 100%);
+  background-size: 500% 500%;
+  animation: heroGradient 10s ease-in-out infinite;
   padding: 64px 24px 56px;
   text-align: center;
+}
+@keyframes heroGradient{
+  0%{background-position:0% 50%}
+  20%{background-position:40% 20%}
+  40%{background-position:80% 60%}
+  60%{background-position:100% 40%}
+  80%{background-position:60% 80%}
+  100%{background-position:0% 50%}
 }
 .hero-eyebrow{
   font-size: 11px;
@@ -632,6 +642,10 @@ strong{color:#2A2520}
 .intro-sparkle{position:absolute;width:4px;height:4px;background:#FFF9EF;border-radius:50%;opacity:0;z-index:4}
 .intro-wash{position:absolute;inset:0;z-index:10;background:radial-gradient(circle at center,rgba(255,250,230,.95) 0%,rgba(212,168,83,.8) 40%,rgba(26,24,22,0) 70%);opacity:0;transform:scale(.3);animation:introWash 1.2s ease-out 4.8s forwards}
 
+/* Red carpet — JS-driven unroll */
+.intro-carpet-wrap{position:absolute;z-index:1;bottom:0;left:50%;transform:translateX(-50%);opacity:0;animation:carpetFadeIn .4s ease-out 2s forwards}
+.intro-carpet-svg{width:clamp(280px,55vw,500px);height:auto;overflow:visible;filter:drop-shadow(0 8px 24px rgba(0,0,0,.45))}
+
 /* Intro keyframes */
 @keyframes introTextIn{0%{opacity:0;transform:translateY(18px)}100%{opacity:1;transform:translateY(0)}}
 @keyframes introTextOut{0%{opacity:1;transform:translateY(0)}100%{opacity:0;transform:translateY(-12px)}}
@@ -645,6 +659,7 @@ strong{color:#2A2520}
 @keyframes introFadeOut{0%{opacity:1}100%{opacity:0}}
 @keyframes introParticle{0%{opacity:0;transform:translate(0,0)}15%{opacity:var(--maxOp)}85%{opacity:var(--maxOp)}100%{opacity:0;transform:translate(var(--tx),var(--ty))}}
 @keyframes introSparkle{0%{opacity:0;transform:translate(0,0) scale(0)}30%{opacity:1;transform:translate(var(--sx),var(--sy)) scale(1.5)}100%{opacity:0;transform:translate(calc(var(--sx)*2),calc(var(--sy)*2)) scale(0)}}
+@keyframes carpetFadeIn{0%{opacity:0}100%{opacity:1}}
 </style>
 </head>
 <body>
@@ -741,6 +756,101 @@ strong{color:#2A2520}
         </svg>
       </div>
     </div>
+  </div>
+  <!-- Red carpet (SVG perspective) -->
+  <div class="intro-carpet-wrap">
+    <svg class="intro-carpet-svg" viewBox="0 0 400 320" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <!-- Carpet base gradient (velvet depth) -->
+        <linearGradient id="carpetVelvet" x1="200" y1="0" x2="200" y2="320" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#8B1A1A"/>
+          <stop offset="8%" stop-color="#A12323"/>
+          <stop offset="16%" stop-color="#7E1717"/>
+          <stop offset="24%" stop-color="#971F1F"/>
+          <stop offset="32%" stop-color="#8B1A1A"/>
+          <stop offset="40%" stop-color="#A32424"/>
+          <stop offset="48%" stop-color="#7C1616"/>
+          <stop offset="56%" stop-color="#951E1E"/>
+          <stop offset="64%" stop-color="#8B1A1A"/>
+          <stop offset="72%" stop-color="#A02222"/>
+          <stop offset="80%" stop-color="#801818"/>
+          <stop offset="88%" stop-color="#931D1D"/>
+          <stop offset="100%" stop-color="#8B1A1A"/>
+        </linearGradient>
+        <!-- Satin center highlight -->
+        <linearGradient id="carpetSatin" x1="200" y1="0" x2="200" y2="320" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="white" stop-opacity=".08"/>
+          <stop offset="30%" stop-color="white" stop-opacity=".03"/>
+          <stop offset="50%" stop-color="white" stop-opacity=".07"/>
+          <stop offset="70%" stop-color="white" stop-opacity=".02"/>
+          <stop offset="100%" stop-color="white" stop-opacity=".05"/>
+        </linearGradient>
+        <!-- Edge shadow -->
+        <linearGradient id="carpetEdge" x1="0" y1="0" x2="400" y2="0" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="black" stop-opacity=".35"/>
+          <stop offset="15%" stop-color="black" stop-opacity=".05"/>
+          <stop offset="50%" stop-color="white" stop-opacity=".04"/>
+          <stop offset="85%" stop-color="black" stop-opacity=".05"/>
+          <stop offset="100%" stop-color="black" stop-opacity=".35"/>
+        </linearGradient>
+        <!-- Gold trim gradient -->
+        <linearGradient id="carpetGold" x1="0" y1="0" x2="0" y2="320" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#D4A853" stop-opacity=".6"/>
+          <stop offset="50%" stop-color="#B8892A" stop-opacity=".3"/>
+          <stop offset="100%" stop-color="#D4A853" stop-opacity=".5"/>
+        </linearGradient>
+        <!-- Floor shadow gradient -->
+        <radialGradient id="floorShadow" cx="200" cy="160" r="220" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="black" stop-opacity=".3"/>
+          <stop offset="100%" stop-color="black" stop-opacity="0"/>
+        </radialGradient>
+        <!-- Roll 3D gradient -->
+        <linearGradient id="rollGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#C43030"/>
+          <stop offset="25%" stop-color="#A52222"/>
+          <stop offset="50%" stop-color="#6B1212"/>
+          <stop offset="75%" stop-color="#8B1A1A"/>
+          <stop offset="100%" stop-color="#B82E2E"/>
+        </linearGradient>
+        <!-- Clip that JS animates -->
+        <clipPath id="carpetClip"><rect id="carpetClipRect" x="0" y="0" width="400" height="0"/></clipPath>
+      </defs>
+      <!-- Floor shadow -->
+      <path id="carpetShadow" d="M148,4 L252,4 L380,316 L20,316 Z" fill="url(#floorShadow)" opacity="0"/>
+      <!-- Main carpet body clipped by JS -->
+      <g clip-path="url(#carpetClip)">
+        <path d="M155,2 L245,2 L365,312 L35,312 Z" fill="url(#carpetVelvet)"/>
+        <path d="M170,2 L230,2 L310,312 L90,312 Z" fill="url(#carpetSatin)"/>
+        <path d="M155,2 L245,2 L365,312 L35,312 Z" fill="url(#carpetEdge)"/>
+        <!-- Velvet fiber lines -->
+        <line x1="158" y1="30" x2="242" y2="30" stroke="rgba(0,0,0,.06)" stroke-width=".5"/>
+        <line x1="152" y1="60" x2="248" y2="60" stroke="rgba(255,255,255,.03)" stroke-width=".5"/>
+        <line x1="145" y1="90" x2="255" y2="90" stroke="rgba(0,0,0,.05)" stroke-width=".5"/>
+        <line x1="135" y1="120" x2="265" y2="120" stroke="rgba(255,255,255,.03)" stroke-width=".5"/>
+        <line x1="122" y1="150" x2="278" y2="150" stroke="rgba(0,0,0,.06)" stroke-width=".5"/>
+        <line x1="108" y1="180" x2="292" y2="180" stroke="rgba(255,255,255,.03)" stroke-width=".5"/>
+        <line x1="92" y1="210" x2="308" y2="210" stroke="rgba(0,0,0,.05)" stroke-width=".5"/>
+        <line x1="75" y1="240" x2="325" y2="240" stroke="rgba(255,255,255,.03)" stroke-width=".5"/>
+        <line x1="58" y1="270" x2="342" y2="270" stroke="rgba(0,0,0,.06)" stroke-width=".5"/>
+        <line x1="42" y1="300" x2="358" y2="300" stroke="rgba(255,255,255,.03)" stroke-width=".5"/>
+        <!-- Gold trim -->
+        <line x1="155" y1="2" x2="35" y2="312" stroke="url(#carpetGold)" stroke-width="2"/>
+        <line x1="245" y1="2" x2="365" y2="312" stroke="url(#carpetGold)" stroke-width="2"/>
+        <line x1="159" y1="6" x2="42" y2="310" stroke="rgba(212,168,83,.15)" stroke-width=".75"/>
+        <line x1="241" y1="6" x2="358" y2="310" stroke="rgba(212,168,83,.15)" stroke-width=".75"/>
+        <line x1="38" y1="312" x2="362" y2="312" stroke="#7A1616" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="3 4"/>
+      </g>
+      <!-- Curl at leading edge (behind the roll) -->
+      <g id="carpetCurl">
+        <path d="" id="curlPath" fill="#8B1A1A" opacity=".7"/>
+      </g>
+      <!-- Rolling cylinder -->
+      <g id="carpetRoll">
+        <ellipse id="rollShadow" cx="200" cy="10" rx="52" ry="5" fill="rgba(0,0,0,.35)"/>
+        <ellipse id="rollBody" cx="200" cy="3" rx="48" ry="9" fill="url(#rollGrad)" stroke="rgba(0,0,0,.2)" stroke-width=".5"/>
+        <ellipse id="rollHighlight" cx="200" cy="0" rx="36" ry="4.5" fill="rgba(255,255,255,.12)"/>
+      </g>
+    </svg>
   </div>
   <div class="intro-wash"></div>
 </div>
@@ -1114,6 +1224,55 @@ strong{color:#2A2520}
       frame.appendChild(sp);
     }
   },2800);
+  /* Red carpet unroll — JS-driven for smooth organic feel */
+  setTimeout(function(){
+    var clipRect=document.getElementById('carpetClipRect');
+    var rollG=document.getElementById('carpetRoll');
+    var rollBody=document.getElementById('rollBody');
+    var rollHi=document.getElementById('rollHighlight');
+    var rollSh=document.getElementById('rollShadow');
+    var curlPath=document.getElementById('curlPath');
+    var shadow=document.getElementById('carpetShadow');
+    if(!clipRect||!rollG)return;
+    var dur=1800,maxH=310,startRx=48,endRx=18;
+    var startT=null;
+    function ease(t){return t<.65?2.38*t*t:1-Math.pow(-2*t+2,3)/2}
+    function lerp(a,b,t){return a+(b-a)*t}
+    function tick(ts){
+      if(!startT)startT=ts;
+      var elapsed=ts-startT;
+      var raw=Math.min(elapsed/dur,1);
+      var t=ease(raw);
+      var h=t*maxH;
+      /* Bounce: overshoot then settle */
+      if(raw>.65&&raw<.82){h=maxH+(raw-.65)*120}
+      else if(raw>=.82&&raw<.94){h=maxH-(raw-.82)*80}
+      else if(raw>=.94){h=maxH}
+      clipRect.setAttribute('height',h);
+      /* Roll position tracks the leading edge */
+      var rollY=h;
+      rollG.setAttribute('transform','translate(0,'+rollY+')');
+      /* Roll shrinks as it unrolls */
+      var rx=lerp(startRx,endRx,t);
+      var ry=lerp(9,4,t);
+      rollBody.setAttribute('rx',rx);rollBody.setAttribute('ry',ry);
+      rollHi.setAttribute('rx',rx*.75);rollHi.setAttribute('ry',ry*.5);
+      rollSh.setAttribute('rx',rx+4);rollSh.setAttribute('ry',ry*.55);
+      /* Curl: small arc just behind the roll */
+      if(t<.95){
+        var cw=lerp(90,50,t);
+        var cy=rollY-4;
+        var cx=200;
+        curlPath.setAttribute('d','M'+(cx-cw/2)+','+cy+' Q'+cx+','+(cy+12)+' '+(cx+cw/2)+','+cy);
+        curlPath.setAttribute('opacity',(0.5-t*.5).toFixed(2));
+      }else{curlPath.setAttribute('opacity','0')}
+      /* Shadow fades in */
+      shadow.setAttribute('opacity',Math.min(t*.5,.35).toFixed(2));
+      if(raw<1)requestAnimationFrame(tick);
+      else{rollG.style.transition='opacity .4s';rollG.style.opacity='0'}
+    }
+    requestAnimationFrame(tick);
+  },2100);
   setTimeout(function(){
     var ov=document.getElementById('vip-intro');
     if(ov){
