@@ -189,6 +189,41 @@ img{max-width:100%;display:block}a{color:inherit;text-decoration:none}
 /* Confetti canvas */
 #confetti-canvas{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:10}
 
+/* ===== CELEBRATION INTRO ===== */
+.cele-overlay{position:fixed;inset:0;z-index:99999;background:radial-gradient(ellipse at center,#163232 0%,#0D1F1F 100%);display:flex;align-items:center;justify-content:center;overflow:hidden}
+.cele-particles{position:absolute;inset:0;pointer-events:none}
+.cele-dot{position:absolute;border-radius:50%;background:radial-gradient(circle,var(--gold),rgba(212,168,83,0));pointer-events:none;opacity:0;animation:celeDot var(--dur) ease-in-out var(--delay) forwards}
+.cele-text{position:absolute;z-index:3;text-align:center;opacity:0;animation:celeTextIn .8s ease-out .2s forwards,celeTextOut .6s ease-in 1.8s forwards}
+.cele-text h2{font-family:'Ogg',serif;font-size:clamp(36px,7vw,64px);color:#FAF8F5;font-weight:400;margin:0;line-height:1.1}
+.cele-text h2 em{font-style:italic;color:var(--gold)}
+.cele-text p{font-family:'Satoshi',sans-serif;font-size:clamp(14px,2.2vw,18px);color:rgba(250,248,245,.5);margin-top:10px;letter-spacing:.03em}
+.cele-sparkle{position:absolute;width:3px;height:3px;background:#FFF9EF;border-radius:50%;opacity:0;z-index:4}
+.cele-ring{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:0;height:0;border-radius:50%;border:2px solid rgba(212,168,83,.25);opacity:0;z-index:2;animation:celeRing 1.2s ease-out 1s forwards}
+/* Simple doors */
+.cele-doors{position:relative;z-index:2;display:flex;align-items:center;opacity:0;animation:celeDoorsIn .8s ease-out .8s forwards}
+.cele-frame{position:relative;display:flex;width:clamp(180px,40vw,320px);height:clamp(240px,45vh,380px);border:1.5px solid rgba(212,168,83,.3);border-radius:3px 3px 0 0;overflow:hidden;box-shadow:0 0 40px rgba(29,107,107,.1),inset 0 0 20px rgba(0,0,0,.4)}
+.cele-door{width:50%;height:100%;background:linear-gradient(180deg,#1A3F3F,#122C2C,#1A3F3F);position:relative;z-index:2;backface-visibility:hidden}
+.cele-door::after{content:'';position:absolute;inset:8px;border:1px solid rgba(212,168,83,.15);border-radius:2px;pointer-events:none}
+.cele-door-l{transform-origin:left center;animation:celeDoorL 1.2s cubic-bezier(.2,.6,.3,1) 2.2s forwards}
+.cele-door-r{transform-origin:right center;animation:celeDoorR 1.2s cubic-bezier(.2,.6,.3,1) 2.2s forwards}
+.cele-handle{position:absolute;top:50%;width:8px;height:8px;border-radius:50%;background:var(--gold);transform:translateY(-50%)}
+.cele-handle-l{right:12px}
+.cele-handle-r{left:12px}
+.cele-glow{position:absolute;inset:-40%;background:radial-gradient(ellipse at center,rgba(212,168,83,.3) 0%,rgba(29,107,107,.15) 35%,transparent 60%);opacity:0;z-index:0;animation:celeGlow 1s ease-out 2s forwards}
+.cele-wash{position:absolute;inset:0;z-index:10;background:radial-gradient(circle at center,rgba(244,250,250,.95) 0%,rgba(29,107,107,.4) 35%,transparent 65%);opacity:0;transform:scale(.2);animation:celeWash .8s ease-out 3s forwards}
+
+@keyframes celeTextIn{0%{opacity:0;transform:scale(.9) translateY(10px)}100%{opacity:1;transform:scale(1) translateY(0)}}
+@keyframes celeTextOut{0%{opacity:1;transform:scale(1)}100%{opacity:0;transform:scale(1.05) translateY(-6px)}}
+@keyframes celeDot{0%{opacity:0;transform:translate(0,0)}12%{opacity:var(--maxOp)}80%{opacity:var(--maxOp)}100%{opacity:0;transform:translate(var(--tx),var(--ty))}}
+@keyframes celeSparkle{0%{opacity:0;transform:translate(0,0) scale(0)}25%{opacity:1;transform:translate(var(--sx),var(--sy)) scale(1.8)}100%{opacity:0;transform:translate(calc(var(--sx)*2.5),calc(var(--sy)*2.5)) scale(0)}}
+@keyframes celeRing{0%{width:0;height:0;opacity:.6}60%{opacity:.3}100%{width:clamp(200px,40vw,400px);height:clamp(200px,40vw,400px);opacity:0}}
+@keyframes celeDoorsIn{0%{opacity:0;transform:scale(.9)}100%{opacity:1;transform:scale(1)}}
+@keyframes celeDoorL{0%{transform:perspective(800px) rotateY(0)}100%{transform:perspective(800px) rotateY(70deg)}}
+@keyframes celeDoorR{0%{transform:perspective(800px) rotateY(0)}100%{transform:perspective(800px) rotateY(-70deg)}}
+@keyframes celeGlow{0%{opacity:0;transform:scale(.5)}100%{opacity:1;transform:scale(1.5)}}
+@keyframes celeWash{0%{opacity:0;transform:scale(.2)}60%{opacity:1;transform:scale(1.5)}100%{opacity:1;transform:scale(3.5)}}
+@keyframes celeFadeOut{0%{opacity:1}100%{opacity:0}}
+
 /* ═══ RESPONSIVE ═══ */
 @media(max-width:768px){
   .hero{padding:24px 16px 28px}
@@ -221,6 +256,25 @@ img{max-width:100%;display:block}a{color:inherit;text-decoration:none}
 </style>
 </head>
 <body>
+
+<!-- CELEBRATION INTRO -->
+<div id="cele-intro" class="cele-overlay">
+  <div class="cele-particles" id="celeParticles"></div>
+  <div class="cele-text">
+    <h2>You're <em>in.</em></h2>
+    <p>Welcome to the Challenge</p>
+  </div>
+  <div class="cele-doors">
+    <div class="cele-frame">
+      <div class="cele-glow"></div>
+      <div class="cele-door cele-door-l"><div class="cele-handle cele-handle-l"></div></div>
+      <div class="cele-door cele-door-r"><div class="cele-handle cele-handle-r"></div></div>
+    </div>
+  </div>
+  <div class="cele-ring"></div>
+  <div class="cele-wash"></div>
+</div>
+
 <canvas id="confetti-canvas"></canvas>
 <div class="pg">
 
@@ -409,7 +463,7 @@ img{max-width:100%;display:block}a{color:inherit;text-decoration:none}
     <img src="ai-income-challenge-logo.png" alt="AI Income Challenge" style="height:44px;opacity:.8">
   </div>
   <div class="f-links">
-    <a href="mailto:hello@digitallypurposed.com">hello@digitallypurposed.com</a>
+    <a href="mailto:hello@digitallypurposed.com">Support</a>
   </div>
   <p class="f-disclaimer">
     This site is not a part of the YouTube, Instagram, Etsy, or Google platforms, nor is it endorsed by any of them. All trademarks belong to their respective owners. This is an educational challenge sharing strategies and skills, not a promise of specific outcomes. Results are not typical. Individual results vary based on effort, market conditions, and implementation. No income guarantees.
@@ -426,7 +480,49 @@ document.querySelectorAll('.cta-g,.cta-full').forEach(function(btn){
   btn.appendChild(g1);btn.appendChild(g2);
 });
 
-// ═══ CONFETTI ═══
+// ═══ CELEBRATION INTRO ═══
+(function(){
+  var pWrap=document.getElementById('celeParticles');
+  if(!pWrap)return;
+  for(var i=0;i<18;i++){
+    var d=document.createElement('div');d.className='cele-dot';
+    var sz=2+Math.random()*3;
+    d.style.width=sz+'px';d.style.height=sz+'px';
+    d.style.left=Math.random()*100+'%';
+    d.style.top=(35+Math.random()*55)+'%';
+    d.style.setProperty('--dur',(3+Math.random()*4)+'s');
+    d.style.setProperty('--delay',(Math.random()*1.5)+'s');
+    d.style.setProperty('--tx',(-15+Math.random()*30)+'px');
+    d.style.setProperty('--ty',(-60-Math.random()*80)+'px');
+    d.style.setProperty('--maxOp',(0.25+Math.random()*0.4).toFixed(2));
+    pWrap.appendChild(d);
+  }
+  /* Sparkle burst at ~2s */
+  setTimeout(function(){
+    var frame=document.querySelector('.cele-frame');
+    if(!frame)return;
+    for(var j=0;j<8;j++){
+      var sp=document.createElement('div');sp.className='cele-sparkle';
+      var ang=(j/8)*Math.PI*2;
+      sp.style.left='50%';sp.style.top='50%';
+      sp.style.setProperty('--sx',(Math.cos(ang)*(15+Math.random()*12))+'px');
+      sp.style.setProperty('--sy',(Math.sin(ang)*(15+Math.random()*12))+'px');
+      sp.style.animation='celeSparkle .7s ease-out '+(j*.06)+'s forwards';
+      frame.appendChild(sp);
+    }
+  },2000);
+  /* Fade out overlay at ~3.5s */
+  setTimeout(function(){
+    var ov=document.getElementById('cele-intro');
+    if(ov){
+      ov.style.animation='celeFadeOut 1s ease-out forwards';
+      setTimeout(function(){ov.style.display='none'},1050);
+    }
+  },3500);
+})();
+
+// ═══ CONFETTI (delayed for intro) ═══
+setTimeout(function(){
 (function(){
   var canvas=document.getElementById('confetti-canvas');
   var ctx=canvas.getContext('2d');
@@ -498,6 +594,7 @@ document.querySelectorAll('.cta-g,.cta-full').forEach(function(btn){
   // small delay so page renders first
   setTimeout(draw,300);
 })();
+},4000);
 </script>
 <script>
 (function() {
