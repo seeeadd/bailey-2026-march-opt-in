@@ -1,0 +1,1569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Day 1 | Free AI Challenge with Bailey</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&display=swap" rel="stylesheet" />
+<link href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,600,700,800,900&display=swap" rel="stylesheet" />
+<link href="https://api.fontshare.com/v2/css?f[]=telegraf@300,400,500,600,700&display=swap" rel="stylesheet" />
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+@font-face{font-family:'Ogg';src:url('public/OggRoman.ttf') format('truetype');font-weight:400;font-display:swap}
+@font-face{font-family:'Ogg';src:url('public/OggBold.ttf') format('truetype');font-weight:700;font-display:swap}
+:root{
+  --cream:#FAF8F5;--warm:#F5F0E8;--dark:#1A1816;--coral:#E07A5F;--coral-dark:#C45D45;
+  --teal:#1D6B6B;--teal-dark:#165858;--gold:#D4A853;--border:#E8E2D9;
+  --blush:#F2D7D5;--rose:#C9A0A0;--sage:#B8CEC2;--sage-dark:#8FB5A3;--mauve:#D4B5C7;
+  --font:'Satoshi','DM Sans',-apple-system,BlinkMacSystemFont,sans-serif;
+  --display:'Ogg',Georgia,serif;--accent:'Caveat',cursive;
+}
+body{font-family:var(--font);font-weight:500;color:#2d2a26;background:var(--cream);line-height:1.7;overflow-x:hidden;-webkit-font-smoothing:antialiased;font-size:16px}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer;border:none;background:none}
+img{max-width:100%;display:block}
+
+.pg{max-width:100%;overflow-x:clip;position:relative}
+
+/* ── Paper Texture Overlay ── */
+.pg::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9999;opacity:.02;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.65' numOctaves='5' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='256' height='256' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E")}
+.pg::after{content:'';position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9998;opacity:.012;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='m'%3E%3CfeTurbulence type='turbulence' baseFrequency='.008' numOctaves='3' result='turb'/%3E%3CfeDisplacementMap in2='turb' in='SourceGraphic' scale='40' xChannelSelector='R' yChannelSelector='G'/%3E%3C/filter%3E%3Cpath d='M-10,200 Q100,180 200,210 Q300,240 410,190' stroke='%23D4A853' stroke-width='1.5' fill='none' filter='url(%23m)' opacity='.4'/%3E%3Cpath d='M-10,120 Q80,90 180,130 Q280,170 410,100' stroke='%23D4A853' stroke-width='1' fill='none' filter='url(%23m)' opacity='.25'/%3E%3C/svg%3E");background-size:800px 800px}
+
+.coral{color:var(--coral)}
+.teal{color:var(--teal)}
+.gold{color:var(--gold)}
+
+/* ── Animations ── */
+@keyframes shimmer{0%{background-position:-200% center}100%{background-position:200% center}}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+@keyframes breathe{0%,100%{opacity:.4;transform:scale(1)}50%{opacity:.7;transform:scale(1.02)}}
+@keyframes fadeInUp{0%{opacity:0;transform:translateY(24px)}100%{opacity:1;transform:translateY(0)}}
+@keyframes glitterSweep{0%{left:-30%;opacity:0}50%{opacity:.25}100%{left:130%;opacity:0}}
+@keyframes ctaPulseTeal{0%,100%{box-shadow:0 4px 20px rgba(29,107,107,.25)}50%{box-shadow:0 6px 28px rgba(29,107,107,.4)}}
+@keyframes ctaRingPulse{0%,100%{box-shadow:0 0 0 0 rgba(212,168,83,.3)}50%{box-shadow:0 0 0 6px rgba(212,168,83,0)}}
+@keyframes ctaGoldDust{0%{left:-35%;opacity:0;transform:skewX(-15deg)}40%{opacity:.6}100%{left:135%;opacity:0;transform:skewX(-15deg)}}
+@keyframes goldShimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
+@keyframes floatOrb{0%,100%{transform:translate(0,0) scale(1)}25%{transform:translate(10px,-15px) scale(1.05)}50%{transform:translate(-5px,-25px) scale(1)}75%{transform:translate(-15px,-10px) scale(.95)}}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+
+/* ── Decorative Elements ── */
+.deco-corner{position:absolute;width:60px;height:60px;pointer-events:none;opacity:.08}
+.deco-corner svg{width:100%;height:100%}
+.deco-corner.tl{top:12px;left:12px}
+.deco-corner.tr{top:12px;right:12px;transform:scaleX(-1)}
+.deco-corner.bl{bottom:12px;left:12px;transform:scaleY(-1)}
+.deco-corner.br{bottom:12px;right:12px;transform:scale(-1)}
+.deco-line{display:flex;align-items:center;justify-content:center;gap:12px;margin:20px auto;max-width:300px}
+.deco-line::before,.deco-line::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent)}
+.deco-line svg{flex-shrink:0;opacity:.2}
+.deco-stars{display:flex;justify-content:center;gap:6px;margin:16px auto}
+.deco-stars svg{opacity:.12;animation:breathe 5s ease-in-out infinite}
+.deco-stars svg:nth-child(2){animation-delay:.5s}
+.deco-stars svg:nth-child(3){animation-delay:1s}
+
+/* ── Scroll Animations ── */
+.animate-on-scroll{opacity:0;transform:translateY(24px);transition:all .6s cubic-bezier(.22,1,.36,1)}
+.animate-on-scroll.visible{opacity:1;transform:translateY(0)}
+
+/* ── Section Divider (organic wave) ── */
+.sec-divider{width:100%;line-height:0;margin:0;position:relative;z-index:2}
+.sec-divider svg{display:block;width:100%;height:auto}
+
+/* ══════════════════════════════════════════════
+   HEADER — Welcome bar
+   ══════════════════════════════════════════════ */
+.header-bar{
+  background:linear-gradient(170deg,#1A1816 0%,#2A2520 50%,#1A1816 100%);
+  padding:52px 24px 56px;
+  text-align:center;
+  position:relative;
+  overflow:hidden;
+}
+.header-bar::before{content:'';position:absolute;top:0;left:0;width:100%;height:100%;
+  background:radial-gradient(ellipse at 30% 40%,rgba(224,122,95,.06) 0%,transparent 50%),
+  radial-gradient(ellipse at 70% 60%,rgba(29,107,107,.05) 0%,transparent 50%);pointer-events:none}
+.header-bar::after{content:'';position:absolute;bottom:0;left:0;width:100%;height:120px;
+  background:linear-gradient(180deg,transparent,rgba(26,24,22,.5));pointer-events:none}
+.header-inner{max-width:1200px;margin:0 auto;position:relative;z-index:2}
+.ep-nav{display:inline-flex;align-items:center;gap:6px;margin-bottom:14px}
+.ep-dot{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:5px 14px 5px 5px;border-radius:20px;
+  font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  text-decoration:none;transition:all .25s;cursor:default}
+.ep-dot .ep-num{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:22px;height:22px;border-radius:50%;
+  font-size:11px;font-weight:800;letter-spacing:0;transition:all .25s}
+/* Active */
+.ep-dot.active{
+  background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);color:#fff}
+.ep-dot.active .ep-num{
+  background:linear-gradient(135deg,var(--coral),var(--coral-dark));color:#fff}
+/* Now-playing equalizer bars */
+.now-playing{display:flex;align-items:flex-end;gap:2px;height:12px}
+.now-playing span{display:block;width:2.5px;border-radius:1px;background:#fff}
+.now-playing span:nth-child(1){animation:eqBar1 .8s ease-in-out infinite}
+.now-playing span:nth-child(2){animation:eqBar2 .8s ease-in-out infinite .15s}
+.now-playing span:nth-child(3){animation:eqBar3 .8s ease-in-out infinite .3s}
+@keyframes eqBar1{0%,100%{height:4px}50%{height:11px}}
+@keyframes eqBar2{0%,100%{height:8px}50%{height:4px}}
+@keyframes eqBar3{0%,100%{height:5px}50%{height:10px}}
+/* Locked */
+.ep-dot.locked{
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);
+  color:rgba(255,255,255,.35);cursor:pointer}
+.ep-dot.locked .ep-num{
+  background:rgba(255,255,255,.08);color:rgba(255,255,255,.4)}
+.ep-dot.locked:hover{
+  background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.15);
+  color:rgba(255,255,255,.55)}
+.ep-dot.locked:hover .ep-num{background:rgba(255,255,255,.12);color:rgba(255,255,255,.6)}
+/* Connector line between dots */
+.ep-nav-sep{width:16px;height:1px;background:rgba(255,255,255,.12)}
+.header-title{
+  font-family:var(--display);font-size:clamp(30px,5.2vw,56px);font-weight:700;
+  line-height:1.08;color:#faf8f5;margin-bottom:20px;letter-spacing:-.02em}
+.header-kicker{display:block;font-family:var(--font);font-size:clamp(13px,1.6vw,16px);font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:14px}
+.header-title .coral-italic{font-style:italic;color:var(--coral)}
+.header-sub{font-size:clamp(14px,1.8vw,17px);color:rgba(255,255,255,.55);max-width:620px;margin:0 auto;line-height:1.7}
+
+/* ── Header compress on scroll ── */
+.header-bar{position:relative;z-index:10}
+/* Compact row — only visible when compressed */
+/* Compact sticky bar */
+.compact-bar{position:fixed;top:0;left:0;width:100%;z-index:999;background:var(--cream);padding:10px 32px;box-sizing:border-box;transform:translateY(-100%);transition:transform .25s cubic-bezier(.4,0,.2,1);box-shadow:0 2px 12px rgba(0,0,0,.06);border-bottom:1px solid rgba(0,0,0,.06)}
+.compact-bar.visible{transform:translateY(0)}
+.compact-row{display:flex;align-items:center;justify-content:space-between;gap:16px;max-width:860px;margin:0 auto;width:100%}
+.compact-left{display:flex;align-items:center;gap:12px;min-width:0}
+.compact-live{display:inline-flex;align-items:center;gap:6px;font-family:var(--font);font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--coral);white-space:nowrap}
+.compact-live-dot{width:8px;height:8px;border-radius:50%;background:var(--coral);animation:livePulse 1.5s ease-in-out infinite}
+@keyframes livePulse{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(224,122,95,.5)}50%{opacity:.8;box-shadow:0 0 0 6px rgba(224,122,95,0)}}
+.compact-title{font-family:var(--display);font-size:15px;font-weight:600;color:#2d2a26;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.compact-cta{display:inline-flex;align-items:center;gap:6px;font-family:var(--font);font-size:13.5px;font-weight:700;color:#fff;background:var(--coral);padding:10px 22px;border-radius:10px;text-decoration:none;white-space:nowrap;transition:background .2s;box-shadow:0 2px 8px rgba(224,122,95,.25)}
+.compact-cta:hover{background:#c96a4f;box-shadow:0 4px 14px rgba(224,122,95,.35)}
+.header-sub strong{color:rgba(255,255,255,.85)}
+
+/* Floating orbs */
+.header-orb{position:absolute;border-radius:50%;pointer-events:none;z-index:0}
+.header-orb-1{width:300px;height:300px;top:-60px;left:-80px;background:radial-gradient(circle,rgba(224,122,95,.06),transparent 70%);animation:floatOrb 20s ease-in-out infinite}
+.header-orb-2{width:250px;height:250px;bottom:-40px;right:-60px;background:radial-gradient(circle,rgba(29,107,107,.06),transparent 70%);animation:floatOrb 25s ease-in-out infinite 5s}
+
+/* ══════════════════════════════════════════════
+   VIDEO SECTION
+   ══════════════════════════════════════════════ */
+.video-section{
+  background:var(--cream);
+  padding:48px 24px 56px;
+  position:relative;
+}
+.video-layout{
+  display:grid;
+  grid-template-columns:1fr 380px;
+  gap:36px;
+  align-items:start;
+  max-width:1200px;
+  margin:0 auto;
+}
+.video-main{position:relative}
+.video-eyebrow{
+  font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--coral);margin-bottom:16px;display:inline-block;
+  padding:5px 16px;background:linear-gradient(135deg,rgba(224,122,95,.06),rgba(242,215,213,.04));
+  border:1px solid rgba(224,122,95,.08);border-radius:20px}
+.video-heading{
+  font-family:var(--display);font-size:clamp(22px,3vw,30px);font-weight:700;
+  line-height:1.2;color:#2d2a26;margin-bottom:12px}
+.video-sub{font-size:15.5px;color:#8a847b;margin-bottom:28px;line-height:1.75;max-width:480px}
+.video-wrap{
+  width:100%;overflow:hidden;aspect-ratio:16/9;background:#0a0a0a;
+  display:flex;align-items:center;justify-content:center;
+  position:relative;border-radius:14px;
+  box-shadow:0 16px 60px rgba(0,0,0,.12),0 4px 16px rgba(0,0,0,.06);
+  border:1px solid rgba(0,0,0,.06)}
+.video-wrap iframe{width:100%;height:100%;border:none}
+.video-wrap .ph{width:100%;height:100%;display:flex;align-items:center;justify-content:center;flex-direction:column;color:rgba(255,255,255,.35);font-size:13px;gap:10px;position:relative}
+.play-btn{width:80px;height:80px;border-radius:50%;background:rgba(0,0,0,.45);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:3px solid rgba(255,255,255,.3);display:flex;align-items:center;justify-content:center;transition:all .3s;cursor:pointer}
+.play-btn:hover{background:rgba(0,0,0,.6);border-color:rgba(255,255,255,.5);transform:scale(1.05)}
+.play-btn svg{fill:#fff;margin-left:4px;width:28px;height:28px}
+.video-note{
+  display:flex;align-items:center;gap:10px;margin-top:20px;
+  padding:14px 20px;background:linear-gradient(135deg,rgba(255,255,255,.7),rgba(250,248,245,.5));
+  border:1px solid var(--border);border-radius:10px;font-size:13.5px;color:#8a847b}
+.video-note svg{flex-shrink:0;opacity:.5}
+
+/* Sidebar — Table of Contents */
+.sidebar{position:relative}
+.sidebar-sticky{position:sticky;top:32px;display:flex;flex-direction:column;gap:16px}
+.sidebar-card{
+  background:linear-gradient(165deg,#fff 0%,#FDF8F0 50%,#FAF0E4 100%);
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  border:1px solid rgba(224,122,95,.12);border-radius:18px;
+  padding:26px 24px;box-shadow:0 8px 32px rgba(224,122,95,.06),0 2px 8px rgba(0,0,0,.03);
+  position:relative;overflow:hidden}
+.sidebar-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--coral),var(--gold),var(--coral))}
+.sidebar-label{
+  font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--coral);margin-bottom:14px;display:flex;align-items:center;gap:6px}
+.sidebar-label::before{content:'🔥';font-size:13px}
+.sidebar-hint{
+  font-size:14.5px;color:#8a847b;line-height:1.75;margin-bottom:22px;
+  font-style:italic}
+.sidebar-toggle{width:100%}
+.sidebar-toggle summary{
+  display:flex;align-items:center;gap:10px;cursor:pointer;
+  font-size:15px;font-weight:700;color:#2d2a26;
+  padding:14px 18px;background:rgba(255,255,255,.6);border:1px solid var(--border);
+  border-radius:12px;list-style:none;transition:all .2s}
+.sidebar-toggle summary::-webkit-details-marker{display:none}
+.sidebar-toggle summary::before{content:'▸';font-size:14px;color:var(--coral);transition:transform .2s}
+.sidebar-toggle[open] summary::before{transform:rotate(90deg)}
+.sidebar-toggle summary:hover{background:rgba(255,255,255,.9);border-color:rgba(224,122,95,.15)}
+.toc-list{list-style:none;padding:12px 0 0;margin:0}
+.toc-list li{padding:10px 18px;font-size:14px;color:#555;line-height:1.5;
+  border-left:2px solid var(--border);margin-left:8px;transition:all .2s}
+.toc-list li:hover{border-left-color:var(--coral);color:#2d2a26;padding-left:22px}
+.toc-list li strong{color:#2d2a26;font-weight:600}
+.toc-time{color:var(--coral);font-size:12px;font-weight:600;margin-right:6px;white-space:nowrap}
+
+/* ══════════════════════════════════════════════
+   EPISODES SECTION
+   ══════════════════════════════════════════════ */
+.episodes-section{
+  background:#fff;
+  padding:36px 24px 40px;
+  position:relative;
+}
+.episodes-inner{max-width:1200px;margin:0 auto}
+.episodes-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:20px;
+}
+.ep-card{
+  text-align:left;
+  padding:20px 20px 24px;
+  border-radius:14px;
+  border:1px solid var(--border);
+  background:linear-gradient(180deg,rgba(255,255,255,.9),var(--cream));
+  transition:all .4s cubic-bezier(.22,1,.36,1);
+  position:relative;overflow:hidden}
+.ep-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:14px 14px 0 0;opacity:0;transition:opacity .3s}
+.ep-card:hover{transform:translateY(-3px);box-shadow:0 8px 28px rgba(0,0,0,.06)}
+.ep-card:hover::before{opacity:1}
+.ep-card.active::before{background:linear-gradient(90deg,var(--coral),var(--gold));opacity:1}
+.ep-card.active{border-color:rgba(224,122,95,.2);box-shadow:0 3px 16px rgba(224,122,95,.08)}
+.ep-card.locked::before{background:linear-gradient(90deg,rgba(0,0,0,.1),rgba(0,0,0,.05));opacity:1}
+.ep-card.locked{opacity:.85;cursor:pointer}
+.ep-card.locked:hover{transform:none;box-shadow:none}
+
+/* Locked card click animation */
+@keyframes lockShake{0%{transform:translateX(0)}15%{transform:translateX(-6px)}30%{transform:translateX(5px)}45%{transform:translateX(-4px)}60%{transform:translateX(3px)}75%{transform:translateX(-2px)}90%{transform:translateX(1px)}100%{transform:translateX(0)}}
+@keyframes lockJiggle{0%,100%{transform:rotate(0)}20%{transform:rotate(-8deg)}40%{transform:rotate(8deg)}60%{transform:rotate(-5deg)}80%{transform:rotate(3deg)}}
+@keyframes lockFlash{0%{opacity:0}30%{opacity:.15}100%{opacity:0}}
+.ep-card.locked.shake{animation:lockShake .5s ease-in-out}
+.ep-card.locked.shake .ep-lock-icon{animation:lockJiggle .5s ease-in-out}
+.ep-card.locked.shake::after{content:'';position:absolute;inset:0;background:var(--coral);border-radius:14px;animation:lockFlash .5s ease-out;pointer-events:none}
+
+.ep-status{
+  font-size:11px;font-weight:700;color:var(--coral);margin-bottom:10px;
+  display:flex;align-items:center;gap:6px;
+  letter-spacing:.06em;text-transform:uppercase}
+.ep-status.watching{color:var(--teal)}
+.ep-status.locked{color:#999}
+.ep-status a{color:var(--coral);text-decoration:underline;text-underline-offset:3px;font-weight:700;transition:color .2s}
+.ep-status a:hover{color:var(--coral-dark)}
+
+.ep-thumb{
+  width:100%;aspect-ratio:16/10;border-radius:10px;overflow:hidden;
+  margin-bottom:14px;position:relative;
+  border:1px solid var(--border);
+  background:linear-gradient(145deg,#F0EDE8,#E8E2D9)}
+.ep-thumb img{width:100%;height:100%;object-fit:cover}
+.ep-thumb-ph{
+  width:100%;height:100%;display:flex;align-items:center;justify-content:center;
+  flex-direction:column;gap:6px;color:#8a847b;font-size:12px}
+
+/* Now-playing overlay on active ep card */
+.ep-thumb-playing{
+  position:absolute;bottom:8px;left:8px;z-index:3;
+  display:flex;align-items:center;gap:6px;
+  padding:4px 10px 4px 6px;border-radius:8px;
+  background:rgba(29,107,107,.92);
+  font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#fff}
+.ep-thumb-playing .now-playing{height:10px}
+.ep-thumb-playing .now-playing span{width:2px;background:#fff}
+
+/* Lock overlay */
+.ep-lock-overlay{
+  position:absolute;top:0;left:0;right:0;bottom:0;
+  background:rgba(26,24,22,.55);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);
+  display:flex;align-items:center;justify-content:center;border-radius:10px;
+  transition:background .3s}
+.ep-card.locked:hover .ep-lock-overlay{background:rgba(26,24,22,.65)}
+.ep-lock-icon{
+  width:44px;height:44px;border-radius:50%;
+  background:linear-gradient(135deg,rgba(224,122,95,.9),rgba(196,93,69,.9));
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 4px 16px rgba(224,122,95,.3);
+  transition:transform .3s}
+.ep-card.locked:hover .ep-lock-icon{transform:scale(1.08)}
+.ep-lock-icon svg{width:20px;height:20px}
+
+.ep-tag{
+  font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--coral);margin-bottom:6px;opacity:.8}
+.ep-title{
+  font-family:'Telegraf',var(--font);font-size:clamp(13.5px,1.6vw,15px);font-weight:500;
+  line-height:1.45;color:#3d3a36;margin-bottom:0;letter-spacing:-.005em}
+.ep-desc{font-size:13px;color:#6b635a;line-height:1.5}
+
+/* ══════════════════════════════════════════════
+   BOTTOM SECTION — FAQ + Links
+   ══════════════════════════════════════════════ */
+.bottom-section{
+  background:var(--warm);
+  padding:28px 24px 32px;
+  position:relative;
+}
+.bottom-layout{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:40px;
+  align-items:start;
+  max-width:1200px;
+  margin:0 auto;
+}
+.bottom-card{
+  padding:36px 32px;
+  background:linear-gradient(180deg,rgba(255,255,255,.8),rgba(250,248,245,.6));
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  border:1px solid rgba(255,255,255,.5);border-radius:18px;
+  box-shadow:0 4px 24px rgba(0,0,0,.03),inset 0 1px 0 rgba(255,255,255,.6);
+  position:relative;overflow:hidden}
+.bottom-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--coral),var(--gold),var(--sage))}
+.bottom-card-title{
+  font-family:var(--display);font-size:clamp(20px,2.5vw,26px);font-weight:700;
+  color:#2d2a26;margin-bottom:16px;line-height:1.2}
+.bottom-card-body{font-size:15px;color:#6b635a;line-height:1.7;margin-bottom:16px}
+.bottom-card-body strong{color:#2d2a26;font-weight:600}
+.bottom-card-body a{color:var(--coral);text-decoration:underline;text-underline-offset:3px;font-weight:600;transition:color .2s}
+.bottom-card-body a:hover{color:var(--coral-dark)}
+
+.help-list{list-style:none;padding:0;margin:0}
+.help-list li{
+  display:flex;align-items:center;gap:12px;
+  padding:14px 18px;margin-bottom:8px;
+  background:linear-gradient(135deg,rgba(255,255,255,.6),rgba(250,248,245,.4));
+  border:1px solid rgba(255,255,255,.4);border-radius:12px;
+  font-size:15px;color:#2d2a26;font-weight:500;
+  transition:all .25s;box-shadow:inset 0 1px 0 rgba(255,255,255,.5)}
+.help-list li:hover{transform:translateX(4px);background:rgba(255,255,255,.8);
+  box-shadow:0 4px 16px rgba(0,0,0,.03),inset 0 1px 0 rgba(255,255,255,.6)}
+.help-list li:last-child{margin-bottom:0}
+.help-list a{color:var(--teal);text-decoration:underline;text-underline-offset:3px;font-weight:700;transition:color .2s}
+.help-list a:hover{color:var(--teal-dark)}
+.help-tag{font-size:11px;font-weight:600;padding:3px 10px;border-radius:6px;margin-left:auto;white-space:nowrap}
+.help-tag.free{color:var(--teal);background:rgba(29,107,107,.08)}
+.help-tag.paid{color:var(--coral);background:rgba(224,122,95,.08)}
+
+/* ══════════════════════════════════════════════
+   REPLAY COUNTDOWN TIMER
+   ══════════════════════════════════════════════ */
+@keyframes replayPulse{0%,100%{opacity:.8}50%{opacity:1}}
+.replay-timer{
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  margin:12px 0 16px;padding:10px 18px;border-radius:10px;
+  background:linear-gradient(135deg,rgba(224,122,95,.06),rgba(212,168,83,.04));
+  border:1px solid rgba(224,122,95,.12);font-size:13px;color:#6b6055}
+.replay-timer svg{flex-shrink:0;color:var(--coral);animation:replayPulse 2s ease-in-out infinite}
+.replay-timer strong{color:var(--coral);font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:.02em}
+.replay-timer.expired{background:rgba(200,60,40,.06);border-color:rgba(200,60,40,.15)}
+.replay-timer.expired strong{color:#c43c28}
+
+/* ══════════════════════════════════════════════
+   DAY UNLOCK STATES
+   ══════════════════════════════════════════════ */
+.ep-card.unlocked{cursor:pointer;transition:transform .2s}
+.ep-card.unlocked:hover{transform:translateY(-3px)}
+.ep-status.unlocked-status{color:var(--teal);font-weight:700}
+.ep-status.unlocked-status a{color:var(--teal);font-weight:800;text-decoration:underline}
+.ep-unlock-timer{
+  display:flex;align-items:center;gap:4px;
+  font-size:10px;color:var(--coral);font-weight:600;
+  margin-top:8px;letter-spacing:.03em;opacity:.7}
+.ep-timer-overlay{
+  position:absolute;top:0;left:0;right:0;bottom:36px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  background:rgba(26,24,22,.45);
+  border-radius:inherit;border-bottom-left-radius:0;border-bottom-right-radius:0;
+  z-index:1;gap:2px}
+.ep-timer-label{font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(250,248,245,.5)}
+.ep-timer-digits{font-family:'Courier New',monospace;font-size:28px;font-weight:900;color:#FAF8F5;
+  letter-spacing:.06em;text-shadow:0 2px 8px rgba(0,0,0,.4)}
+
+/* ══════════════════════════════════════════════
+   VIP STRIP (reuses .vip-banner styles)
+   ══════════════════════════════════════════════ */
+.vip-strip-banner{margin-top:32px;animation:none!important;max-height:none!important;opacity:1!important;transform:none!important}
+/* Softened VIP strip in post-video zone — muted gold, not bright */
+.post-video .vip-strip-banner{background:linear-gradient(160deg,rgba(253,246,227,.1) 0%,rgba(250,240,212,.07) 40%,rgba(245,230,190,.05) 100%);border-color:rgba(212,168,83,.2);border-bottom:2px solid rgba(180,140,60,.25);animation:none!important;box-shadow:0 2px 12px rgba(0,0,0,.1)}
+
+/* ══════════════════════════════════════════════
+   FOOTER
+   ══════════════════════════════════════════════ */
+.vfooter{background:var(--dark);padding:36px 20px 28px;text-align:center;position:relative;overflow:hidden}
+.vfooter::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(184,206,194,.15),rgba(212,168,83,.2),rgba(201,160,160,.15),transparent)}
+.vf-brand{font-family:var(--display);font-size:22px;font-weight:700;color:#fff;margin-bottom:4px}
+.vf-brand span{color:var(--gold)}
+.vf-sub{font-family:var(--accent);font-size:20px;color:var(--coral);display:block;margin-bottom:16px}
+.vf-copy{font-size:12px;color:rgba(255,255,255,.25);margin-bottom:14px}
+.vf-links{display:flex;flex-wrap:wrap;justify-content:center;gap:14px}
+.vf-links a{font-size:12px;color:rgba(255,255,255,.25);text-decoration:underline;transition:color .2s}
+.vf-links a:hover{color:rgba(255,255,255,.5)}
+
+/* ══════════════════════════════════════════════
+   LIVE VIEWER COUNT
+   ══════════════════════════════════════════════ */
+.live-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  margin-bottom:14px;padding:6px 16px;
+  background:rgba(224,122,95,.12);border:1px solid rgba(224,122,95,.2);
+  border-radius:20px;font-size:12px;font-weight:700;color:var(--coral);
+  letter-spacing:.04em}
+.live-dot{width:8px;height:8px;border-radius:50%;background:var(--coral);
+  animation:blink 1.4s ease-in-out infinite}
+.live-count{color:rgba(255,255,255,.7);font-weight:500}
+
+/* ══════════════════════════════════════════════
+   MILESTONE SIDEBAR (replaces TOC)
+   ══════════════════════════════════════════════ */
+/* VIP Banner (under video) */
+/* VIP Banner — hidden until video hits 3min */
+@keyframes vipSlideIn{0%{opacity:0;transform:translateY(16px);max-height:0;margin-top:0;padding-top:0;padding-bottom:0}100%{opacity:1;transform:translateY(0);max-height:600px;margin-top:16px;padding-top:22px;padding-bottom:22px}}
+.vip-banner{display:none}
+.vip-banner.revealed{display:flex;animation:vipSlideIn .5s cubic-bezier(.22,1,.36,1) forwards}
+.vip-banner-note{position:absolute;top:6px;left:20px;font-family:var(--accent);font-size:15px;color:var(--coral);transform:rotate(-3deg);opacity:.85;pointer-events:none}
+@keyframes vipPulse{0%,100%{box-shadow:0 2px 8px rgba(212,168,83,.12),0 1px 2px rgba(0,0,0,.04),inset 0 1px 0 rgba(255,255,255,.8),0 0 0 0 rgba(212,168,83,.0)}50%{box-shadow:0 2px 8px rgba(212,168,83,.12),0 1px 2px rgba(0,0,0,.04),inset 0 1px 0 rgba(255,255,255,.8),0 0 0 6px rgba(212,168,83,.08)}}
+@keyframes vipArrowBounce{0%,100%{transform:translateX(0)}50%{transform:translateX(5px)}}
+@keyframes vipBadgePop{0%,100%{transform:scale(1) rotate(-2deg)}50%{transform:scale(1.06) rotate(-2deg)}}
+.vip-banner{
+  align-items:center;gap:20px;
+  margin-top:16px;padding:22px 24px;border-radius:16px;
+  background:linear-gradient(160deg,#FDF6E3 0%,#FAF0D4 40%,#F5E6BE 100%);
+  border:1px solid rgba(212,168,83,.35);
+  border-bottom:3px solid rgba(180,140,60,.4);
+  text-decoration:none;transition:all .25s cubic-bezier(.22,1,.36,1);
+  position:relative;overflow:hidden;
+  animation:vipPulse 3s ease-in-out infinite;
+  cursor:pointer}
+.vip-banner::before{content:'';position:absolute;top:0;left:-40%;width:30%;height:100%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.55),transparent);
+  transform:skewX(-15deg);animation:none;pointer-events:none;
+  transition:left .6s ease}
+.vip-banner:hover::before{left:120%}
+.vip-banner-badge{position:absolute;top:-1px;right:24px;
+  background:linear-gradient(135deg,var(--coral),#C45D45);color:#fff;
+  font-size:12px;font-weight:800;
+  padding:5px 14px 6px;border-radius:0 0 8px 8px;
+  box-shadow:0 3px 10px rgba(224,122,95,.25);
+  animation:vipBadgePop 2s ease-in-out infinite;
+  display:flex;align-items:center;gap:6px;line-height:1}
+.vip-banner-badge .old-price{text-decoration:line-through;opacity:.65;font-size:11px;font-weight:600}
+.vip-banner-badge .new-price{font-size:13px;font-weight:900}
+.vip-banner:hover{transform:translateY(-3px);
+  box-shadow:0 10px 32px rgba(212,168,83,.22),0 4px 10px rgba(0,0,0,.06),inset 0 1px 0 rgba(255,255,255,.9);
+  border-color:rgba(212,168,83,.5);border-bottom-color:rgba(180,140,60,.55);
+  animation:none}
+.vip-banner:active{transform:translateY(0);
+  box-shadow:0 1px 4px rgba(212,168,83,.15),inset 0 1px 3px rgba(0,0,0,.06);
+  border-bottom-width:1px;padding-bottom:24px;animation:none}
+.vip-banner-img{
+  flex-shrink:0;width:140px;height:90px;border-radius:10px;overflow:hidden;
+  border:1px solid rgba(180,140,60,.2);
+  box-shadow:0 4px 14px rgba(0,0,0,.1);
+  transition:transform .3s ease}
+.vip-banner:hover .vip-banner-img{transform:scale(1.04)}
+.vip-banner-img img{width:100%;height:100%;object-fit:cover}
+.vip-banner-body{flex:1;min-width:0}
+@keyframes vipNowFlicker{0%,100%{color:var(--coral);opacity:1}40%{color:var(--coral);opacity:1}50%{opacity:.3}60%{opacity:1}85%{opacity:1}90%{opacity:.4}95%{opacity:1}}
+.vip-now{color:var(--coral);animation:vipNowFlicker 2.5s ease-in-out infinite;font-style:italic}
+.vip-banner-title{font-size:18px;font-weight:800;color:#2d2a26;line-height:1.3;display:flex;align-items:center;gap:6px;letter-spacing:-.01em;flex-wrap:wrap}
+.vip-banner-sub{font-size:13.5px;color:#6b6055;line-height:1.45;margin-top:4px}
+.vip-banner-proof{display:flex;align-items:center;gap:6px;margin-top:8px;font-size:12.5px;color:var(--coral);font-weight:600}
+.vip-banner-proof svg{flex-shrink:0}
+.vip-banner-arrow{
+  flex-shrink:0;width:44px;height:44px;border-radius:12px;
+  background:linear-gradient(145deg,#E8C06A,var(--gold),#C49A3A);
+  display:flex;align-items:center;justify-content:center;
+  color:#fff;
+  box-shadow:0 4px 12px rgba(212,168,83,.35),inset 0 1px 0 rgba(255,255,255,.3),inset 0 -1px 2px rgba(0,0,0,.1);
+  border:1px solid rgba(180,140,60,.3);
+  animation:vipArrowBounce 1.8s ease-in-out infinite}
+.vip-banner:hover .vip-banner-arrow{transform:translateX(4px);box-shadow:0 6px 18px rgba(212,168,83,.45),inset 0 1px 0 rgba(255,255,255,.3);animation:none}
+
+/* Sidebar VIP banner — always column layout (sidebar is narrow at all widths) */
+.sidebar .vip-banner{flex-direction:column;align-items:stretch;gap:10px;padding:14px 14px 16px;text-align:center}
+.sidebar .vip-banner-note{position:relative;top:0;left:0;text-align:center;transform:rotate(-1deg);margin-bottom:2px;font-size:13px}
+.sidebar .vip-banner-badge{position:static;display:inline-flex;align-self:center;border-radius:8px;margin-bottom:2px}
+.sidebar .vip-banner-img{width:100%;height:120px;border-radius:10px}
+.sidebar .vip-banner-body{text-align:center}
+.sidebar .vip-banner-title{justify-content:center;font-size:16px;flex-wrap:wrap;white-space:normal}
+.sidebar .vip-banner-sub{font-size:12.5px}
+.sidebar .vip-banner-proof{justify-content:center}
+.sidebar .vip-banner-arrow{align-self:stretch;width:100%;border-radius:10px;height:42px}
+
+.progress-wrap{margin-bottom:14px}
+.progress-label{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.progress-label span{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#8a847b}
+.progress-pct{color:var(--coral)!important;font-variant-numeric:tabular-nums;font-size:13px!important;font-weight:800!important}
+.progress-track{width:100%;height:8px;border-radius:4px;background:rgba(224,122,95,.08);overflow:hidden;position:relative}
+@keyframes progressShimmer{0%{left:-40%}100%{left:120%}}
+.progress-fill{height:100%;border-radius:4px;width:0%;
+  background:linear-gradient(90deg,var(--coral),#E8945F,var(--gold));
+  transition:width .6s cubic-bezier(.22,1,.36,1);position:relative;overflow:hidden}
+.progress-fill::before{content:'';position:absolute;top:0;width:30%;height:100%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.4),transparent);
+  animation:progressShimmer 2s ease-in-out infinite}
+.progress-fill::after{content:'';position:absolute;right:0;top:-2px;width:12px;height:12px;
+  border-radius:50%;background:var(--coral);box-shadow:0 0 10px rgba(224,122,95,.6),0 0 4px rgba(224,122,95,.3);
+  transition:opacity .3s}
+.progress-fill[style*="width: 0"]::after,.progress-fill[style*="width:0"]::after{opacity:0}
+.progress-fill[style*="width: 0"]::before,.progress-fill[style*="width:0"]::before{animation:none}
+
+/* TV screen preview */
+@keyframes tvScanline{0%{top:-100%}100%{top:100%}}
+@keyframes tvDot{0%,100%{opacity:1}50%{opacity:.4}}
+.ms-preview{margin-top:10px;cursor:pointer;transition:transform .2s}
+.ms-preview:hover{transform:scale(1.015)}
+.ms-preview.hidden{display:none}
+.ms-tv{position:relative}
+.ms-tv-screen{
+  position:relative;overflow:hidden;
+  background:linear-gradient(170deg,#1A1816 0%,#2A2520 60%,#1A1816 100%);
+  border-radius:10px 10px 0 0;border:2px solid #3a3530;
+  padding:14px 16px 16px;min-height:72px;
+  box-shadow:inset 0 0 20px rgba(0,0,0,.4),0 4px 16px rgba(0,0,0,.12)}
+.ms-tv-scanline{
+  position:absolute;top:-100%;left:0;width:100%;height:40%;
+  background:linear-gradient(180deg,transparent,rgba(255,255,255,.02),transparent);
+  animation:tvScanline 4s linear infinite;pointer-events:none;z-index:1}
+.ms-tv-screen::after{content:'';position:absolute;inset:0;
+  background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.06) 2px,rgba(0,0,0,.06) 4px);
+  pointer-events:none;border-radius:8px}
+.ms-tv-content{position:relative;z-index:2}
+.ms-tv-live{display:flex;align-items:center;gap:5px;margin-bottom:6px}
+.ms-tv-dot{width:6px;height:6px;border-radius:50%;background:#E07A5F;
+  animation:tvDot 1.5s ease-in-out infinite;box-shadow:0 0 6px rgba(224,122,95,.6)}
+.ms-preview-tag{font-size:8.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--coral)}
+.ms-preview-title{font-size:13.5px;font-weight:700;color:#FAF8F5;line-height:1.4;
+  text-shadow:0 1px 3px rgba(0,0,0,.3)}
+.ms-tv-base{
+  background:linear-gradient(180deg,#3a3530,#2d2a26);
+  height:10px;border-radius:0 0 10px 10px;border:2px solid #3a3530;border-top:0;
+  display:flex;align-items:center;justify-content:center}
+.ms-tv-base-dot{width:4px;height:4px;border-radius:50%;background:#555;margin-top:-1px}
+.ms-toggle{width:100%}
+.ms-toggle summary{
+  display:flex;align-items:center;gap:8px;cursor:pointer;
+  font-size:12px;font-weight:700;color:#6b6055;
+  padding:8px 14px;background:rgba(255,255,255,.4);border:1px solid rgba(0,0,0,.06);
+  border-radius:8px;list-style:none;transition:all .2s;margin-bottom:0;
+  letter-spacing:.02em}
+.ms-toggle summary::-webkit-details-marker{display:none}
+.ms-toggle summary:hover{background:rgba(255,255,255,.7);border-color:rgba(224,122,95,.15);color:#2d2a26}
+.ms-toggle summary svg{color:var(--coral);flex-shrink:0;opacity:.6}
+.ms-toggle-arrow{margin-left:auto;transition:transform .2s;display:flex;opacity:.4}
+.ms-toggle:not([open]) .ms-toggle-arrow{transform:rotate(-90deg)}
+.milestone-list{list-style:none;padding:0;margin:0;position:relative}
+/* Vertical connecting line */
+.milestone-list::before{content:'';position:absolute;left:27px;top:20px;bottom:20px;width:2px;
+  background:linear-gradient(180deg,var(--coral),rgba(212,168,83,.3),transparent);border-radius:1px}
+.milestone-item{
+  display:flex;align-items:flex-start;gap:12px;
+  padding:10px 12px;margin-bottom:2px;
+  border-radius:10px;border:1px solid transparent;
+  transition:all .35s cubic-bezier(.22,1,.36,1);cursor:pointer;position:relative}
+.milestone-item:last-child{margin-bottom:0}
+.milestone-item:hover{background:rgba(255,255,255,.7);border-color:var(--border)}
+
+/* Milestone states */
+.milestone-item .ms-icon{
+  flex-shrink:0;width:26px;height:26px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  background:#fff;border:2px solid var(--border);
+  transition:all .35s;font-size:10px;font-weight:800;color:#8a847b;
+  position:relative;z-index:1}
+.milestone-item.active{background:rgba(224,122,95,.05);border-color:rgba(224,122,95,.12)}
+@keyframes msIconPulse{0%,100%{box-shadow:0 0 0 0 rgba(224,122,95,.25)}50%{box-shadow:0 0 0 6px rgba(224,122,95,0)}}
+.milestone-item.active .ms-icon{
+  background:linear-gradient(135deg,var(--coral),var(--coral-dark));
+  border-color:var(--coral);color:#fff;
+  box-shadow:0 2px 8px rgba(224,122,95,.3);
+  animation:msIconPulse 2s ease-in-out infinite}
+.milestone-item.completed .ms-icon{
+  background:linear-gradient(135deg,var(--teal),var(--teal-dark));
+  border-color:var(--teal);color:#fff}
+.ms-tag{
+  display:inline-block;font-size:8.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;
+  padding:2px 7px;border-radius:4px;margin-bottom:2px}
+.milestone-item.active .ms-tag{background:rgba(224,122,95,.1);color:var(--coral)}
+.milestone-item.upcoming .ms-tag{background:rgba(0,0,0,.04);color:#aaa4}
+.milestone-item.completed .ms-tag{background:rgba(29,107,107,.08);color:var(--teal)}
+.ms-title{font-size:12.5px;font-weight:600;color:#2d2a26;line-height:1.35}
+.milestone-item.upcoming .ms-title{color:#b5b0a8}
+.milestone-item.completed .ms-title{color:#2d2a26}
+.ms-body{flex:1;min-width:0}
+
+/* ══════════════════════════════════════════════
+   POST-VIDEO CTA ZONE
+   ══════════════════════════════════════════════ */
+.post-video{
+  background:linear-gradient(170deg,#1A1816 0%,#2A2520 50%,#1A1816 100%);
+  padding:56px 24px 64px;position:relative;overflow:hidden}
+.post-video::before{content:'';position:absolute;top:0;left:0;width:100%;height:100%;
+  background:radial-gradient(ellipse at 30% 40%,rgba(224,122,95,.05) 0%,transparent 50%),
+  radial-gradient(ellipse at 70% 60%,rgba(29,107,107,.04) 0%,transparent 50%);pointer-events:none}
+.post-inner{max-width:1000px;margin:0 auto;position:relative;z-index:2}
+.post-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-bottom:36px}
+.post-card{
+  padding:44px 40px;border-radius:16px;position:relative;overflow:hidden;
+  transition:transform .3s,box-shadow .3s}
+.post-card:hover{transform:translateY(-2px)}
+
+/* Action Step Card */
+.post-card.action{
+  background:linear-gradient(135deg,rgba(29,107,107,.12),rgba(29,107,107,.06));
+  border:1px solid rgba(29,107,107,.2)}
+.post-card.action::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--teal),var(--sage))}
+.post-card .pc-eyebrow{
+  font-size:10px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;
+  margin-bottom:20px;display:flex;align-items:center;gap:6px;opacity:.85}
+.post-card.action .pc-eyebrow{color:var(--teal)}
+.post-card .pc-title{
+  font-family:var(--display);font-size:clamp(20px,2.4vw,24px);font-weight:700;
+  color:#faf8f5;line-height:1.3;margin-bottom:24px;
+  padding-bottom:20px;border-bottom:1px solid rgba(255,255,255,.08)}
+.post-card .pc-body{font-size:15px;color:rgba(255,255,255,.5);line-height:1.85;max-width:52ch}
+.post-card .pc-body strong{color:rgba(255,255,255,.85);font-weight:600}
+
+/* Day 2 Teaser Card */
+.post-card.teaser{
+  background:linear-gradient(135deg,rgba(212,168,83,.1),rgba(212,168,83,.04));
+  border:1px solid rgba(212,168,83,.2)}
+.post-card.teaser::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--gold),var(--coral))}
+.post-card.teaser .pc-eyebrow{color:var(--gold)}
+.day2-unlock{
+  display:inline-flex;align-items:center;gap:8px;margin-top:14px;
+  padding:8px 18px;border-radius:8px;
+  background:rgba(212,168,83,.12);border:1px solid rgba(212,168,83,.2);
+  font-size:13px;font-weight:700;color:var(--gold);transition:all .25s}
+.day2-unlock:hover{background:rgba(212,168,83,.2)}
+.day2-unlock svg{opacity:.7}
+
+/* VIP Soft-Sell Strip */
+.vip-strip{
+  display:flex;align-items:center;gap:20px;
+  padding:22px 28px;border-radius:14px;
+  background:linear-gradient(135deg,rgba(224,122,95,.08),rgba(212,168,83,.06));
+  border:1px solid rgba(224,122,95,.15)}
+.vip-strip .vip-text{flex:1;font-size:14.5px;color:rgba(255,255,255,.55);line-height:1.6}
+.vip-strip .vip-text strong{color:rgba(255,255,255,.85)}
+.vip-cta{
+  flex-shrink:0;padding:10px 22px;border-radius:10px;
+  background:linear-gradient(135deg,var(--coral),var(--coral-dark));
+  color:#fff;font-size:13px;font-weight:700;letter-spacing:.02em;
+  transition:all .25s;white-space:nowrap;
+  box-shadow:0 4px 16px rgba(224,122,95,.25)}
+.vip-cta:hover{transform:translateY(-1px);box-shadow:0 6px 24px rgba(224,122,95,.35)}
+
+/* Completion Celebration Overlay */
+.completion-overlay{
+  position:fixed;top:0;left:0;width:100%;height:100%;z-index:10000;
+  display:flex;align-items:center;justify-content:center;
+  background:rgba(26,24,22,.85);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  opacity:0;pointer-events:none;transition:opacity .6s}
+.completion-overlay.show{opacity:1;pointer-events:auto}
+.completion-card{
+  text-align:center;padding:48px 40px;border-radius:24px;
+  background:linear-gradient(170deg,#2A2520,#1A1816);
+  border:1px solid rgba(212,168,83,.2);
+  box-shadow:0 24px 80px rgba(0,0,0,.4);
+  transform:scale(.9);transition:transform .5s cubic-bezier(.22,1,.36,1)}
+.completion-overlay.show .completion-card{transform:scale(1)}
+.completion-badge{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:72px;height:72px;border-radius:50%;margin-bottom:20px;
+  background:linear-gradient(135deg,var(--teal),var(--sage));
+  box-shadow:0 4px 24px rgba(29,107,107,.3)}
+.completion-badge svg{width:36px;height:36px}
+.completion-title{
+  font-family:var(--display);font-size:clamp(28px,4vw,36px);font-weight:700;
+  color:#faf8f5;margin-bottom:14px}
+.completion-sub{font-size:15px;color:rgba(255,255,255,.45);margin-bottom:28px;line-height:1.7}
+.completion-cta{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:14px 32px;border-radius:12px;
+  background:linear-gradient(135deg,var(--coral),var(--coral-dark));
+  color:#fff;font-size:15px;font-weight:700;
+  box-shadow:0 4px 20px rgba(224,122,95,.3);
+  transition:all .25s;animation:ctaPulseTeal 3s ease-in-out infinite}
+.completion-cta:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(224,122,95,.4)}
+.completion-dismiss{
+  display:block;margin-top:14px;font-size:13px;color:rgba(255,255,255,.3);
+  cursor:pointer;transition:color .2s;background:none;border:none}
+.completion-dismiss:hover{color:rgba(255,255,255,.5)}
+
+/* ══════════════════════════════════════════════
+   RESPONSIVE
+   ══════════════════════════════════════════════ */
+@media(max-width:900px){
+  .video-layout{grid-template-columns:1fr;gap:32px}
+  .sidebar-sticky{position:relative;top:0}
+  .episodes-grid{grid-template-columns:repeat(3,1fr);gap:20px}
+  .bottom-layout{grid-template-columns:1fr;gap:32px}
+  .post-grid{grid-template-columns:1fr;gap:20px}
+  /* VIP banner — stack vertically on tablet/mobile */
+  .vip-banner{flex-direction:column;align-items:stretch;gap:10px;padding:14px 14px 16px;text-align:center}
+  .vip-banner-note{position:relative;top:0;left:0;text-align:center;transform:rotate(-1deg);margin-bottom:2px;font-size:13px}
+  .vip-banner-badge{position:static;display:inline-flex;align-self:center;border-radius:8px;margin-bottom:2px}
+  .vip-banner-img{width:100%;height:110px;border-radius:10px}
+  .vip-banner-body{text-align:center}
+  .vip-banner-title{justify-content:center;font-size:16px;flex-wrap:wrap;white-space:normal}
+  .vip-banner-sub{font-size:12.5px}
+  .vip-banner-proof{justify-content:center}
+  .vip-banner-arrow{align-self:stretch;width:100%;border-radius:10px;height:42px}
+}
+@media(max-width:680px){
+  .episodes-grid{grid-template-columns:1fr;gap:20px;max-width:480px;margin:0 auto}
+  .header-bar{padding:32px 20px 36px}
+  .video-section{padding:28px 20px 32px}
+  .episodes-section{padding:28px 20px 32px}
+  .post-video{padding:40px 20px 48px}
+  .post-card{padding:28px 22px}
+  .vip-strip-banner{margin-top:20px}
+  .completion-card{padding:36px 24px;margin:0 16px}
+  .vip-banner{padding:12px 12px 14px}
+  .vip-banner-img{height:90px}
+  .vip-banner-title{font-size:14.5px}
+  .vip-banner-sub{font-size:12px}
+}
+</style>
+</head>
+<body>
+<div class="pg">
+
+<!-- ═══════════════════════════════════════════
+     HEADER — Dark welcome bar
+     ═══════════════════════════════════════════ -->
+<section class="header-bar">
+  <div class="header-orb header-orb-1"></div>
+  <div class="header-orb header-orb-2"></div>
+  <div class="header-inner">
+    <div style="display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap;margin-bottom:14px">
+      <nav class="ep-nav" style="margin-bottom:0">
+        <span class="ep-dot active"><span class="ep-num"><span class="now-playing"><span></span><span></span><span></span></span></span> Day 1</span>
+        <span class="ep-nav-sep"></span>
+        <a href="#" class="ep-dot locked"><span class="ep-num">2</span> Day 2</a>
+        <span class="ep-nav-sep"></span>
+        <a href="#" class="ep-dot locked"><span class="ep-num">3</span> Day 3</a>
+      </nav>
+      <div class="live-badge">
+        <span class="live-dot"></span>
+        <span class="live-count"><span id="viewerCount">847</span> watching now</span>
+      </div>
+    </div>
+    <p style="font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:28px;font-weight:600">The AI Income Challenge</p>
+    <h1 class="header-title"><span class="header-kicker">Day 1 of 3:</span>Which of the 4 AI Income Paths Is Actually<br>Right for <span class="coral-italic">You</span></h1>
+    <p style="font-family:var(--display);font-size:clamp(18px,2.8vw,30px);color:rgba(255,255,255,.45);margin-bottom:32px;line-height:1.2;font-style:italic">(And Why Most People Pick Wrong)</p>
+    <p class="header-sub">By the end of this video, you'll know what all four paths are, which ones match the time you actually have, and why <strong>one skill</strong> is the only thing connecting them.</p>
+  </div>
+</section>
+
+<!-- Compact sticky bar (appears on scroll) -->
+<div class="compact-bar" id="compactBar">
+  <div class="compact-row">
+    <div class="compact-left">
+      <span class="compact-live"><span class="compact-live-dot"></span>ONGOING</span>
+      <span class="compact-title">Which of the 4 AI Income Paths Is Actually Right for You</span>
+    </div>
+    <a href="#videoPlayer" class="compact-cta" onclick="document.getElementById('videoPlayer').scrollIntoView({behavior:'smooth',block:'center'});return false">Continue Watching →</a>
+  </div>
+</div>
+
+<!-- Wave hidden — fixed header handles transition -->
+<div class="sec-divider" id="headerWave" style="display:none">
+  <svg viewBox="0 0 1440 56" preserveAspectRatio="none" fill="none">
+    <path d="M0,0 L1440,0 L1440,12 Q1080,56 720,32 Q360,8 0,48 Z" fill="#1A1816"/>
+  </svg>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     VIDEO + SIDEBAR
+     ═══════════════════════════════════════════ -->
+<section class="video-section">
+  <div class="video-layout">
+    <!-- Main video column -->
+    <div class="video-main">
+      <span class="video-eyebrow">Day 1 of 3</span>
+      <h2 class="video-heading">Which of the 4 AI Income Paths Is Actually Right for <span class="coral">You</span></h2>
+      <p class="video-sub">Real paths. Real numbers. From someone who is actually doing all four of them right now.</p>
+
+      <div class="video-wrap" id="videoPlayer">
+        <div id="vidalytics_embed_y0_m5VcCmDvkwjkM" style="width:100%;position:relative;padding-top:56.25%"></div>
+      </div>
+
+      <div class="video-note">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+        Feel free to watch this on 1.5x or 2x by clicking the gear icon in the bottom right of the video.
+      </div>
+
+      <!-- 48-hour Replay Countdown -->
+      <div class="replay-timer" id="replayTimer">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        This Day 1 session closes in <strong id="replayCountdown">--:--:--</strong>
+      </div>
+
+    </div>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <div class="sidebar-sticky">
+        <!-- Progress Tracker -->
+        <div class="sidebar-card">
+          <p class="sidebar-label">Your Progress</p>
+          <p class="sidebar-hint">Etsy, printables, Instagram ecom, and teaching. Four completely different doors, all powered by the same skill. Today you see what's behind each one.</p>
+
+          <!-- Progress bar -->
+          <div class="progress-wrap">
+            <div class="progress-label">
+              <span>Day 1 <span style="color:var(--coral);font-weight:800" id="progressStep">0/3</span></span>
+              <span class="progress-pct" id="progressPct">0%</span>
+            </div>
+            <div class="progress-track">
+              <div class="progress-fill" id="progressFill" style="width:0%"></div>
+            </div>
+          </div>
+
+          <!-- Milestones (toggled) -->
+          <details class="ms-toggle" id="msToggle">
+            <summary>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+              What's Coming Up
+              <span class="ms-toggle-arrow">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="6 9 12 15 18 9"/></svg>
+              </span>
+            </summary>
+          <ul class="milestone-list" id="milestoneList">
+            <li class="milestone-item active" data-time="0">
+              <div class="ms-icon">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polygon points="8,5 19,12 8,19"/></svg>
+              </div>
+              <div class="ms-body">
+                <span class="ms-tag">Now Playing</span>
+                <p class="ms-title">Day 1: See All 4 Paths</p>
+              </div>
+            </li>
+            <li class="milestone-item upcoming" data-time="999999">
+              <div class="ms-icon">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+              </div>
+              <div class="ms-body">
+                <span class="ms-tag">Tomorrow</span>
+                <p class="ms-title">Day 2: Find YOUR Path</p>
+              </div>
+            </li>
+            <li class="milestone-item upcoming" data-time="999999">
+              <div class="ms-icon">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+              </div>
+              <div class="ms-body">
+                <span class="ms-tag">In 2 Days</span>
+                <p class="ms-title">Day 3: Build Your Roadmap</p>
+              </div>
+            </li>
+          </ul>
+          </details>
+          <!-- Preview snippet — TV screen style -->
+          <div class="ms-preview" id="msPreview">
+            <div class="ms-tv">
+              <div class="ms-tv-screen">
+                <div class="ms-tv-scanline"></div>
+                <div class="ms-tv-content">
+                  <span class="ms-tv-live">
+                    <span class="ms-tv-dot"></span>
+                    <span class="ms-preview-tag" id="msPreviewTag">Now Playing</span>
+                  </span>
+                  <p class="ms-preview-title" id="msPreviewTitle">Which of the 4 AI Income Paths Is Actually Right for You</p>
+                </div>
+              </div>
+              <div class="ms-tv-base">
+                <div class="ms-tv-base-dot"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- VIP Banner (hidden until ~5min of video watched) -->
+        <a href="https://baileymasterclass.com/vip/" class="vip-banner" id="vipBanner">
+          <span class="vip-banner-note">VIP members are following along right now</span>
+          <span class="vip-banner-badge"><span class="old-price">$97</span> <span class="new-price">$47</span></span>
+          <div class="vip-banner-img">
+            <img src="full-all-vip-mockups.png" alt="VIP Challenge Kit mockups">
+          </div>
+          <div class="vip-banner-body">
+            <p class="vip-banner-title">🎁 Grab Your VIP Challenge Kit <span class="vip-now">NOW</span></p>
+            <p class="vip-banner-sub">Follow along with the workbook, Track Picker, and weekly calendar templates while you watch</p>
+            <p class="vip-banner-proof">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+              <span id="vipProofCount">432</span> challengers upgraded today
+            </p>
+          </div>
+          <div class="vip-banner-arrow">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+          </div>
+        </a>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Wave: cream → white -->
+<div class="sec-divider">
+  <svg viewBox="0 0 1440 48" preserveAspectRatio="none" fill="none">
+    <path d="M0,0 L1440,0 L1440,8 Q1080,48 720,24 Q360,0 0,40 Z" fill="var(--cream)"/>
+  </svg>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     EPISODES — 3 cards
+     ═══════════════════════════════════════════ -->
+<section class="episodes-section">
+  <div class="episodes-inner">
+    <div class="episodes-grid">
+
+      <!-- Day 1 — Active -->
+      <div class="ep-card active animate-on-scroll">
+        <p class="ep-status watching">You're watching Day 1 of 3!</p>
+        <div class="ep-thumb" style="position:relative">
+          <div class="ep-thumb-ph">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><polygon points="10,7 16,10 10,13" fill="var(--teal)" opacity=".3"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+            Day 1 Thumbnail
+          </div>
+          <div class="ep-thumb-playing">
+            <span class="now-playing"><span></span><span></span><span></span></span>
+            Now Playing
+          </div>
+          <div class="ep-timer-overlay" id="day1Timer"></div>
+        </div>
+        <p class="ep-tag">Day 1 of 3:</p>
+        <h3 class="ep-title">4 AI income paths you probably didn't know existed, and the real numbers behind each one</h3>
+      </div>
+
+      <!-- Day 2 — Unlock date: March 14 -->
+      <div class="ep-card locked animate-on-scroll" id="day2Card" data-unlock-date="2026-03-14" data-unlock-url="day2.html" onclick="handleLockedClick(this)">
+        <p class="ep-status locked" id="day2Status">Unlocks tomorrow</p>
+        <div class="ep-thumb">
+          <div class="ep-thumb-ph">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#8a847b" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+            Day 2 Thumbnail
+          </div>
+          <div class="ep-lock-overlay">
+            <div class="ep-lock-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+            </div>
+          </div>
+        </div>
+        <p class="ep-tag">Day 2 of 3:</p>
+        <h3 class="ep-title">The 5 questions that tell you which path actually fits your life (most people skip question #3 and regret it)</h3>
+        <p class="ep-unlock-timer" id="day2Timer"></p>
+      </div>
+
+      <!-- Day 3 — Unlock date: March 15 -->
+      <div class="ep-card locked animate-on-scroll" id="day3Card" data-unlock-date="2026-03-15" data-unlock-url="day3.html" onclick="handleLockedClick(this)">
+        <p class="ep-status locked" id="day3Status">Unlocks in 2 days</p>
+        <div class="ep-thumb">
+          <div class="ep-thumb-ph">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#8a847b" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+            Day 3 Thumbnail
+          </div>
+          <div class="ep-lock-overlay">
+            <div class="ep-lock-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+            </div>
+          </div>
+        </div>
+        <p class="ep-tag">Day 3 of 3:</p>
+        <h3 class="ep-title">Your first-30-days roadmap for your chosen path, without the 3-6 month guessing period</h3>
+        <p class="ep-unlock-timer" id="day3Timer"></p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Wave: white → dark -->
+<div class="sec-divider">
+  <svg viewBox="0 0 1440 48" preserveAspectRatio="none" fill="none">
+    <path d="M0,0 L1440,0 L1440,8 Q1080,48 720,24 Q360,0 0,40 Z" fill="#fff"/>
+  </svg>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     POST-VIDEO CTA ZONE
+     ═══════════════════════════════════════════ -->
+<section class="post-video">
+  <div class="post-inner">
+    <div class="post-grid">
+
+      <!-- Action Step Card -->
+      <div class="post-card action animate-on-scroll">
+        <p class="pc-eyebrow">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+          Your Day 1 Action Step
+        </p>
+        <h3 class="pc-title">Write Down the Path That Made You Think "Wait, I Could Do That"</h3>
+        <p class="pc-body">While you're watching (or right after), pay attention to the moment where one of the four paths makes you stop and think <strong>"okay, that one actually sounds like something I could fit into my life."</strong><br><br>It might surprise you. It might not be the one you expected. Write it down, even just in your phone notes.<br><br>Tomorrow I'm going to walk you through 5 questions that'll tell you if that instinct is right. You'll need your answer from today to do it.</p>
+      </div>
+
+      <!-- Day 2 Teaser Card -->
+      <div class="post-card teaser animate-on-scroll">
+        <p class="pc-eyebrow">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Dropping Tomorrow
+        </p>
+        <h3 class="pc-title">Day 2: The 5 Questions That Tell You Which Path Is Yours</h3>
+        <p class="pc-body">I'm going to help you stop going back and forth. There are 5 specific questions I use with my students to figure out which path actually matches their schedule, their skills, and what they want their life to look like.<br><br>Plus I'm showing real proof for every single path. <strong>Not screenshots I found online. My actual numbers.</strong></p>
+        <div class="day2-unlock">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+          Unlocks tomorrow
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Proof Stripe — Bailey's credibility before upsell -->
+    <div class="proof-stripe animate-on-scroll" style="margin:36px 0 28px;padding:40px 44px;border-radius:14px;background:linear-gradient(135deg,rgba(250,248,245,.08),rgba(255,255,255,.06));border:1px solid rgba(255,255,255,.1);border-top:2px solid rgba(212,168,83,.3)">
+      <p style="font-size:15px;color:rgba(255,255,255,.5);line-height:1.9;max-width:54ch"><strong style="color:rgba(255,255,255,.92);font-size:17px">Bailey Vann.</strong> Mom of four. Built a seven-figure Etsy shop from $3 digital designs. Grew a teaching community to <strong style="color:rgba(255,255,255,.9)">900+ members</strong>. Runs a YouTube channel with <strong style="color:rgba(255,255,255,.9)">67,000 subscribers</strong>.<br><br>Has been doing the daily research on what's trending across all four of these paths for over three years. She's not teaching theory. She's showing you what she actually does every week.</p>
+    </div>
+
+    <!-- VIP Soft-Sell Strip — same style as sidebar VIP banner -->
+    <a href="https://baileymasterclass.com/vip/" class="vip-banner vip-strip-banner revealed animate-on-scroll">
+      <span class="vip-banner-note">VIP members are following along right now</span>
+      <span class="vip-banner-badge"><span class="old-price">$97</span> <span class="new-price">$47</span></span>
+      <div class="vip-banner-img">
+        <img src="full-all-vip-mockups.png" alt="VIP Challenge Kit mockups">
+      </div>
+      <div class="vip-banner-body">
+        <p class="vip-banner-title">🎁 Grab Your VIP Challenge Kit <span class="vip-now">NOW</span></p>
+        <p class="vip-banner-sub">Follow along with the workbook, Track Picker, and weekly calendar templates while you watch</p>
+        <p class="vip-banner-proof">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+          <span class="vipStripCount">432</span> challengers upgraded today
+        </p>
+      </div>
+      <div class="vip-banner-arrow">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     COMPLETION CELEBRATION OVERLAY
+     ═══════════════════════════════════════════ -->
+<div class="completion-overlay" id="completionOverlay">
+  <div class="completion-card">
+    <div class="completion-badge">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+    </div>
+    <h2 class="completion-title">Day 1 Complete!</h2>
+    <p class="completion-sub">You just saw the full map. Tomorrow you'll figure out<br>which path is actually yours.</p>
+    <a href="https://baileymasterclass.com/vip/" class="completion-cta">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      Get the VIP Kit While You Wait
+    </a>
+    <button class="completion-dismiss" onclick="document.getElementById('completionOverlay').classList.remove('show')">I'll just wait for Day 2</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     FOOTER
+     ═══════════════════════════════════════════ -->
+<footer class="vfooter">
+  <div style="max-width:1200px;margin:0 auto">
+    <svg width="200" height="20" viewBox="0 0 200 20" fill="none" style="display:block;margin:0 auto 20px;opacity:.35">
+      <line x1="0" y1="10" x2="75" y2="10" stroke="var(--gold)" stroke-width=".5"/>
+      <path d="M85 10L92 3L100 10L92 17Z" fill="none" stroke="var(--gold)" stroke-width=".8"/>
+      <circle cx="100" cy="10" r="2" fill="var(--gold)" opacity=".5"/>
+      <path d="M108 10L115 3L100 10L115 17Z" fill="none" stroke="var(--gold)" stroke-width=".8"/>
+      <line x1="125" y1="10" x2="200" y2="10" stroke="var(--gold)" stroke-width=".5"/>
+    </svg>
+    <p class="vf-brand">BAILEY <span>VANN</span></p>
+    <span class="vf-sub">AI Income Challenge Series</span>
+    <p class="vf-copy">&copy; 2026 Bailey Vann | All Rights Reserved</p>
+    <div class="vf-links">
+      <a href="#">Terms &amp; Conditions</a>
+      <a href="#">Privacy</a>
+      <a href="#">Support</a>
+    </div>
+  </div>
+</footer>
+
+</div><!-- .pg -->
+
+<!-- ── Vidalytics Embed Script ── -->
+<script type="text/javascript">
+(function (v, i, d, a, l, y, t, c, s) {
+    y='_'+d.toLowerCase();c=d+'L';if(!v[d]){v[d]={};}if(!v[c]){v[c]={};}if(!v[y]){v[y]={};}var vl='Loader',vli=v[y][vl],vsl=v[c][vl + 'Script'],vlf=v[c][vl + 'Loaded'],ve='Embed';
+    if (!vsl){vsl=function(u,cb){
+        if(t){cb();return;}s=i.createElement("script");s.type="text/javascript";s.async=1;s.src=u;
+        if(s.readyState){s.onreadystatechange=function(){if(s.readyState==="loaded"||s.readyState=="complete"){s.onreadystatechange=null;vlf=1;cb();}};}else{s.onload=function(){vlf=1;cb();};}
+        i.getElementsByTagName("head")[0].appendChild(s);
+    };}
+    vsl(l+'loader.min.js',function(){if(!vli){var vlc=v[c][vl];vli=new vlc();}vli.loadScript(l+'player.min.js',function(){var vec=v[d][ve];t=new vec();t.run(a);});});
+})(window, document, 'Vidalytics', 'vidalytics_embed_y0_m5VcCmDvkwjkM', 'https://fast.vidalytics.com/embeds/Uvh_lP09/y0_m5VcCmDvkwjkM/');
+</script>
+
+<!-- ── Main Scripts ── -->
+<script>
+(function(){
+  'use strict';
+
+  /* ── Scroll Animations ── */
+  var els=document.querySelectorAll('.animate-on-scroll');
+  if(els.length){
+    var obs=new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target)}
+      });
+    },{threshold:.15});
+    els.forEach(function(el){obs.observe(el)});
+  }
+
+  /* ── Compact Bar on Scroll ── */
+  (function(){
+    var hb=document.querySelector('.header-bar');
+    var bar=document.getElementById('compactBar');
+    if(!hb||!bar) return;
+    var threshold=hb.offsetHeight*0.4; // show bar after scrolling 40% past hero
+    var showing=false;
+    window.addEventListener('scroll',function(){
+      var y=window.scrollY;
+      if(y>threshold&&!showing){showing=true;bar.classList.add('visible')}
+      else if(y<=threshold&&showing){showing=false;bar.classList.remove('visible')}
+    },{passive:true});
+  })();
+
+  /* ── Locked Episode Click → Shake ── */
+  window.handleLockedClick=function(card){
+    if(card.classList.contains('shake')) return;
+    card.classList.add('shake');
+    card.addEventListener('animationend',function onEnd(){
+      card.classList.remove('shake');
+      card.removeEventListener('animationend',onEnd);
+      var url=card.getAttribute('data-unlock-url');
+      if(url && url!=='#') window.location.href=url;
+    });
+  };
+
+  /* ── Simulated Live Viewer Count ── */
+  var vcEl=document.getElementById('viewerCount');
+  var baseCount=780+Math.floor(Math.random()*140); // 780–920
+  vcEl.textContent=baseCount;
+  setInterval(function(){
+    baseCount+=Math.floor(Math.random()*7)-3; // drift ±3
+    if(baseCount<720) baseCount=720+Math.floor(Math.random()*20);
+    if(baseCount>960) baseCount=960-Math.floor(Math.random()*20);
+    vcEl.textContent=baseCount;
+  },8000+Math.floor(Math.random()*4000));
+
+  /* ── Scrolling Tab Title ── */
+  var tabText='\uD83D\uDD34 LIVE NOW - Day 1: Which AI Income Path Is Right for You? - AI Income Challenge    ';
+  var tabBlob=new Blob(['setInterval(function(){postMessage(1)},100)'],{type:'text/javascript'});
+  var tabWorker=new Worker(URL.createObjectURL(tabBlob));
+  var tabI=0;
+  tabWorker.onmessage=function(){
+    document.title=tabText.substring(tabI)+tabText.substring(0,tabI);
+    tabI=(tabI+1)%tabText.length;
+  };
+
+  /* ══════════════════════════════════════════
+     VIDALYTICS API — Progress + Milestones
+     ══════════════════════════════════════════ */
+  var EMBED_ID='vidalytics_embed_y0_m5VcCmDvkwjkM';
+  var progressFill=document.getElementById('progressFill');
+  var progressPct=document.getElementById('progressPct');
+  var milestones=document.querySelectorAll('.milestone-item');
+  var completed=false;
+
+  // Milestone timestamps in seconds (update these to match your actual video)
+  var msTimestamps=[];
+  milestones.forEach(function(m){msTimestamps.push(parseFloat(m.getAttribute('data-time')||0))});
+
+  function updateMilestones(currentTime){
+    var activeIdx=0;
+    for(var i=msTimestamps.length-1;i>=0;i--){
+      if(currentTime>=msTimestamps[i]){activeIdx=i;break;}
+    }
+    milestones.forEach(function(m,idx){
+      m.classList.remove('active','completed','upcoming');
+      var icon=m.querySelector('.ms-icon');
+      var tag=m.querySelector('.ms-tag');
+      if(idx<activeIdx){
+        m.classList.add('completed');
+        icon.innerHTML='<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>';
+        tag.textContent='Watched';
+      } else if(idx===activeIdx){
+        m.classList.add('active');
+        icon.innerHTML='<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polygon points="8,5 19,12 8,19"/></svg>';
+        tag.textContent='Now Playing';
+      } else {
+        m.classList.add('upcoming');
+        if(idx===activeIdx+1){
+          tag.textContent='Up Next';
+        } else {
+          tag.textContent=idx===msTimestamps.length-1?'Don\'t Miss':'Coming Up';
+        }
+        icon.innerHTML=idx===msTimestamps.length-1
+          ?'<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>'
+          :String(idx+1);
+      }
+    });
+  }
+
+  function showCompletion(){
+    if(completed) return;
+    completed=true;
+    // Mark all milestones as completed
+    milestones.forEach(function(m){
+      m.classList.remove('active','upcoming');
+      m.classList.add('completed');
+      m.querySelector('.ms-icon').innerHTML='<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>';
+      m.querySelector('.ms-tag').textContent='Watched';
+    });
+    progressFill.style.width='100%';
+    progressPct.textContent='100%';
+    // Show overlay after brief delay
+    setTimeout(function(){
+      document.getElementById('completionOverlay').classList.add('show');
+    },800);
+  }
+
+  // Wait for Vidalytics player to be available, then hook events
+  function getVidalyticsPlayer(embedId){
+    return new Promise(function(resolve){
+      var attempts=0;
+      var check=setInterval(function(){
+        attempts++;
+        if(window.Vidalytics && window.Vidalytics.getPlayer){
+          var p=window.Vidalytics.getPlayer(embedId);
+          if(p){clearInterval(check);resolve(p);return;}
+        }
+        // Fallback: check for player on the embed element
+        var el=document.getElementById(embedId);
+        if(el && el.__vidalytics_player){clearInterval(check);resolve(el.__vidalytics_player);return;}
+        if(attempts>300){clearInterval(check);resolve(null);} // give up after 30s
+      },100);
+    });
+  }
+
+  getVidalyticsPlayer(EMBED_ID).then(function(player){
+    if(!player){
+      console.log('Vidalytics player not found — progress tracking disabled');
+      return;
+    }
+    var duration=0;
+    var lastMsIdx=-1;
+    var msToggle=document.getElementById('msToggle');
+
+    player.on('play',function(){
+      if(!duration) duration=player.duration()||0;
+    });
+
+    var vipRevealed=false;
+    player.on('timeupdate',function(){
+      if(!duration) duration=player.duration()||0;
+      if(!duration) return;
+      var ct=player.currentTime()||0;
+      var pct=Math.min(Math.round((ct/duration)*100),100);
+      progressFill.style.width=pct+'%';
+      progressPct.textContent=pct+'%';
+      updateMilestones(ct);
+      // Update preview snippet when milestone changes
+      var curIdx=0;
+      for(var i=msTimestamps.length-1;i>=0;i--){if(ct>=msTimestamps[i]){curIdx=i;break;}}
+      var stepEl=document.getElementById('progressStep');
+      if(stepEl) stepEl.textContent=(curIdx+1)+'/'+msTimestamps.length;
+      if(curIdx!==lastMsIdx){
+        lastMsIdx=curIdx;
+        var activeMs=milestones[curIdx];
+        if(activeMs){
+          var previewTitle=document.getElementById('msPreviewTitle');
+          var previewTag=document.querySelector('.ms-preview-tag');
+          if(previewTitle) previewTitle.textContent=activeMs.querySelector('.ms-title').textContent;
+          if(previewTag) previewTag.textContent=activeMs.querySelector('.ms-tag').textContent;
+        }
+      }
+      // Reveal VIP banner after ~5 minutes of video
+      if(!vipRevealed && ct>=300){
+        vipRevealed=true;
+        var banner=document.getElementById('vipBanner');
+        if(banner) banner.classList.add('revealed');
+      }
+    });
+
+    player.on('ended',function(){
+      showCompletion();
+    });
+  });
+
+  /* ── Milestone preview: show/hide with toggle, click to open ── */
+  (function(){
+    var toggle=document.getElementById('msToggle');
+    var preview=document.getElementById('msPreview');
+    if(!toggle||!preview) return;
+    function syncPreview(){preview.classList.toggle('hidden',toggle.open);}
+    toggle.addEventListener('toggle',syncPreview);
+    syncPreview();
+    preview.addEventListener('click',function(){toggle.open=true;});
+  })();
+
+  /* ══════════════════════════════════════════
+     VIP CONDITIONAL LOGIC
+     ══════════════════════════════════════════ */
+  // Check if user is VIP (via URL param ?vip=1, or cookie, or injected by platform)
+  var isVIP=(new URLSearchParams(window.location.search)).get('vip')==='1';
+  if(isVIP){
+    // Hide all VIP upsell banners
+    document.querySelectorAll('.vip-banner, .vip-strip-banner').forEach(function(el){
+      el.style.display='none';
+    });
+    // Replace countdown with permanent access message
+    var replayWrap=document.getElementById('replayTimer');
+    if(replayWrap){
+      replayWrap.innerHTML='<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> <span style="color:var(--teal);font-weight:700">You have permanent replay access (VIP)</span>';
+      replayWrap.style.borderColor='rgba(29,107,107,.2)';
+      replayWrap.style.background='linear-gradient(135deg,rgba(29,107,107,.06),rgba(29,107,107,.02))';
+    }
+    // Hide day 1 timer overlay too
+    var d1Timer=document.getElementById('day1Timer');
+    if(d1Timer) d1Timer.style.display='none';
+  }
+
+  /* ── VIP Banner: fallback reveal after 5min page load ── */
+  setTimeout(function(){
+    var banner=document.getElementById('vipBanner');
+    if(banner && !banner.classList.contains('revealed')){
+      banner.classList.add('revealed');
+    }
+  },300000);
+
+  /* ── VIP Banner: ticking social proof counter (syncs sidebar + strip) ── */
+  (function(){
+    var countEl=document.getElementById('vipProofCount');
+    var stripEl=document.querySelector('.vipStripCount');
+    if(!countEl) return;
+    var count=parseInt(countEl.textContent,10)||432;
+    setInterval(function(){
+      count++;
+      countEl.textContent=count;
+      if(stripEl) stripEl.textContent=count;
+    },35000+Math.floor(Math.random()*10000));
+  })();
+
+  /* ── Milestone click → seek to timestamp ── */
+  milestones.forEach(function(m){
+    m.addEventListener('click',function(){
+      var t=parseFloat(m.getAttribute('data-time')||0);
+      getVidalyticsPlayer(EMBED_ID).then(function(player){
+        if(player){player.seek(t);player.play();}
+      });
+    });
+  });
+
+  /* ══════════════════════════════════════════
+     48-HOUR REPLAY COUNTDOWN
+     ══════════════════════════════════════════ */
+  (function(){
+    // Day 1 went live March 13, 2026 at 10:00 AM ET — expires 48h later
+    var DAY1_LIVE=new Date('2026-03-13T10:00:00-05:00').getTime();
+    var EXPIRE=DAY1_LIVE+(48*60*60*1000);
+    var el=document.getElementById('replayCountdown');
+    var wrap=document.getElementById('replayTimer');
+    if(!el||!wrap) return;
+
+    function tick(){
+      var now=Date.now();
+      var diff=EXPIRE-now;
+      if(diff<=0){
+        el.textContent='EXPIRED';
+        wrap.classList.add('expired');
+        wrap.querySelector('svg').style.animation='none';
+        return;
+      }
+      var h=Math.floor(diff/3600000);
+      var m=Math.floor((diff%3600000)/60000);
+      var s=Math.floor((diff%60000)/1000);
+      el.textContent=(h<10?'0':'')+h+':'+(m<10?'0':'')+m+':'+(s<10?'0':'')+s;
+      requestAnimationFrame(tick);
+    }
+    tick();
+  })();
+
+  /* ══════════════════════════════════════════
+     DATE-BASED DAY UNLOCKING
+     ══════════════════════════════════════════ */
+  (function(){
+    var days=[
+      {card:'day2Card',status:'day2Status',timer:'day2Timer',date:'2026-03-14',url:'day2.html',label:'Day 2'},
+      {card:'day3Card',status:'day3Status',timer:'day3Timer',date:'2026-03-15',url:'day3.html',label:'Day 3'}
+    ];
+
+    function pad(n){return n<10?'0'+n:String(n);}
+
+    function updateDays(){
+      var now=new Date();
+      days.forEach(function(d){
+        var card=document.getElementById(d.card);
+        var statusEl=document.getElementById(d.status);
+        var timerEl=document.getElementById(d.timer);
+        if(!card) return;
+
+        // Unlock date at midnight local time
+        var unlockDate=new Date(d.date+'T00:00:00');
+        var isUnlocked=now>=unlockDate;
+
+        if(isUnlocked){
+          // Unlock the card
+          card.classList.remove('locked');
+          card.classList.add('unlocked');
+          card.setAttribute('onclick','window.location.href="'+d.url+'"');
+          statusEl.className='ep-status unlocked-status';
+          statusEl.innerHTML='<a href="'+d.url+'">Watch '+d.label+' now →</a>';
+          // Remove lock overlay
+          var overlay=card.querySelector('.ep-lock-overlay');
+          if(overlay) overlay.style.display='none';
+          // Show 48h expiry timer for this day
+          var dayLive=unlockDate.getTime();
+          var dayExpire=dayLive+(48*60*60*1000);
+          var diff=dayExpire-now.getTime();
+          if(diff>0){
+            var h=Math.floor(diff/3600000);
+            var m=Math.floor((diff%3600000)/60000);
+            timerEl.innerHTML='<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> Closes in '+pad(h)+':'+pad(m);
+          } else {
+            timerEl.textContent='Replay expired';
+            timerEl.style.color='#c43c28';
+          }
+        } else {
+          // Show time until unlock
+          var diff=unlockDate.getTime()-now.getTime();
+          var hrs=Math.floor(diff/3600000);
+          var mins=Math.floor((diff%3600000)/60000);
+          if(hrs>24){
+            statusEl.textContent='Unlocks in '+Math.ceil(hrs/24)+' days';
+          } else if(hrs>0){
+            timerEl.innerHTML='<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> Unlocks in '+pad(hrs)+':'+pad(mins);
+          } else {
+            timerEl.innerHTML='<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> Unlocks in '+mins+' min';
+          }
+        }
+      });
+    }
+
+    updateDays();
+    setInterval(updateDays,60000); // update every minute
+
+    // Day 1 card timer overlay (same 48h expiry)
+    var day1Timer=document.getElementById('day1Timer');
+    if(day1Timer){
+      var DAY1_LIVE=new Date('2026-03-13T10:00:00-05:00').getTime();
+      var DAY1_EXPIRE=DAY1_LIVE+(48*60*60*1000);
+      function tickDay1(){
+        var diff=DAY1_EXPIRE-Date.now();
+        if(diff<=0){
+          day1Timer.innerHTML='<span class="ep-timer-label">Session Closed</span>';
+          return;
+        }
+        var h=Math.floor(diff/3600000);
+        var m=Math.floor((diff%3600000)/60000);
+        var s=Math.floor((diff%60000)/1000);
+        day1Timer.innerHTML='<span class="ep-timer-label">Closes in</span><span class="ep-timer-digits">'+pad(h)+':'+pad(m)+':'+pad(s)+'</span>';
+      }
+      tickDay1();
+      setInterval(tickDay1,1000);
+    }
+  })();
+
+})();
+</script>
+
+<!-- ── Vidalytics → FEA Create Tag Webhook ── -->
+<script>
+(function(){
+  var FEACREATE_WEBHOOK_URL='https://services.leadconnectorhq.com/hooks/mRbOcEobWT5kQ5hBurus/webhook-trigger/770336e4-a2f4-4690-9d58-54dc48687414';
+  var TAGS=[
+    {percent:25, tag:'D1_started'},
+    {percent:50, tag:'D1_halfway'},
+    {percent:80, tag:'D1_nearly_complete'},
+    {percent:95, tag:'D1_complete'}
+  ];
+
+  var params=new URLSearchParams(window.location.search);
+  var email=params.get('email');
+  if(!email) return;
+
+  var fired={};
+  function fireTag(tagName){
+    if(fired[tagName]) return;
+    fired[tagName]=true;
+    console.log('[VideoTag] Firing: '+tagName+' for '+email);
+    fetch(FEACREATE_WEBHOOK_URL,{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({email:email, tag:tagName})
+    }).catch(function(err){
+      console.error('[VideoTag] Webhook failed:',tagName,err);
+    });
+  }
+
+  var EMBED_ID='vidalytics_embed_y0_m5VcCmDvkwjkM';
+  var attempts=0;
+  var check=setInterval(function(){
+    attempts++;
+    if(window.Vidalytics && window.Vidalytics.getPlayer){
+      var player=window.Vidalytics.getPlayer(EMBED_ID);
+      if(player){
+        clearInterval(check);
+        console.log('[VideoTag] Player found, monitoring progress for '+email);
+        setInterval(function(){
+          var duration=player.duration?player.duration():0;
+          var current=player.currentTime?player.currentTime():0;
+          if(duration<=0) return;
+          var pct=(current/duration)*100;
+          TAGS.forEach(function(t){
+            if(pct>=t.percent) fireTag(t.tag);
+          });
+        },3000);
+        return;
+      }
+    }
+    if(attempts>300) clearInterval(check);
+  },100);
+})();
+</script>
+
+</body>
+</html>
