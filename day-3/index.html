@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" href="ai-income-logomark.png">
+<title>Day 3 Has Wrapped - AI Income Challenge</title>
+<link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&display=swap" rel="stylesheet">
+<style>
+@font-face{font-family:'Ogg';src:url('https://cdn.shopify.com/s/files/1/0550/8115/5765/t/36/assets/Ogg-Regular.woff2') format('woff2');font-weight:400;font-display:swap}
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--gold:#D4A853;--amber:#c4933f;--cream:#FAF8F5;--dark:#1A1816}
+body{font-family:'Satoshi',sans-serif;background:var(--cream);color:var(--dark);min-height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative}
+body::before{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:radial-gradient(ellipse at 40% 30%,rgba(212,168,83,0.08) 0%,transparent 60%),radial-gradient(ellipse at 60% 70%,rgba(212,168,83,0.04) 0%,transparent 50%);pointer-events:none}
+
+.wrap{text-align:center;padding:40px 24px;position:relative;z-index:1}
+.logo{width:160px;margin:0 auto 48px;display:block}
+h1{font-family:'Ogg',serif;font-size:2.4rem;font-weight:400;margin-bottom:12px;color:var(--dark)}
+.sub{font-size:1.1rem;color:#6b655c;margin-bottom:48px;line-height:1.5}
+
+.loader{display:flex;align-items:center;justify-content:center;margin:0 auto 24px;gap:4px;height:40px}
+.bar{width:6px;height:20px;border-radius:3px;background:var(--gold);animation:barBounce 1s ease-in-out infinite}
+.bar:nth-child(2){animation-delay:0.1s;height:28px}
+.bar:nth-child(3){animation-delay:0.2s;height:36px}
+.bar:nth-child(4){animation-delay:0.3s;height:28px}
+.bar:nth-child(5){animation-delay:0.4s;height:20px}
+@keyframes barBounce{0%,100%{transform:scaleY(0.6);opacity:0.4}50%{transform:scaleY(1.2);opacity:1}}
+
+.redirect-text{font-size:0.95rem;color:#9a9389;margin-bottom:32px}
+.manual-link{font-size:0.9rem;color:var(--amber);text-decoration:none;border-bottom:1px solid rgba(212,168,83,0.4);transition:border-color 0.2s}
+.manual-link:hover{border-color:var(--gold)}
+
+@media(max-width:600px){
+  h1{font-size:1.8rem}
+  .logo{width:130px;margin-bottom:36px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <img src="ai-income-os-logo.png" alt="AI Income OS" class="logo">
+  <h1>Day 3 Has Wrapped!</h1>
+  <p class="sub">But we saved something special for you...</p>
+  <div class="loader">
+    <div class="bar"></div>
+    <div class="bar"></div>
+    <div class="bar"></div>
+    <div class="bar"></div>
+    <div class="bar"></div>
+  </div>
+  <p class="redirect-text">Redirecting you now...</p>
+  <a href="https://baileymasterclass.com/aiincomeos/" class="manual-link">Click here if you're not redirected</a>
+</div>
+<script>
+setTimeout(function(){ window.location.href = 'https://baileymasterclass.com/aiincomeos/'; }, 3000);
+</script>
+</body>
+</html>
