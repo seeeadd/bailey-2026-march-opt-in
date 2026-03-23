@@ -1029,7 +1029,7 @@ img{max-width:100%;display:block}
 <body>
 <div class="pg">
 
-<!-- Email gate removed for VIP replay -->
+<!-- Email gate removed for evergreen -->
   <div style="display:none">
     <div style="margin:0 auto 16px;width:56px;height:56px;border-radius:50%;background:rgba(212,168,83,.1);border:1px solid rgba(212,168,83,.2);display:flex;align-items:center;justify-content:center"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#D4A853" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 9.9-1"/><circle cx="12" cy="16" r="1"/><path d="M12 17v2"/></svg></div>
 <!-- email gate content fully removed -->
@@ -1042,7 +1042,7 @@ img{max-width:100%;display:block}
 </div>
 <script>
 (function(){
-  // Email gate removed for VIP replay — no gate needed
+  // Email gate removed for evergreen — no gate needed
 })();
 </script>
 
@@ -1081,7 +1081,7 @@ img{max-width:100%;display:block}
 <div class="compact-bar" id="compactBar">
   <div class="compact-row">
     <div class="compact-left">
-      <span class="compact-live"><span class="compact-live-dot"></span>VIP REPLAY</span>
+      <span class="compact-live"><span class="compact-live-dot"></span>FREE TRAINING</span>
       <span class="compact-divider" style="color:rgba(255,255,255,.3);font-size:12px">│</span>
       <span class="compact-day" style="font-family:var(--font);font-size:11px;font-weight:600;color:rgba(255,255,255,.4);letter-spacing:.04em;white-space:nowrap">DAY 2 OF 3</span>
       <span class="compact-title">5 Questions to Find Your Perfect AI Income Path</span>
@@ -1338,7 +1338,7 @@ img{max-width:100%;display:block}
 
 
 
-  /* Pause overlay, video controls, seeking prevention, HLS quality selector — all removed for VIP replay iframe */
+  /* Pause overlay, video controls, seeking prevention, HLS quality selector — all removed for evergreen iframe */
   /* BEGIN_REMOVED_PLAYER_CODE
       var pp=pausePairs[Math.floor(Math.random()*pausePairs.length)];
       document.getElementById('pauseResumeLabel').textContent=pp[0];
@@ -1615,7 +1615,7 @@ img{max-width:100%;display:block}
   },10000);
 
   /* ── Scrolling Tab Title ── */
-  var tabText='\uD83D\uDD34 VIP REPLAY - Day 2: How to Pick the Right AI Income Path - AI Income Challenge    ';
+  var tabText='\uD83D\uDD34 FREE TRAINING - Day 2: How to Pick the Right AI Income Path - AI Income Challenge    ';
   var tabBlob=new Blob(['setInterval(function(){postMessage(1)},100)'],{type:'text/javascript'});
   var tabWorker=new Worker(URL.createObjectURL(tabBlob));
   var tabI=0;
@@ -1695,10 +1695,10 @@ img{max-width:100%;display:block}
   })();
 
   /* ══════════════════════════════════════════
-     DATE-BASED DAY UNLOCKING (disabled for VIP replay — all days accessible)
+     DATE-BASED DAY UNLOCKING (disabled for evergreen — all days accessible)
      ══════════════════════════════════════════ */
   (function(){
-    return; // VIP replay: skip all lock/unlock logic
+    return; // evergreen: skip all lock/unlock logic
     var days=[
       {card:'day3Card',status:'day3Status',timer:'day3Timer',live:'2026-03-16T10:00:00-05:00',url:'day3.html',label:'Day 3'}
     ];
