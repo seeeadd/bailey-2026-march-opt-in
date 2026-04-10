@@ -1854,17 +1854,14 @@ document.getElementById('reg-form').addEventListener('submit', function(e) {
   btn.textContent = wittyPhrases[0];
   var wittyInterval = setInterval(function() { phraseIndex = (phraseIndex + 1) % wittyPhrases.length; btn.textContent = wittyPhrases[phraseIndex]; }, 1200);
   var payload = { first_name: nameVal, email: emailVal, tags: ['evergreen-2026-registered'], source: 'evergreen-2026-registered' };
-  Promise.all([
-    fetch('https://services.leadconnectorhq.com/hooks/mRbOcEobWT5kQ5hBurus/webhook-trigger/qB3LJeXK2aBfekcTCofA', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) }),
-    fetch('https://services.leadconnectorhq.com/hooks/mRbOcEobWT5kQ5hBurus/webhook-trigger/f5f41192-acbc-44e5-9594-47a746f4ea43', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) }),
-    fetch('https://script.google.com/macros/s/AKfycbzTVDuG7OghJfug_h26_GMQ2ssn2WDgR4H_ekw1Y_s1eEVJhOMJdRRjdu8ORCGHJZWnPQ/exec', { method: 'POST', body: JSON.stringify(payload) })
-  ]).then(function() {
-    clearInterval(wittyInterval); btn.textContent = "You\u2019re In! Redirecting..."; formSubmitting = false;
-    setTimeout(function() { window.location.href = 'https://baileymasterclass.com/day-1/?email=' + encodeURIComponent(emailVal); }, 1000);
-  }).catch(function() {
-    clearInterval(wittyInterval); btn.textContent = "You\u2019re In! Redirecting..."; formSubmitting = false;
-    setTimeout(function() { window.location.href = 'https://baileymasterclass.com/day-1/?email=' + encodeURIComponent(emailVal); }, 1000);
-  });
+  var jsonBody = JSON.stringify(payload);
+  /* Fire webhooks without waiting — keepalive ensures they complete after redirect */
+  fetch('https://services.leadconnectorhq.com/hooks/mRbOcEobWT5kQ5hBurus/webhook-trigger/qB3LJeXK2aBfekcTCofA', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: jsonBody, keepalive: true }).catch(function(){});
+  fetch('https://services.leadconnectorhq.com/hooks/mRbOcEobWT5kQ5hBurus/webhook-trigger/f5f41192-acbc-44e5-9594-47a746f4ea43', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: jsonBody, keepalive: true }).catch(function(){});
+  fetch('https://script.google.com/macros/s/AKfycbzTVDuG7OghJfug_h26_GMQ2ssn2WDgR4H_ekw1Y_s1eEVJhOMJdRRjdu8ORCGHJZWnPQ/exec', { method: 'POST', body: jsonBody, keepalive: true }).catch(function(){});
+  /* Redirect immediately — no need to wait for webhook responses */
+  clearInterval(wittyInterval); btn.textContent = "You\u2019re In! Redirecting...";
+  setTimeout(function() { window.location.href = 'https://baileymasterclass.com/day-1/?email=' + encodeURIComponent(emailVal); }, 300);
 });
 document.querySelectorAll('.reg-in').forEach(function(input) { input.addEventListener('focus', function() { this.style.borderColor = ''; }); });
 
